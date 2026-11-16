@@ -34,44 +34,45 @@
         </div>
 
         <!-- Цэс / Category Menu -->
-        <nav class="flex items-center space-x-8 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 pb-4 w-full justify-center">
+        <nav class="flex items-center space-x-10 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 pb-4 w-full justify-center">
             
             <!-- 1. НОМНУУД (Dropdown цэстэй) -->
-            <div class="relative dropdown group">
-                <a href="#" style="background-color: #927657;" class="text-white py-2 px-4 rounded-xs inline-block">
+            <div class="relative dropdown group py-2">
+                <!-- Энгийн үед цагаан фон/текст, хулгана аваачихад #927657 өнгөтэй болно -->
+                <a href="#" class="text-gray-700 hover:text-white py-2 px-4 rounded-xs inline-block transition-colors duration-200" style="&:hover { background-color: #927657; }">
                     НОМНУУД
                 </a>
                 
-                <!-- Доошоо бууж харагдах дэд цэс (Dropdown Content) -->
-                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[600px] bg-gray-50 border border-gray-200 shadow-xl p-6 rounded-sm grid grid-cols-3 gap-4 z-50">
+                <!-- Доошоо бууж харагдах дэд цэс (Dropdown Content - 2 талдаа зайтай, тэгш хэмтэй) -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[650px] bg-white border border-gray-200 shadow-2xl p-6 rounded-sm grid grid-cols-3 gap-6 z-50">
                     <div class="text-center group/card cursor-pointer">
-                        <div class="bg-black h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Art Book</div>
+                        <div class="bg-gray-100 h-28 rounded-sm mb-2 shadow-sm border border-gray-200 flex items-center justify-center text-gray-800 text-xs font-medium hover:border-[#927657] transition">Art Book</div>
                         <p class="text-black font-bold text-xs">Art Book</p>
                         <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                     </div>
                     <div class="text-center group/card cursor-pointer">
-                        <div class="bg-black h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Memory Book</div>
+                        <div class="bg-gray-100 h-28 rounded-sm mb-2 shadow-sm border border-gray-200 flex items-center justify-center text-gray-800 text-xs font-medium hover:border-[#927657] transition">Memory Book</div>
                         <p class="text-black font-bold text-xs">Memory Book</p>
                         <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                     </div>
-                    <div class="text-center group/card cursor-pointer opacity-50">
-                        <div class="bg-gray-800 h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Coming Soon</div>
-                        <p class="text-black font-bold text-xs">Бусад ном</p>
-                        <p class="text-[10px] text-gray-500">Удахгүй</p>
+                    <div class="text-center group/card cursor-pointer opacity-40">
+                        <div class="bg-gray-50 h-28 rounded-sm mb-2 border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs">Удахгүй</div>
+                        <p class="text-gray-400 font-bold text-xs">Бусад ном</p>
+                        <p class="text-[10px] text-gray-400">Тун удахгүй</p>
                     </div>
                 </div>
             </div>
 
             <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ -->
-            <a href="#" class="text-gray-700 hover:text-black py-2">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
+            <a href="#" class="text-gray-700 hover:text-white hover:bg-[#927657] py-2 px-3 rounded-xs transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
 
             <!-- 3. ФОТО ХЭВЛЭЛ -->
-            <a href="#" class="text-gray-700 hover:text-black py-2">ФОТО ХЭВЛЭЛ</a>
+            <a href="#" class="text-gray-700 hover:text-white hover:bg-[#927657] py-2 px-3 rounded-xs transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
 
             <span class="text-gray-300">|</span>
 
             <!-- 4. УРЛАГИЙН БҮТЭЭГДЭХҮҮН -->
-            <a href="#" class="text-gray-700 hover:text-black py-2">УРЛАГИЙН БҮТЭЭГДЭХҮҮН</a>
+            <a href="#" class="text-gray-700 hover:text-white hover:bg-[#927657] py-2 px-3 rounded-xs transition-colors duration-200">УРЛАГИЙН БҮТЭЭГДЭХҮҮН</a>
 
         </nav>
     </header>
