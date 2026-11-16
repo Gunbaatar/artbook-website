@@ -120,11 +120,14 @@
     <!-- 1. НҮҮР ХУУДАС -->
     <main id="landing-page" class="w-full flex flex-col space-y-6 mt-2">
         
-        <!-- 1. ЭХНИЙ ТОМ ЗУРАГ (1920x1080 дэлгэц дээр бүтэн харагдах, Захиалах товчтой) -->
-        <div class="relative group w-full h-[500px] sm:h-[600px] lg:h-[80vh] min-h-[500px] overflow-hidden shadow-xl">
-            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Framing Service" class="w-full h-full object-cover object-center">
+        <!-- 1. ЭХНИЙ ВИДЕО ХЭСЭГ (video_home.mp4) -->
+        <div class="relative group w-full h-[500px] sm:h-[600px] lg:h-[80vh] min-h-[500px] overflow-hidden shadow-xl bg-black">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover object-center">
+                <source src="video_home.mp4" type="video/mp4">
+                Таны браузер видео дэмжихгүй байна.
+            </video>
             
-            <!-- Дээр нь байрлах текст болон ЗАХИАЛАХ товч (WhiteWall шиг загвартай) -->
+            <!-- Дээр нь байрлах текст болон ЗАХИАЛАХ товч -->
             <div class="absolute inset-0 bg-black/30 flex flex-col justify-between p-8 sm:p-16">
                 <!-- Дээд хэсгийн гарчиг -->
                 <div class="text-white max-w-xl">
@@ -132,7 +135,7 @@
                     <p class="text-sm sm:text-base font-medium tracking-wide opacity-90 drop-shadow">Таны дурсгалт зураг болон хүүхдийн бүтээлийг чанарын өндөр түвшинд жаазална.</p>
                 </div>
 
-                <!-- Баруун доод эсвэл доод хэсэгт байрлах ЗАХИАЛАХ товч -->
+                <!-- Баруун доод хэсэгт байрлах ЗАХИАЛАХ товч -->
                 <div class="flex justify-end">
                     <button onclick="switchService('framing', event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-6 py-3 rounded-sm shadow-lg tracking-wider uppercase transition transform hover:scale-105">
                         ЗАХИАЛАХ
@@ -333,8 +336,13 @@
         }
     </script>
     
-    <footer class="w-full text-center py-4 text-xs text-gray-400 mt-auto border-t border-gray-100">
-        © KidArt Studio. All rights reserved.
+    <!-- ФУТЕР ХЭСЭГ (Хаяг болон холбоо барих мэдээлэл) -->
+    <footer class="w-full bg-gray-50 border-t border-gray-100 py-8 px-6 mt-auto text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto flex flex-col items-center space-y-2">
+            <p class="font-medium text-gray-700">Great Mongolian State Street, Marshall Town, 17th Khoroo, Khan-Uul District, Ulaanbaatar 17012, Mongolia.</p>
+            <p>Tel: (976) 99077880, 99170761</p>
+            <p class="text-[11px] text-gray-400 mt-2">© KidArt Studio. All rights reserved.</p>
+        </div>
     </footer>
 
 </body>
