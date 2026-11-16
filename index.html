@@ -141,7 +141,6 @@
             <!-- Иконтой жагсаалт хэсэг -->
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
                 
-                <!-- 1. Өөрчлөгдсөн хэсэг -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/>
@@ -184,11 +183,31 @@
 
             </div>
 
+            <!-- Онлайн чат хэсэг (Шинээр нэмсэн) -->
+            <div class="pt-2 border-t border-gray-100">
+                <div class="bg-[#f9f9f9] border border-gray-200 p-4 rounded-sm flex items-center justify-between transition hover:border-[#927657]">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white p-2 rounded-full shadow-sm text-gray-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-black">Тусламж хэрэгтэй юу?</h4>
+                            <p class="text-[10px] text-gray-500">Бидэнтэй онлайн чатаар холбогдох</p>
+                        </div>
+                    </div>
+                    <a href="#" class="text-xs font-bold text-white bg-[#927657] py-2 px-4 rounded-sm hover:bg-opacity-90 transition">
+                        Чатлах
+                    </a>
+                </div>
+            </div>
+
         </div>
 
     </main>
 
-    <!-- JS Функция (Мэдээлэл динамикаар солигдох хэсэг) -->
+    <!-- JS Функция -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
