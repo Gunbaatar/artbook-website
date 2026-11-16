@@ -52,7 +52,7 @@
         <div class="relative w-full flex justify-center items-center mb-6">
             
             <!-- Лого файл (logo.png) -->
-            <a href="#">
+            <a href="#" onclick="goHome(event)">
                 <img src="logo.png" alt="KidArt Logo" class="h-10 w-auto object-contain">
             </a>
 
@@ -67,13 +67,29 @@
                     <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
                 </a>
                 
-                <!-- Нэвтрэх товч -->
-                <button onclick="toggleLoginModal(event)" class="text-xs font-semibold text-gray-700 hover:text-[#927657] transition flex items-center space-x-1.5">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                    </svg>
-                    <span>Нэвтрэх</span>
-                </button>
+                <!-- Нэвтрэх товч (Нэвтрээгүй үед харагдана) -->
+                <div id="login-btn-container">
+                    <button onclick="toggleLoginModal(event)" class="text-xs font-semibold text-gray-700 hover:text-[#927657] transition flex items-center space-x-1.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Нэвтрэх</span>
+                    </button>
+                </div>
+                
+                <!-- Хэрэглэгчийн цэс (Нэвтэрсэн үед харагдана) -->
+                <div id="user-menu-container" class="hidden flex items-center space-x-4">
+                    <button onclick="showDashboard(event)" class="text-xs font-bold text-[#927657] flex items-center space-x-1.5 hover:opacity-80 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>Миний бүртгэл</span>
+                    </button>
+                    <span class="text-gray-300">|</span>
+                    <button onclick="logout(event)" class="text-xs font-semibold text-gray-500 hover:text-red-500 transition">
+                        Гарах
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -82,7 +98,7 @@
             
             <!-- 1. НОМНУУД (Dropdown цэстэй) -->
             <div class="dropdown group static">
-                <a href="#" onclick="event.preventDefault()" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
+                <a href="#" onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     НОМНУУД
                 </a>
                 
@@ -92,7 +108,7 @@
                     <div class="w-[400px] grid grid-cols-2 gap-6">
                         
                         <!-- Art Book сонголт -->
-                        <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchContent('art', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="artbook_menu.jpg" alt="Art Book Menu" class="w-full h-full object-cover">
                             </div>
@@ -101,7 +117,7 @@
                         </div>
 
                         <!-- Memory Book сонголт -->
-                        <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchContent('memory', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="memory_menu.jpg" alt="Memory Book Menu" class="w-full h-full object-cover">
                             </div>
@@ -137,8 +153,8 @@
         </nav>
     </header>
 
-    <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
-    <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
+    <!-- 1. ҮНДСЭН НҮҮР ХУУДАС (Лэндинг пэйж) -->
+    <main id="landing-page" class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         
         <!-- Зүүн тал: Зургийн хэсэг -->
         <div class="lg:col-span-8 relative flex justify-center">
@@ -165,9 +181,9 @@
                 </a>
             </div>
 
-            <!-- ЗАХИАЛГА ӨГӨХ товч (Шууд нэвтрэх цонх дуудна) -->
+            <!-- ЗАХИАЛГА ӨГӨХ товч (Нэвтрээгүй үед нэвтрэх, нэвтэрсэн үед сагсанд нэмнэ) -->
             <div>
-                <a id="main-action-btn" href="#" onclick="toggleLoginModal(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
+                <a id="main-action-btn" href="#" onclick="handleActionBtn(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
                     ЗАХИАЛГА ӨГӨХ
                 </a>
             </div>
@@ -241,6 +257,70 @@
 
     </main>
 
+    <!-- 2. ХЭРЭГЛЭГЧИЙН САМБАР (DASHBOARD) - Анх нуугдмал байна -->
+    <main id="dashboard-page" style="display: none;" class="max-w-3xl w-full mx-auto flex-col space-y-6 mt-10 mb-auto">
+        <h2 class="text-2xl font-bold text-gray-900">Миний бүртгэл</h2>
+        
+        <!-- Мэдээлэл бүртгэх форм (Анх удаа нэвтрэхэд) -->
+        <div id="profile-setup" class="bg-white p-8 rounded-sm shadow-md border border-gray-200">
+            <h3 class="text-lg font-semibold mb-2 text-black">Хувийн мэдээллээ гүйцээх</h3>
+            <p class="text-xs text-gray-500 mb-6">Та захиалга өгөхийн тулд холбогдох мэдээллээ үнэн зөв оруулна уу.</p>
+            
+            <form id="profile-form" onsubmit="saveProfile(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Овог</label>
+                        <input type="text" id="lastName" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Нэр</label>
+                        <input type="text" id="firstName" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Утасны дугаар</label>
+                    <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Гэрийн хаяг (Дүүрэг, хороо, байр, тоот)</label>
+                    <textarea id="address" required rows="3" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-[#927657] text-white font-medium py-3.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm mt-4">
+                    Мэдээлэл хадгалах
+                </button>
+            </form>
+        </div>
+
+        <!-- Идэвхтэй Dashboard (Мэдээлэл хадгалсны дараа харагдах) -->
+        <div id="dashboard-active" style="display: none;" class="space-y-6 w-full">
+            
+            <div class="bg-white p-6 rounded-sm shadow-md border border-gray-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Сайн байна уу, <span id="display-name" class="text-[#927657]">Хэрэглэгч</span>!</h3>
+                        <p class="text-xs text-gray-500 mt-1.5">Таны мэдээлэл амжилттай хадгалагдлаа. Та одоо захиалга өгөх боломжтой.</p>
+                    </div>
+                </div>
+                <div class="mt-6 border-t border-gray-100 pt-4 grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="text-gray-400 block text-[11px] uppercase tracking-wider mb-1">Утасны дугаар:</span> <span id="display-phone" class="font-medium text-black">-</span></div>
+                    <div><span class="text-gray-400 block text-[11px] uppercase tracking-wider mb-1">Гэрийн хаяг:</span> <span id="display-address" class="font-medium text-black">-</span></div>
+                </div>
+            </div>
+
+            <!-- Захиалгын түүх -->
+            <div class="bg-white p-6 rounded-sm shadow-md border border-gray-200">
+                <h3 class="text-md font-semibold text-gray-900 mb-4">Миний захиалгууд</h3>
+                <div class="text-center py-12 bg-gray-50 border border-dashed border-gray-300 rounded-sm flex flex-col items-center justify-center">
+                    <svg class="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                    <p class="text-sm text-gray-500 mb-4">Танд одоогоор идэвхтэй захиалга байхгүй байна.</p>
+                    <button onclick="goHome(event)" class="inline-block bg-[#927657] text-white text-xs font-semibold py-2.5 px-6 rounded-sm hover:bg-opacity-90 transition shadow-sm">
+                        Шинэ ном үүсгэх
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <!-- Нэвтрэх Цонх (Login Modal) -->
     <div id="login-modal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 z-[60] flex justify-center items-center">
         <div class="bg-white rounded-lg shadow-2xl w-96 p-8 relative">
@@ -255,17 +335,17 @@
             </div>
 
             <div class="flex flex-col space-y-3">
-                <button class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
+                <button onclick="simulateLogin('Facebook')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/></svg>
                     <span>Facebook-ээр нэвтрэх</span>
                 </button>
 
-                <button class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
+                <button onclick="simulateLogin('Instagram')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     <span>Instagram-аар нэвтрэх</span>
                 </button>
 
-                <button class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
+                <button onclick="simulateLogin('Gmail')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -280,7 +360,6 @@
 
     <!-- Facebook / Instagram сонголттой чатын цонх -->
     <div id="chat-widget" style="display: none;" class="fixed bottom-6 right-6 w-80 bg-white border border-gray-200 shadow-2xl rounded-lg flex-col z-50 overflow-hidden">
-        <!-- Chat Header -->
         <div class="bg-[#927657] text-white px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -291,7 +370,6 @@
             </button>
         </div>
         
-        <!-- Chat Body -->
         <div class="p-6 bg-gray-50 flex flex-col space-y-4 text-center">
             <p class="text-[13px] text-gray-600 mb-2">Та өөрийн ашигладаг сошиал хаягаар нэвтэрч бидэнтэй шууд холбогдоорой.</p>
             
@@ -313,8 +391,12 @@
 
     <!-- JS Функцууд -->
     <script>
-        // Агуулга солих функц
-        function switchContent(type) {
+        let isLoggedIn = false;
+        let cartItemCount = 0;
+
+        // 1. Агуулга солих (Art book / Memory book)
+        function switchContent(type, e) {
+            if(e) e.preventDefault();
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
@@ -343,12 +425,25 @@
                 f1Title.innerText = 'Онлайн эх бэлтгэл';
                 f1Subtitle.innerText = 'Хялбараар зургийн өрөлт, текст оруулах';
             }
+            
+            // Цэснээс сонголт хийхэд үндсэн хуудас руу автоматаар шилжинэ
+            goHome();
         }
 
-        // Сагсны тоолуур (Одоогийн байдлаар Нэвтрэх цонх дуудаж байгаа тул ашиглахгүй)
-        let cartItemCount = 0;
-        function addToCart(e) {
+        // 2. Үндсэн товчны үйлдэл (Нэвтрэх шалгах)
+        function handleActionBtn(e) {
             e.preventDefault();
+            if (!isLoggedIn) {
+                // Нэвтрээгүй бол нэвтрэх цонх дуудна
+                toggleLoginModal();
+            } else {
+                // Нэвтэрсэн бол сагсанд нэмнэ
+                addToCart();
+            }
+        }
+
+        // 3. Сагсанд нэмэх
+        function addToCart() {
             cartItemCount++;
             const cartCountElement = document.getElementById('cart-count');
             cartCountElement.innerText = cartItemCount;
@@ -358,7 +453,18 @@
             cartCountElement.classList.add('cart-pop');
         }
 
-        // Чатын цонх нээх/хаах функц
+        // 4. Нэвтрэх модал нээх/хаах
+        function toggleLoginModal(e) {
+            if(e) e.preventDefault();
+            const loginModal = document.getElementById('login-modal');
+            if (loginModal.style.display === 'none' || loginModal.style.display === '') {
+                loginModal.style.display = 'flex';
+            } else {
+                loginModal.style.display = 'none';
+            }
+        }
+
+        // 5. Чатын цонх нээх/хаах
         function toggleChat(e) {
             if(e) e.preventDefault();
             const chatWidget = document.getElementById('chat-widget');
@@ -369,15 +475,66 @@
             }
         }
 
-        // Нэвтрэх модал нээх/хаах функц
-        function toggleLoginModal(e) {
+        // 6. Нэвтрэх үйлдэл хийгдэхэд (Симуляци)
+        function simulateLogin(provider) {
+            isLoggedIn = true;
+            toggleLoginModal(); // Нэвтрэх цонх хаах
+            showDashboard();    // Dashboard руу шилжих
+            
+            // Header цэс өөрчлөх
+            document.getElementById('login-btn-container').classList.add('hidden');
+            document.getElementById('user-menu-container').classList.remove('hidden');
+        }
+
+        // 7. Гарах үйлдэл
+        function logout(e) {
             if(e) e.preventDefault();
-            const loginModal = document.getElementById('login-modal');
-            if (loginModal.style.display === 'none' || loginModal.style.display === '') {
-                loginModal.style.display = 'flex';
-            } else {
-                loginModal.style.display = 'none';
-            }
+            isLoggedIn = false;
+            goHome(); // Нүүр хуудас руу буцах
+            
+            // Header буцаах
+            document.getElementById('login-btn-container').classList.remove('hidden');
+            document.getElementById('user-menu-container').classList.add('hidden');
+            
+            // Мэдээлэл цэвэрлэх (Демо)
+            document.getElementById('profile-setup').style.display = 'block';
+            document.getElementById('dashboard-active').style.display = 'none';
+            document.getElementById('profile-form').reset();
+        }
+
+        // 8. Нүүр хуудас руу шилжих
+        function goHome(e) {
+            if(e) e.preventDefault();
+            document.getElementById('dashboard-page').style.display = 'none';
+            // landing-page нь grid учир grid гэж дуудна
+            document.getElementById('landing-page').style.display = 'grid'; 
+        }
+
+        // 9. Dashboard руу шилжих
+        function showDashboard(e) {
+            if(e) e.preventDefault();
+            document.getElementById('landing-page').style.display = 'none';
+            // dashboard-page нь flex учир flex гэж дуудна
+            document.getElementById('dashboard-page').style.display = 'flex';
+        }
+
+        // 10. Хувийн мэдээлэл хадгалах
+        function saveProfile(e) {
+            e.preventDefault();
+            
+            const lname = document.getElementById('lastName').value;
+            const fname = document.getElementById('firstName').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            
+            // Дэлгэцэнд утгуудыг харуулах
+            document.getElementById('display-name').innerText = lname.charAt(0) + '. ' + fname;
+            document.getElementById('display-phone').innerText = phone;
+            document.getElementById('display-address').innerText = address;
+            
+            // Формыг нууж, идэвхтэй Dashboard хэсгийг харуулах
+            document.getElementById('profile-setup').style.display = 'none';
+            document.getElementById('dashboard-active').style.display = 'block';
         }
     </script>
 
