@@ -53,13 +53,12 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Дэд цэсний гадна тал (Бүтэн өргөнөөр сунгагдсан маш цайвар саарал дэвсгэртэй bg-[#f9f9f9]) -->
+                <!-- Дэд цэсний гадна тал -->
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
                     
-                    <!-- Доторх контент (Голлож байрлах 2 ном) -->
                     <div class="w-[400px] grid grid-cols-2 gap-6">
                         
-                        <!-- Art Book сонголт: Цэсний зураг нь artbook_menu.jpg -->
+                        <!-- Art Book сонголт -->
                         <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="artbook_menu.jpg" alt="Art Book Menu" class="w-full h-full object-cover">
@@ -68,7 +67,7 @@
                             <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                         </div>
 
-                        <!-- Memory Book сонголт: Цэсний зураг нь memory_menu.jpg -->
+                        <!-- Memory Book сонголт -->
                         <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="memory_menu.jpg" alt="Memory Book Menu" class="w-full h-full object-cover">
@@ -108,7 +107,7 @@
     <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
     <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         
-        <!-- Зүүн тал: Зургийн хэсэг (Анх ороход book.webp харагдана) -->
+        <!-- Зүүн тал: Зургийн хэсэг -->
         <div class="lg:col-span-8 relative flex justify-center">
             <img id="main-image" src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
@@ -134,21 +133,22 @@
             </div>
 
             <div>
-                <a href="#" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
-                    НОМ ҮҮСГЭХ
+                <a id="main-action-btn" href="#" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
+                    ЗАХИАЛГА ӨГӨХ
                 </a>
             </div>
 
             <!-- Иконтой жагсаалт хэсэг -->
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
                 
+                <!-- 1. Өөрчлөгдсөн хэсэг -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/>
                     </svg>
                     <div>
-                        <h4 class="text-sm font-semibold text-black">Онлайн эх бэлтгэл</h4>
-                        <p class="text-xs text-gray-500">Хялбараар зургийн өрөлт, текст оруулах</p>
+                        <h4 id="feature1-title" class="text-sm font-semibold text-black">Дижитал хэлбэрт оруулах</h4>
+                        <p id="feature1-subtitle" class="text-xs text-gray-500">Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ</p>
                     </div>
                 </div>
 
@@ -188,24 +188,38 @@
 
     </main>
 
-    <!-- JS Функция (Том зураг нь book.webp болон book2.webp болж солигдоно) -->
+    <!-- JS Функция (Мэдээлэл динамикаар солигдох хэсэг) -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
             const price = document.getElementById('main-price');
+            
+            const btn = document.getElementById('main-action-btn');
+            const f1Title = document.getElementById('feature1-title');
+            const f1Subtitle = document.getElementById('feature1-subtitle');
 
             if (type === 'art') {
                 img.src = 'book.webp';
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
+                
+                // Art Book үеийн текстүүд
+                btn.innerText = 'ЗАХИАЛГА ӨГӨХ';
+                f1Title.innerText = 'Дижитал хэлбэрт оруулах';
+                f1Subtitle.innerText = 'Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ';
             } else if (type === 'memory') {
                 img.src = 'book2.webp';
                 title.innerText = 'Memory Book';
                 subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
                 price.innerText = '70,000₮';
+                
+                // Memory Book үеийн текстүүд
+                btn.innerText = 'НОМ ҮҮСГЭХ';
+                f1Title.innerText = 'Онлайн эх бэлтгэл';
+                f1Subtitle.innerText = 'Хялбараар зургийн өрөлт, текст оруулах';
             }
         }
     </script>
