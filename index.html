@@ -9,7 +9,6 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Дэд цэсийг илүү цэвэрхэн харагдуулах transition эффект */
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
@@ -21,8 +20,6 @@
             visibility: visible;
             transform: translateY(0);
         }
-        
-        /* Хулгана цэс рүү шилжих үед хаагдахгүй байх үл үзэгдэх гүүр */
         .dropdown-menu::before {
             content: '';
             position: absolute;
@@ -31,8 +28,6 @@
             width: 100%;
             height: 20px;
         }
-        
-        /* Сагсанд нэмэх үеийн animation */
         @keyframes pop {
             0% { transform: scale(1); }
             50% { transform: scale(1.3); }
@@ -45,18 +40,16 @@
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
 
-    <!-- ТОЛГОЙ ХЭСЭГ (HEADER & MENU) -->
+    <!-- ТОЛГОЙ ХЭСЭГ -->
     <header class="max-w-7xl w-full mx-auto flex flex-col pt-4 pb-2">
         
-        <!-- Лого болон Нэвтрэх/Сагс хэсэг -->
+        <!-- Лого болон Нэвтрэх/Сагс -->
         <div class="relative w-full flex justify-center items-center mb-6">
-            
-            <!-- Лого файл (logo.png) -->
             <a href="#" onclick="goHome(event)">
                 <img src="logo.png" alt="KidArt Logo" class="h-10 w-auto object-contain">
             </a>
 
-            <!-- Баруун дээд булан: Сагс болон Нэвтрэх -->
+            <!-- Баруун дээд булан -->
             <div class="absolute right-0 flex items-center space-x-6">
                 <!-- Сагс -->
                 <a href="#" class="relative text-gray-700 hover:text-[#927657] transition flex items-center">
@@ -67,7 +60,7 @@
                     <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
                 </a>
                 
-                <!-- Нэвтрэх товч (Нэвтрээгүй үед харагдана) -->
+                <!-- Нэвтрэх товч (Нэвтрээгүй үед) -->
                 <div id="login-btn-container">
                     <button onclick="toggleLoginModal(event)" class="text-xs font-semibold text-gray-700 hover:text-[#927657] transition flex items-center space-x-1.5">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -77,7 +70,7 @@
                     </button>
                 </div>
                 
-                <!-- Хэрэглэгчийн цэс (Нэвтэрсэн үед харагдана) -->
+                <!-- Хэрэглэгчийн цэс (Нэвтэрсэн үед) -->
                 <div id="user-menu-container" class="hidden flex items-center space-x-4">
                     <button onclick="showDashboard(event)" class="text-xs font-bold text-[#927657] flex items-center space-x-1.5 hover:opacity-80 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -93,21 +86,14 @@
             </div>
         </div>
 
-        <!-- Цэс / Category Menu -->
+        <!-- Цэс -->
         <nav class="flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 w-full justify-center relative">
-            
-            <!-- 1. НОМНУУД (Dropdown цэстэй) -->
             <div class="dropdown group static">
                 <a href="#" onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     НОМНУУД
                 </a>
-                
-                <!-- Дэд цэсний гадна тал -->
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
-                    
                     <div class="w-[400px] grid grid-cols-2 gap-6">
-                        
-                        <!-- Art Book сонголт -->
                         <div onclick="switchContent('art', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="artbook_menu.jpg" alt="Art Book Menu" class="w-full h-full object-cover">
@@ -115,8 +101,6 @@
                             <p class="text-black font-bold text-xs">Art Book</p>
                             <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                         </div>
-
-                        <!-- Memory Book сонголт -->
                         <div onclick="switchContent('memory', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="memory_menu.jpg" alt="Memory Book Menu" class="w-full h-full object-cover">
@@ -124,150 +108,86 @@
                             <p class="text-black font-bold text-xs">Memory Book</p>
                             <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <span class="text-gray-300">|</span>
-
-            <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ -->
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
-                ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
-            </a>
-
+            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
             <span class="text-gray-300">|</span>
-
-            <!-- 3. ФОТО ХЭВЛЭЛ -->
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
-                ФОТО ХЭВЛЭЛ
-            </a>
-
+            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
-
-            <!-- 4. УРЛАГИЙН БҮТЭЭГДЭХҮҮН -->
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
-                УРЛАГИЙН БҮТЭЭГДЭХҮҮН
-            </a>
-
+            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">УРЛАГИЙН БҮТЭЭГДЭХҮҮН</a>
         </nav>
     </header>
 
     <!-- 1. ҮНДСЭН НҮҮР ХУУДАС (Лэндинг пэйж) -->
     <main id="landing-page" class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
-        
-        <!-- Зүүн тал: Зургийн хэсэг -->
         <div class="lg:col-span-8 relative flex justify-center">
             <img id="main-image" src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
-
-        <!-- Баруун тал: Мэдээллийн хэсэг -->
         <div class="lg:col-span-4 flex flex-col space-y-6">
-            
             <div>
                 <h2 id="main-title" class="text-2xl lg:text-3xl font-bold tracking-tight text-black">Art Book</h2>
-                <p id="main-subtitle" class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">
-                    Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно
-                </p>
+                <p id="main-subtitle" class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно</p>
             </div>
-
             <div class="space-y-1 pt-2 border-t border-gray-100">
-                <div class="text-lg font-semibold text-black">
-                    Эхлэх үнэ: <span id="main-price" class="font-bold">200,000₮</span>
-                </div>
+                <div class="text-lg font-semibold text-black">Эхлэх үнэ: <span id="main-price" class="font-bold">200,000₮</span></div>
                 <p class="text-xs text-gray-500">Татвар болон хүргэлтийн зардал ороогүй үнэ</p>
-                <a href="#" style="color: #927657;" class="inline-block text-xs font-semibold underline mt-2 hover:opacity-80">
-                    Бүх хэвлэлийн хэмжээ & Үнийн жагсаалт →
-                </a>
+                <a href="#" style="color: #927657;" class="inline-block text-xs font-semibold underline mt-2 hover:opacity-80">Бүх хэвлэлийн хэмжээ & Үнийн жагсаалт →</a>
             </div>
-
-            <!-- ЗАХИАЛГА ӨГӨХ товч (Нэвтрээгүй үед нэвтрэх, нэвтэрсэн үед сагсанд нэмнэ) -->
+            <!-- ЗАХИАЛГА ӨГӨХ товч -->
             <div>
                 <a id="main-action-btn" href="#" onclick="handleActionBtn(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
                     ЗАХИАЛГА ӨГӨХ
                 </a>
             </div>
 
-            <!-- Иконтой жагсаалт хэсэг -->
+            <!-- Иконтой жагсаалт -->
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
-                
                 <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/></svg>
                     <div>
                         <h4 id="feature1-title" class="text-sm font-semibold text-black">Дижитал хэлбэрт оруулах</h4>
                         <p id="feature1-subtitle" class="text-xs text-gray-500">Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ</p>
                     </div>
                 </div>
-
                 <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
                     <div>
                         <h4 class="text-sm font-semibold text-black">6 төрлийн хэвлэлийн формат</h4>
                         <p class="text-xs text-gray-500">Босоо, Хэвтээ болон Дөрвөлжин</p>
                     </div>
                 </div>
-
                 <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
                     <div>
                         <h4 class="text-sm font-semibold text-black">Цаас болон хавтсны сонголтууд</h4>
                         <p class="text-xs text-gray-500">Дээд зэрэглэлийн цаасны сонголтууд</p>
                     </div>
                 </div>
-
                 <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM18.75 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M18 14.25h-2.25M15 12.75v1.5m0 0H9.75m0 0h-1.5m1.5 0v-1.5m0 1.5H6m0-4.5h10.5l2.25 3.075V17.25H3.75V9.75h1.5M18.75 14.25v-3.75a1.5 1.5 0 00-1.5-1.5H15M6 6.75h9m-9 3h6"/>
-                    </svg>
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM18.75 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M18 14.25h-2.25M15 12.75v1.5m0 0H9.75m0 0h-1.5m1.5 0v-1.5m0 1.5H6m0-4.5h10.5l2.25 3.075V17.25H3.75V9.75h1.5M18.75 14.25v-3.75a1.5 1.5 0 00-1.5-1.5H15M6 6.75h9m-9 3h6"/></svg>
                     <div>
                         <h4 class="text-sm font-semibold text-black">Бэлэн болох хугацаа</h4>
                         <p class="text-xs text-gray-500">Ойролцоогоор ажлын 12 өдөр (Даваа - Баасан)</p>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Онлайн чат холбох хэсэг -->
-            <div class="pt-2 border-t border-gray-100">
-                <div class="bg-[#f9f9f9] border border-gray-200 p-4 rounded-sm flex items-center justify-between transition hover:border-[#927657]">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-white p-2 rounded-full shadow-sm text-gray-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h4 class="text-sm font-semibold text-black">Тусламж хэрэгтэй юу?</h4>
-                            <p class="text-[10px] text-gray-500">Бидэнтэй онлайн чатаар холбогдох</p>
-                        </div>
-                    </div>
-                    <a href="#" onclick="toggleChat(event)" class="text-xs font-bold text-white bg-[#927657] py-2 px-4 rounded-sm hover:bg-opacity-90 transition">
-                        Чатлах
-                    </a>
-                </div>
-            </div>
-
         </div>
-
     </main>
 
-    <!-- 2. ХЭРЭГЛЭГЧИЙН САМБАР (DASHBOARD) - Анх нуугдмал байна -->
-    <main id="dashboard-page" style="display: none;" class="max-w-3xl w-full mx-auto flex-col space-y-6 mt-10 mb-auto">
+    <!-- 2. ХЭРЭГЛЭГЧИЙН САМБАР (DASHBOARD) -->
+    <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto flex-col space-y-6 mt-10 mb-auto">
         <h2 class="text-2xl font-bold text-gray-900">Миний бүртгэл</h2>
         
-        <!-- Мэдээлэл бүртгэх форм (Анх удаа нэвтрэхэд) -->
+        <!-- Мэдээлэл бүртгэх форм (Илүү нарийвчилсан хаягийн сонголттой) -->
         <div id="profile-setup" class="bg-white p-8 rounded-sm shadow-md border border-gray-200">
             <h3 class="text-lg font-semibold mb-2 text-black">Хувийн мэдээллээ гүйцээх</h3>
             <p class="text-xs text-gray-500 mb-6">Та захиалга өгөхийн тулд холбогдох мэдээллээ үнэн зөв оруулна уу.</p>
             
-            <form id="profile-form" onsubmit="saveProfile(event)" class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
+            <form id="profile-form" onsubmit="saveProfile(event)" class="space-y-6">
+                <!-- Овог, Нэр, Утас -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">Овог</label>
                         <input type="text" id="lastName" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
@@ -276,15 +196,60 @@
                         <label class="block text-xs font-medium text-gray-700 mb-1">Нэр</label>
                         <input type="text" id="firstName" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
                     </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Утасны дугаар</label>
+                        <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Утасны дугаар</label>
-                    <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+
+                <!-- Хаягийн дэлгэрэнгүй сонголтууд -->
+                <div class="border-t border-gray-100 pt-4">
+                    <h4 class="text-sm font-semibold text-gray-800 mb-3">Хүргэлтийн хаяг</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Хот / Аймаг</label>
+                            <select id="city" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657] bg-white">
+                                <option value="Улаанбаатар">Улаанбаатар</option>
+                                <option value="Дархан">Дархан</option>
+                                <option value="Эрдэнэт">Эрдэнэт</option>
+                                <option value="Орон нутаг">Орон нутаг</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Дүүрэг</label>
+                            <select id="district" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657] bg-white">
+                                <option value="Баянзүрх">Баянзүрх</option>
+                                <option value="Баянгол">Баянгол</option>
+                                <option value="Сонгинохайрхан">Сонгинохайрхан</option>
+                                <option value="Сүхбаатар">Сүхбаатар</option>
+                                <option value="Хан-Уул">Хан-Уул</option>
+                                <option value="Чингэлтэй">Чингэлтэй</option>
+                                <option value="Налайх">Налайх</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Хороо</label>
+                            <input type="text" id="khoroo" required placeholder="Ж: 12-р хороо" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Байр / Гудамж</label>
+                            <input type="text" id="building" required placeholder="Ж: 42-р байр" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Орц</label>
+                            <input type="text" id="entrance" required placeholder="Ж: 1-р орц" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Хаалга / Тоот</label>
+                            <input type="text" id="door" required placeholder="Ж: 24 тоот" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]">
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Гэрийн хаяг (Дүүрэг, хороо, байр, тоот)</label>
-                    <textarea id="address" required rows="3" class="w-full border border-gray-300 rounded-sm p-2.5 text-sm focus:outline-none focus:border-[#927657] focus:ring-1 focus:ring-[#927657]"></textarea>
-                </div>
+
                 <button type="submit" class="w-full bg-[#927657] text-white font-medium py-3.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm mt-4">
                     Мэдээлэл хадгалах
                 </button>
@@ -293,7 +258,6 @@
 
         <!-- Идэвхтэй Dashboard (Мэдээлэл хадгалсны дараа харагдах) -->
         <div id="dashboard-active" style="display: none;" class="space-y-6 w-full">
-            
             <div class="bg-white p-6 rounded-sm shadow-md border border-gray-200">
                 <div class="flex justify-between items-start">
                     <div>
@@ -301,7 +265,7 @@
                         <p class="text-xs text-gray-500 mt-1.5">Таны мэдээлэл амжилттай хадгалагдлаа. Та одоо захиалга өгөх боломжтой.</p>
                     </div>
                 </div>
-                <div class="mt-6 border-t border-gray-100 pt-4 grid grid-cols-2 gap-4 text-sm">
+                <div class="mt-6 border-t border-gray-100 pt-4 grid grid-cols-2 gap-6 text-sm">
                     <div><span class="text-gray-400 block text-[11px] uppercase tracking-wider mb-1">Утасны дугаар:</span> <span id="display-phone" class="font-medium text-black">-</span></div>
                     <div><span class="text-gray-400 block text-[11px] uppercase tracking-wider mb-1">Гэрийн хаяг:</span> <span id="display-address" class="font-medium text-black">-</span></div>
                 </div>
@@ -324,7 +288,6 @@
     <!-- Нэвтрэх Цонх (Login Modal) -->
     <div id="login-modal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 z-[60] flex justify-center items-center">
         <div class="bg-white rounded-lg shadow-2xl w-96 p-8 relative">
-            <!-- Хаах товч -->
             <button onclick="toggleLoginModal(event)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
@@ -339,12 +302,10 @@
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/></svg>
                     <span>Facebook-ээр нэвтрэх</span>
                 </button>
-
                 <button onclick="simulateLogin('Instagram')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     <span>Instagram-аар нэвтрэх</span>
                 </button>
-
                 <button onclick="simulateLogin('Gmail')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -358,50 +319,17 @@
         </div>
     </div>
 
-    <!-- Facebook / Instagram сонголттой чатын цонх -->
-    <div id="chat-widget" style="display: none;" class="fixed bottom-6 right-6 w-80 bg-white border border-gray-200 shadow-2xl rounded-lg flex-col z-50 overflow-hidden">
-        <div class="bg-[#927657] text-white px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span class="font-semibold text-sm">KidArt Онлайн туслах</span>
-            </div>
-            <button onclick="toggleChat(event)" class="text-white hover:text-gray-200 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-        
-        <div class="p-6 bg-gray-50 flex flex-col space-y-4 text-center">
-            <p class="text-[13px] text-gray-600 mb-2">Та өөрийн ашигладаг сошиал хаягаар нэвтэрч бидэнтэй шууд холбогдоорой.</p>
-            
-            <a href="https://m.me/gunbaatar" target="_blank" class="flex items-center justify-center space-x-2 bg-[#927657] text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition shadow-sm">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/>
-                </svg>
-                <span class="text-sm font-semibold">Messenger-ээр бичих</span>
-            </a>
-
-            <a href="https://ig.me/m/YOUR_IG_USERNAME" target="_blank" class="flex items-center justify-center space-x-2 bg-[#927657] text-white py-3 px-4 rounded-md hover:opacity-90 transition shadow-sm">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                </svg>
-                <span class="text-sm font-semibold">Instagram-аар бичих</span>
-            </a>
-        </div>
-    </div>
-
     <!-- JS Функцууд -->
     <script>
         let isLoggedIn = false;
         let cartItemCount = 0;
 
-        // 1. Агуулга солих (Art book / Memory book)
         function switchContent(type, e) {
             if(e) e.preventDefault();
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
             const price = document.getElementById('main-price');
-            
             const btn = document.getElementById('main-action-btn');
             const f1Title = document.getElementById('feature1-title');
             const f1Subtitle = document.getElementById('feature1-subtitle');
@@ -411,7 +339,6 @@
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
-                
                 btn.innerText = 'ЗАХИАЛГА ӨГӨХ';
                 f1Title.innerText = 'Дижитал хэлбэрт оруулах';
                 f1Subtitle.innerText = 'Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ';
@@ -420,17 +347,14 @@
                 title.innerText = 'Memory Book';
                 subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
                 price.innerText = '70,000₮';
-                
                 btn.innerText = 'НОМ ҮҮСГЭХ';
                 f1Title.innerText = 'Онлайн эх бэлтгэл';
                 f1Subtitle.innerText = 'Хялбараар зургийн өрөлт, текст оруулах';
             }
-            
-            // Цэснээс сонголт хийхэд үндсэн хуудас руу автоматаар шилжинэ
             goHome();
         }
 
-        // 2. Үндсэн товчны үйлдэл (Нэвтрэх шалгах)
+        // ЗАХИАЛГА ӨГӨХ товч дарахад ажиллах логик
         function handleActionBtn(e) {
             e.preventDefault();
             if (!isLoggedIn) {
@@ -442,18 +366,15 @@
             }
         }
 
-        // 3. Сагсанд нэмэх
         function addToCart() {
             cartItemCount++;
             const cartCountElement = document.getElementById('cart-count');
             cartCountElement.innerText = cartItemCount;
-            
             cartCountElement.classList.remove('cart-pop');
             void cartCountElement.offsetWidth;
             cartCountElement.classList.add('cart-pop');
         }
 
-        // 4. Нэвтрэх модал нээх/хаах
         function toggleLoginModal(e) {
             if(e) e.preventDefault();
             const loginModal = document.getElementById('login-modal');
@@ -464,82 +385,70 @@
             }
         }
 
-        // 5. Чатын цонх нээх/хаах
-        function toggleChat(e) {
-            if(e) e.preventDefault();
-            const chatWidget = document.getElementById('chat-widget');
-            if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
-                chatWidget.style.display = 'flex';
-            } else {
-                chatWidget.style.display = 'none';
-            }
-        }
-
-        // 6. Нэвтрэх үйлдэл хийгдэхэд (Симуляци)
+        // Facebook зэргээр нэвтрэх үед ажиллах функц
         function simulateLogin(provider) {
             isLoggedIn = true;
-            toggleLoginModal(); // Нэвтрэх цонх хаах
-            showDashboard();    // Dashboard руу шилжих
+            toggleLoginModal(); 
+            showDashboard(); // Нэвтэрсний дараа Dashboard-ийн хаяг бүртгэх форм руу шилжинэ
             
-            // Header цэс өөрчлөх
             document.getElementById('login-btn-container').classList.add('hidden');
             document.getElementById('user-menu-container').classList.remove('hidden');
         }
 
-        // 7. Гарах үйлдэл
         function logout(e) {
             if(e) e.preventDefault();
             isLoggedIn = false;
-            goHome(); // Нүүр хуудас руу буцах
+            goHome(); 
             
-            // Header буцаах
             document.getElementById('login-btn-container').classList.remove('hidden');
             document.getElementById('user-menu-container').classList.add('hidden');
             
-            // Мэдээлэл цэвэрлэх (Демо)
+            // Гарах үед Dashboard-ийг анхны (Форм бөглөх) төлөвт нь буцаах
             document.getElementById('profile-setup').style.display = 'block';
             document.getElementById('dashboard-active').style.display = 'none';
             document.getElementById('profile-form').reset();
         }
 
-        // 8. Нүүр хуудас руу шилжих
         function goHome(e) {
             if(e) e.preventDefault();
             document.getElementById('dashboard-page').style.display = 'none';
-            // landing-page нь grid учир grid гэж дуудна
             document.getElementById('landing-page').style.display = 'grid'; 
         }
 
-        // 9. Dashboard руу шилжих
         function showDashboard(e) {
             if(e) e.preventDefault();
             document.getElementById('landing-page').style.display = 'none';
-            // dashboard-page нь flex учир flex гэж дуудна
             document.getElementById('dashboard-page').style.display = 'flex';
         }
 
-        // 10. Хувийн мэдээлэл хадгалах
+        // Хаягийн мэдээлэл хадгалах
         function saveProfile(e) {
             e.preventDefault();
             
             const lname = document.getElementById('lastName').value;
             const fname = document.getElementById('firstName').value;
             const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
             
-            // Дэлгэцэнд утгуудыг харуулах
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const khoroo = document.getElementById('khoroo').value;
+            const building = document.getElementById('building').value;
+            const entrance = document.getElementById('entrance').value;
+            const door = document.getElementById('door').value;
+            
+            // Дэлгэцэнд мэдээллийг нэгтгэж харуулах
             document.getElementById('display-name').innerText = lname.charAt(0) + '. ' + fname;
             document.getElementById('display-phone').innerText = phone;
-            document.getElementById('display-address').innerText = address;
+            document.getElementById('display-address').innerText = `${city}, ${district}, ${khoroo}, ${building}, ${entrance}, ${door}`;
             
-            // Формыг нууж, идэвхтэй Dashboard хэсгийг харуулах
+            // Формыг нууж, идэвхтэй захиалгын түүх харуулах
             document.getElementById('profile-setup').style.display = 'none';
             document.getElementById('dashboard-active').style.display = 'block';
         }
     </script>
-
+    
     <!-- ХӨЛ ХЭСЭГ -->
-    <footer class="max-w-7xl w-full mx-auto text-center py-4 text-xs text-gray-400">
+    <footer class="max-w-7xl w-full mx-auto text-center py-4 text-xs text-gray-400 mt-auto">
         © KidArt Studio. All rights reserved.
     </footer>
 
