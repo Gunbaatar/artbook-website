@@ -40,19 +40,6 @@
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
 
-    <!-- Facebook SDK эхлүүлэх скрипт (App ID оруулсан) -->
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/mn_MN/sdk.js"></script>
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '1655340216040589',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v18.0'
-            });
-        };
-    </script>
-
     <!-- ТОЛГОЙ ХЭСЭГ -->
     <header class="max-w-7xl w-full mx-auto flex flex-col pt-4 pb-2">
         
@@ -320,7 +307,7 @@
             </div>
 
             <div class="flex flex-col space-y-3">
-                <button onclick="facebookLogin()" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
+                <button onclick="simulateLogin('Facebook')" class="flex items-center justify-center space-x-2 w-full bg-[#927657] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/></svg>
                     <span>Facebook-ээр нэвтрэх</span>
                 </button>
@@ -435,37 +422,13 @@
             }
         }
 
-        function facebookLogin() {
-            if (typeof FB === 'undefined') {
-                alert("Facebook SDK уншигдаж байна эсвэл App ID шалгана уу.");
-                return;
-            }
-
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    FB.api('/me', {fields: 'first_name,last_name'}, function(apiResponse) {
-                        processSuccessfulLogin(apiResponse.last_name, apiResponse.first_name);
-                    });
-                } else {
-                    console.log('Хэрэглэгч нэвтрэхээс татгалзсан.');
-                }
-            }, {scope: 'public_profile,email'});
-        }
-
         function simulateLogin(provider) {
-            processSuccessfulLogin('', '');
-        }
-
-        function processSuccessfulLogin(lastName, firstName) {
             isLoggedIn = true;
             toggleLoginModal(); 
             showDashboard();
             
             document.getElementById('login-btn-container').classList.add('hidden');
             document.getElementById('user-menu-container').classList.remove('hidden');
-
-            if(lastName) document.getElementById('lastName').value = lastName;
-            if(firstName) document.getElementById('firstName').value = firstName;
         }
 
         function logout(e) {
