@@ -42,23 +42,34 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Доошоо бууж харагдах дэд цэс -->
+                <!-- Доошоо бууж харагдах дэд цэс (Зургуудаар оруулсан хэсэг) -->
                 <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[650px] bg-white border border-gray-200 shadow-2xl p-6 rounded-sm grid grid-cols-3 gap-6 z-50">
+                    
+                    <!-- Art Book зурагтай хэсэг -->
                     <div class="text-center group/card cursor-pointer">
-                        <div class="bg-gray-100 h-28 rounded-sm mb-2 shadow-sm border border-gray-200 flex items-center justify-center text-gray-800 text-xs font-medium hover:border-[#927657] transition">Art Book</div>
+                        <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                            <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
+                        </div>
                         <p class="text-black font-bold text-xs">Art Book</p>
                         <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                     </div>
+
+                    <!-- Memory Book зурагтай хэсэг -->
                     <div class="text-center group/card cursor-pointer">
-                        <div class="bg-gray-100 h-28 rounded-sm mb-2 shadow-sm border border-gray-200 flex items-center justify-center text-gray-800 text-xs font-medium hover:border-[#927657] transition">Memory Book</div>
+                        <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                            <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
+                        </div>
                         <p class="text-black font-bold text-xs">Memory Book</p>
                         <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                     </div>
+
+                    <!-- Бусад ном (Удахгүй) -->
                     <div class="text-center group/card cursor-pointer opacity-40">
                         <div class="bg-gray-50 h-28 rounded-sm mb-2 border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs">Удахгүй</div>
                         <p class="text-gray-400 font-bold text-xs">Бусад ном</p>
                         <p class="text-[10px] text-gray-400">Тун удахгүй</p>
                     </div>
+
                 </div>
             </div>
 
