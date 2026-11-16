@@ -109,7 +109,7 @@
                 </div>
             </div>
             <span class="text-gray-300">|</span>
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
+            <a href="#" onclick="switchService('framing', event)" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
             <span class="text-gray-300">|</span>
             <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
@@ -117,10 +117,52 @@
         </nav>
     </header>
 
-    <!-- 1. ҮНДСЭН НҮҮР ХУУДАС -->
-    <main id="landing-page" class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
+    <!-- 1. ШИНЭЧЛЭГДСЭН НҮҮР ХУУДАС (3 ЗУРАГТАЙ БЛОК) -->
+    <main id="landing-page" class="max-w-7xl w-full mx-auto flex flex-col space-y-6 mt-6 my-auto">
+        
+        <!-- 1. ЭХНИЙ ТОМ ЗУРАГ (Жаазлах үйлчилгээ рүү үсэрнэ) -->
+        <div onclick="switchService('framing', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-xl h-[400px] lg:h-[480px]">
+            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Framing Service" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center transition group-hover:bg-opacity-20">
+                <div class="text-center text-white p-6">
+                    <h2 class="text-3xl lg:text-4xl font-bold tracking-tight mb-2">Жаазлах үйлчилгээ</h2>
+                    <p class="text-sm font-medium tracking-wide underline opacity-90">Дэлгэрэнгүй үзэх →</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 ширхэг ДООД ЗУРГУУД -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Доод зүүн талын зураг (Art Book рүү үсэрнэ) -->
+            <div onclick="switchContent('art', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-lg h-72">
+                <img src="book.webp" alt="Art Book" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center transition group-hover:bg-opacity-20">
+                    <div class="text-center text-white p-4">
+                        <h3 class="text-2xl font-bold mb-1">Art Book</h3>
+                        <p class="text-xs font-medium tracking-wide underline opacity-90">Бүтээлийн ном захиалах →</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Доод баруун талын зураг (Memory Book рүү үсэрнэ) -->
+            <div onclick="switchContent('memory', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-lg h-72">
+                <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="Memory Book" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center transition group-hover:bg-opacity-20">
+                    <div class="text-center text-white p-4">
+                        <h3 class="text-2xl font-bold mb-1">Memory Book</h3>
+                        <p class="text-xs font-medium tracking-wide underline opacity-90">Дурсамж ном үүсгэх →</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 2. БҮТЭЭГДЭХҮҮНИЙ ДЭЛГЭРЭНГҮЙ ХЭСЭГ (ArtBook, MemoryBook эсвэл Жаазлах) -->
+    <main id="detail-page" style="display: none;" class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
+            <img id="main-image" src="book.webp" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
         <div class="lg:col-span-4 flex flex-col space-y-6">
             <div>
@@ -154,20 +196,6 @@
                         <p class="text-xs text-gray-500">Босоо, Хэвтээ болон Дөрвөлжин</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
-                    <div>
-                        <h4 class="text-sm font-semibold text-black">Цаас болон хавтсны сонголтууд</h4>
-                        <p class="text-xs text-gray-500">Дээд зэрэглэлийн цаасны сонголтууд</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM18.75 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M18 14.25h-2.25M15 12.75v1.5m0 0H9.75m0 0h-1.5m1.5 0v-1.5m0 1.5H6m0-4.5h10.5l2.25 3.075V17.25H3.75V9.75h1.5M18.75 14.25v-3.75a1.5 1.5 0 00-1.5-1.5H15M6 6.75h9m-9 3h6"/></svg>
-                    <div>
-                        <h4 class="text-sm font-semibold text-black">Бэлэн болох хугацаа</h4>
-                        <p class="text-xs text-gray-500">Ойролцоогоор ажлын 12 өдөр (Даваа - Баасан)</p>
-                    </div>
-                </div>
             </div>
 
             <!-- Онлайн чат холбох хэсэг -->
@@ -193,7 +221,7 @@
         </div>
     </main>
 
-    <!-- 2. ХЭРЭГЛЭГЧИЙН САМБАР -->
+    <!-- 3. ХЭРЭГЛЭГЧИЙН САМБАР -->
     <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto flex-col space-y-6 mt-10 mb-auto">
         <h2 class="text-2xl font-bold text-gray-900">Миний бүртгэл</h2>
         
@@ -364,6 +392,7 @@
         let isLoggedIn = false;
         let cartItemCount = 0;
 
+        // Ном солих функц
         function switchContent(type, e) {
             if(e) e.preventDefault();
             const img = document.getElementById('main-image');
@@ -391,7 +420,30 @@
                 f1Title.innerText = 'Онлайн эх бэлтгэл';
                 f1Subtitle.innerText = 'Хялбараар зургийн өрөлт, текст оруулах';
             }
-            goHome();
+            
+            showDetail();
+        }
+
+        // Жаазлах үйлчилгээ рүү шилжих функц
+        function switchService(service, e) {
+            if(e) e.preventDefault();
+            const img = document.getElementById('main-image');
+            const title = document.getElementById('main-title');
+            const subtitle = document.getElementById('main-subtitle');
+            const price = document.getElementById('main-price');
+            const btn = document.getElementById('main-action-btn');
+            const f1Title = document.getElementById('feature1-title');
+            const f1Subtitle = document.getElementById('feature1-subtitle');
+
+            img.src = 'home_hero.jpg';
+            title.innerText = 'Жаазлах үйлчилгээ';
+            subtitle.innerText = 'Таны дурсгалт зураг болон бүтээлийг чанартай жаазална';
+            price.innerText = '50,000₮-өөс';
+            btn.innerText = 'ЖААЗ СОНГОХ';
+            f1Title.innerText = 'Чанарын өндөр түвшинд жаазлах';
+            f1Subtitle.innerText = 'Модон болон металл жаазны сонголтууд';
+
+            showDetail();
         }
 
         function handleActionBtn(e) {
@@ -444,15 +496,26 @@
             document.getElementById('profile-form').reset();
         }
 
+        // Нүүр хуудас руу очих
         function goHome(e) {
             if(e) e.preventDefault();
+            document.getElementById('landing-page').style.display = 'flex';
+            document.getElementById('detail-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'none';
-            document.getElementById('landing-page').style.display = 'grid'; 
         }
 
+        // Дэлгэрэнгүй хуудас руу очих
+        function showDetail() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'grid';
+            document.getElementById('dashboard-page').style.display = 'none';
+        }
+
+        // Dashboard руу очих
         function showDashboard(e) {
             if(e) e.preventDefault();
             document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'flex';
         }
 
