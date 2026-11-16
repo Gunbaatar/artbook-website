@@ -9,7 +9,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Дэд цэсний transition эффект */
+        /* Дэд цэсийг илүү цэвэрхэн харагдуулах transition эффект */
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
@@ -22,7 +22,7 @@
             transform: translateY(0);
         }
         
-        /* Хулгана цэс рүү шилжих үед хаагдахгүй байх гүүр */
+        /* Хулгана цэс рүү шилжих үед хаагдахгүй байх үл үзэгдэх гүүр */
         .dropdown-menu::before {
             content: '';
             position: absolute;
@@ -33,19 +33,20 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col p-6">
+<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
 
     <!-- ТОЛГОЙ ХЭСЭГ (HEADER & MENU) -->
-    <header class="max-w-7xl w-full mx-auto flex flex-col items-center pt-2">
+    <!-- pb-8 байсныг pb-2 болгож контенттой ойртуулсан -->
+    <header class="max-w-7xl w-full mx-auto flex flex-col items-center pt-4 pb-2">
         <!-- Лого файл (logo.png) -->
-        <div class="mb-4">
+        <div class="mb-6">
             <a href="#">
                 <img src="logo.png" alt="KidArt Logo" class="h-10 w-auto object-contain">
             </a>
         </div>
 
-        <!-- Цэс / Category Menu (WhiteWall хэв маягтай зураасан hover) -->
-        <nav class="flex items-center space-x-8 text-sm font-medium tracking-wide border-b border-gray-200 w-full justify-center relative">
+        <!-- Цэс / Category Menu -->
+        <nav class="flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 w-full justify-center relative">
             
             <!-- 1. НОМНУУД (Dropdown цэстэй) -->
             <div class="dropdown group static">
@@ -53,43 +54,49 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Дэд цэсний гадна тал (Бүтэн өргөнөөр сунгагдсан маш цайвар саарал дэвсгэр) -->
+                <!-- Дэд цэсний гадна тал (Бүтэн өргөнөөр сунгагдсан маш цайвар саарал дэвсгэртэй bg-[#f9f9f9]) -->
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 pointer-events-none group-hover:pointer-events-auto flex justify-center py-6">
                     
                     <!-- Доторх контент (Голлож байрлах 2 ном) -->
-                    <div class="w-[450px] grid grid-cols-2 gap-8">
+                    <div class="w-[400px] grid grid-cols-2 gap-6">
                         
                         <!-- Art Book сонголт -->
                         <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
-                            <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-black font-medium text-sm">Art Book</p>
-                            <p class="text-[11px] text-gray-500 mt-0.5">БҮТЭЭЛИЙН НОМ</p>
+                            <p class="text-black font-bold text-xs">Art Book</p>
+                            <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                         </div>
 
                         <!-- Memory Book сонголт -->
                         <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer relative z-10">
-                            <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-black font-medium text-sm">Memory Book</p>
-                            <p class="text-[11px] text-gray-500 mt-0.5">ДУРСАМЖ НОМ</p>
+                            <p class="text-black font-bold text-xs">Memory Book</p>
+                            <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                         </div>
 
                     </div>
                 </div>
             </div>
 
+            <span class="text-gray-300">|</span>
+
             <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ -->
             <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                 ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
             </a>
 
+            <span class="text-gray-300">|</span>
+
             <!-- 3. ФОТО ХЭВЛЭЛ -->
             <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                 ФОТО ХЭВЛЭЛ
             </a>
+
+            <span class="text-gray-300">|</span>
 
             <!-- 4. УРЛАГИЙН БҮТЭЭГДЭХҮҮН -->
             <a href="#" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
@@ -99,20 +106,21 @@
         </nav>
     </header>
 
-    <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) - Зайг ойртуулсан -->
-    <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mt-8 mb-auto">
+    <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
+    <!-- mt-6 нэмж дээрх цэстэй илүү ойртуулсан -->
+    <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         
         <!-- Зүүн тал: Зургийн хэсэг -->
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="artbook_main.jpg" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-lg transition-all duration-300">
+            <img id="main-image" src="artbook_main.jpg" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
 
         <!-- Баруун тал: Мэдээллийн хэсэг -->
-        <div class="lg:col-span-4 flex flex-col space-y-5">
+        <div class="lg:col-span-4 flex flex-col space-y-6">
             
             <div>
                 <h2 id="main-title" class="text-2xl lg:text-3xl font-bold tracking-tight text-black">Art Book</h2>
-                <p id="main-subtitle" class="text-xs uppercase tracking-wider text-gray-500 mt-1.5 font-medium">
+                <p id="main-subtitle" class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">
                     Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно
                 </p>
             </div>
@@ -122,13 +130,13 @@
                     Эхлэх үнэ: <span id="main-price" class="font-bold">200,000₮</span>
                 </div>
                 <p class="text-xs text-gray-500">Татвар болон хүргэлтийн зардал ороогүй үнэ</p>
-                <a href="#" style="color: #927657;" class="inline-block text-xs font-medium underline mt-1.5 hover:opacity-80">
+                <a href="#" style="color: #927657;" class="inline-block text-xs font-semibold underline mt-2 hover:opacity-80">
                     Бүх хэвлэлийн хэмжээ & Үнийн жагсаалт →
                 </a>
             </div>
 
-            <div class="pt-2">
-                <a href="#" class="inline-block w-full text-center bg-[#4a7238] text-white py-3.5 px-6 font-medium tracking-wide hover:bg-[#3d5e2e] transition shadow-sm" style="background-color: #927657;">
+            <div>
+                <a href="#" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
                     НОМ ҮҮСГЭХ
                 </a>
             </div>
@@ -137,20 +145,15 @@
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
                 
                 <div class="flex items-start space-x-3">
-                    <svg class="w-5 h-5 text-gray-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/>
                     </svg>
                     <div>
-                        <h4 class="text-[13px] font-semibold text-black">Онлайн эх бэлтгэл</h4>
-                        <p class="text-[11px] text-gray-500 mt-0.5">Хялбараар зургийн өрөлт, текст оруулах</p>
+                        <h4 class="text-sm font-semibold text-black">Онлайн эх бэлтгэл</h4>
+                        <p class="text-xs text-gray-500">Хялбараар зургийн өрөлт, текст оруулах</p>
                     </div>
                 </div>
 
                 <div class="flex items-start space-x-3">
-                    <svg class="w-5 h-5 text-gray-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                    </svg>
-                    <div>
-                        <h4 class="text-[13px] font-semibold text-black">6 төрлийн хэвлэлийн формат</h4>
-                        <p class="text-[11px] text-gray-500 mt-0.5">Босоо, Хэвтээ болон Дөрвөлжин</p>
-                    </div>
+                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12
