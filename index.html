@@ -49,7 +49,6 @@
             
             <!-- 1. НОМНУУД (Dropdown цэстэй) -->
             <div class="dropdown group static">
-                <!-- href="#" дээр дарахад дээшээ үсрэхээс сэргийлж onclick="event.preventDefault()" нэмэв -->
                 <a href="#" onclick="event.preventDefault()" class="text-gray-700 hover:text-[#927657] py-4 px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     НОМНУУД
                 </a>
@@ -60,19 +59,19 @@
                     <!-- Доторх контент (Голлож байрлах 2 ном) -->
                     <div class="w-[400px] grid grid-cols-2 gap-6">
                         
-                        <!-- Art Book сонголт (book.webp болгож солив) -->
+                        <!-- Art Book сонголт: Цэсний зураг нь artbook_menu.jpg -->
                         <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
-                                <img src="book.webp" alt="Art Book" class="w-full h-full object-cover">
+                                <img src="artbook_menu.jpg" alt="Art Book Menu" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Art Book</p>
                             <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                         </div>
 
-                        <!-- Memory Book сонголт -->
+                        <!-- Memory Book сонголт: Цэсний зураг нь memory_menu.jpg -->
                         <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
-                                <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
+                                <img src="memory_menu.jpg" alt="Memory Book Menu" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Memory Book</p>
                             <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
@@ -109,9 +108,9 @@
     <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
     <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         
-        <!-- Зүүн тал: Зургийн хэсэг (book.webp болгож солив) -->
+        <!-- Зүүн тал: Зургийн хэсэг (Анх ороход book.webp харагдана) -->
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="book.webp" onerror="this.src='book.webp'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
+            <img id="main-image" src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
 
         <!-- Баруун тал: Мэдээллийн хэсэг -->
@@ -189,7 +188,7 @@
 
     </main>
 
-    <!-- JS Функция (book.webp болгож солив) -->
+    <!-- JS Функция (Том зураг нь book.webp болон book2.webp болж солигдоно) -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
@@ -203,7 +202,7 @@
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
             } else if (type === 'memory') {
-                img.src = 'memory_menu.jpg';
+                img.src = 'book2.webp';
                 title.innerText = 'Memory Book';
                 subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
                 price.innerText = '70,000₮';
