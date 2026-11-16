@@ -41,8 +41,8 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Доошоо бууж харагдах дэд цэс -->
-                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[650px] bg-white border border-gray-200 shadow-2xl p-6 rounded-sm grid grid-cols-3 gap-6 z-50">
+                <!-- Доошоо бууж харагдах дэд цэс (Зөвхөн 2 номтой, голдоо тэгш байрлалтай) -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[450px] bg-white border border-gray-200 shadow-2xl p-6 rounded-sm grid grid-cols-2 gap-6 z-50">
                     
                     <!-- Art Book сонголт -->
                     <div onclick="switchContent('art')" class="text-center group/card cursor-pointer">
@@ -60,13 +60,6 @@
                         </div>
                         <p class="text-black font-bold text-xs">Memory Book</p>
                         <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
-                    </div>
-
-                    <!-- Бусад ном -->
-                    <div class="text-center group/card cursor-pointer opacity-40">
-                        <div class="bg-gray-50 h-28 rounded-sm mb-2 border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs">Удахгүй</div>
-                        <p class="text-gray-400 font-bold text-xs">Бусад ном</p>
-                        <p class="text-[10px] text-gray-400">Тун удахгүй</p>
                     </div>
 
                 </div>
@@ -173,7 +166,7 @@
 
     </main>
 
-    <!-- JS Функция (Art болон Memory хооронд үнэ, зураг, текст солих) -->
+    <!-- JS Функция -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
@@ -182,7 +175,7 @@
             const price = document.getElementById('main-price');
 
             if (type === 'art') {
-                img.src = 'artbook_main.jpg'; // Хэрэв байхгүй бол artbook_menu.jpg руу автоматаар fallback хийнэ
+                img.src = 'artbook_main.jpg';
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
