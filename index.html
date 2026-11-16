@@ -60,10 +60,10 @@
                     <!-- Доторх контент (Голлож байрлах 2 ном) -->
                     <div class="w-[400px] grid grid-cols-2 gap-6">
                         
-                        <!-- Art Book сонголт -->
+                        <!-- Art Book сонголт (book.webp болгож солив) -->
                         <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
-                                <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
+                                <img src="book.webp" alt="Art Book" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Art Book</p>
                             <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
@@ -109,9 +109,9 @@
     <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
     <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mt-6 my-auto">
         
-        <!-- Зүүн тал: Зургийн хэсэг -->
+        <!-- Зүүн тал: Зургийн хэсэг (book.webp болгож солив) -->
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="artbook_main.jpg" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
+            <img id="main-image" src="book.webp" onerror="this.src='book.webp'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
 
         <!-- Баруун тал: Мэдээллийн хэсэг -->
@@ -140,7 +140,7 @@
                 </a>
             </div>
 
-            <!-- Иконтой жагсаалт хэсэг (Таны анхны оруулсан 4 хэсэг бүрэн эхээрээ) -->
+            <!-- Иконтой жагсаалт хэсэг -->
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
                 
                 <div class="flex items-start space-x-3">
@@ -189,7 +189,7 @@
 
     </main>
 
-    <!-- JS Функция -->
+    <!-- JS Функция (book.webp болгож солив) -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
@@ -198,7 +198,7 @@
             const price = document.getElementById('main-price');
 
             if (type === 'art') {
-                img.src = 'artbook_main.jpg';
+                img.src = 'book.webp';
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
