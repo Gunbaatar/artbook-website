@@ -93,12 +93,12 @@
     <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
     <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
         
-        <!-- Зүүн тал: Зургийн хэсэг (Динамикаар сольгддог) -->
+        <!-- Зүүн тал: Зургийн хэсэг -->
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="artbook_menu.jpg" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
+            <img id="main-image" src="artbook_main.jpg" onerror="this.src='artbook_menu.jpg'" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
 
-        <!-- Баруун тал: Мэдээллийн хэсэг (Динамикаар сольгддог текстүүд) -->
+        <!-- Баруун тал: Мэдээллийн хэсэг -->
         <div class="lg:col-span-4 flex flex-col space-y-6">
             
             <div>
@@ -110,7 +110,7 @@
 
             <div class="space-y-1 pt-2 border-t border-gray-100">
                 <div class="text-lg font-semibold text-black">
-                    Эхлэх үнэ: <span class="font-bold">70,000₮</span>
+                    Эхлэх үнэ: <span id="main-price" class="font-bold">200,000₮</span>
                 </div>
                 <p class="text-xs text-gray-500">Татвар болон хүргэлтийн зардал ороогүй үнэ</p>
                 <a href="#" style="color: #927657;" class="inline-block text-xs font-semibold underline mt-2 hover:opacity-80">
@@ -173,21 +173,24 @@
 
     </main>
 
-    <!-- JS Функция (Art болон Memory хооронд утга солих) -->
+    <!-- JS Функция (Art болон Memory хооронд үнэ, зураг, текст солих) -->
     <script>
         function switchContent(type) {
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
+            const price = document.getElementById('main-price');
 
             if (type === 'art') {
-                img.src = 'artbook_menu.jpg';
+                img.src = 'artbook_main.jpg'; // Хэрэв байхгүй бол artbook_menu.jpg руу автоматаар fallback хийнэ
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
+                price.innerText = '200,000₮';
             } else if (type === 'memory') {
                 img.src = 'memory_menu.jpg';
                 title.innerText = 'Memory Book';
                 subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
+                price.innerText = '70,000₮';
             }
         }
     </script>
