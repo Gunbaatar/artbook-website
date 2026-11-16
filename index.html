@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* Dropdown цэс хулгана аваачих үед ил гарч ирэх стил */
         .dropdown:hover .dropdown-menu {
             opacity: 1;
             visibility: visible;
@@ -42,11 +41,11 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Доошоо бууж харагдах дэд цэс (Зургуудаар оруулсан хэсэг) -->
+                <!-- Доошоо бууж харагдах дэд цэс -->
                 <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[650px] bg-white border border-gray-200 shadow-2xl p-6 rounded-sm grid grid-cols-3 gap-6 z-50">
                     
-                    <!-- Art Book зурагтай хэсэг -->
-                    <div class="text-center group/card cursor-pointer">
+                    <!-- Art Book сонголт -->
+                    <div onclick="switchContent('art')" class="text-center group/card cursor-pointer">
                         <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
                             <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
                         </div>
@@ -54,8 +53,8 @@
                         <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                     </div>
 
-                    <!-- Memory Book зурагтай хэсэг -->
-                    <div class="text-center group/card cursor-pointer">
+                    <!-- Memory Book сонголт -->
+                    <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer">
                         <div class="h-28 rounded-sm mb-2 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
                             <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
                         </div>
@@ -63,7 +62,7 @@
                         <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                     </div>
 
-                    <!-- Бусад ном (Удахгүй) -->
+                    <!-- Бусад ном -->
                     <div class="text-center group/card cursor-pointer opacity-40">
                         <div class="bg-gray-50 h-28 rounded-sm mb-2 border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-xs">Удахгүй</div>
                         <p class="text-gray-400 font-bold text-xs">Бусад ном</p>
@@ -94,18 +93,18 @@
     <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
     <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
         
-        <!-- Зүүн тал: Зургийн хэсэг (8 багана) -->
+        <!-- Зүүн тал: Зургийн хэсэг (Динамикаар сольгддог) -->
         <div class="lg:col-span-8 relative flex justify-center">
-            <img src="book.webp" alt="ArtBook & Memory Book" class="w-full h-auto object-cover rounded-sm shadow-xl">
+            <img id="main-image" src="artbook_menu.jpg" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
 
-        <!-- Баруун тал: Мэдээллийн хэсэг (4 багана) -->
+        <!-- Баруун тал: Мэдээллийн хэсэг (Динамикаар сольгддог текстүүд) -->
         <div class="lg:col-span-4 flex flex-col space-y-6">
             
             <div>
-                <h2 class="text-2xl lg:text-3xl font-bold tracking-tight text-black">ArtBook & Memory Book</h2>
-                <p class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">
-                    ДУРСАМЖИТ БОЛОН АРТ БҮТЭЭЛИЙН ТАНСАГ ЗЭРЭГЛЭЛИЙН ЗУРАГТ НОМ
+                <h2 id="main-title" class="text-2xl lg:text-3xl font-bold tracking-tight text-black">Art Book</h2>
+                <p id="main-subtitle" class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">
+                    Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно
                 </p>
             </div>
 
@@ -128,7 +127,6 @@
             <!-- Иконтой жагсаалт хэсэг -->
             <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
                 
-                <!-- 1. Онлайн эх бэлтгэл -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/>
@@ -139,7 +137,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Формат -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
@@ -150,7 +147,6 @@
                     </div>
                 </div>
 
-                <!-- 3. Цаас болон хавтсны сонголтууд -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
@@ -161,7 +157,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Хүргэлтийн хугацаа -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM18.75 18.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M18 14.25h-2.25M15 12.75v1.5m0 0H9.75m0 0h-1.5m1.5 0v-1.5m0 1.5H6m0-4.5h10.5l2.25 3.075V17.25H3.75V9.75h1.5M18.75 14.25v-3.75a1.5 1.5 0 00-1.5-1.5H15M6 6.75h9m-9 3h6"/>
@@ -177,6 +172,25 @@
         </div>
 
     </main>
+
+    <!-- JS Функция (Art болон Memory хооронд утга солих) -->
+    <script>
+        function switchContent(type) {
+            const img = document.getElementById('main-image');
+            const title = document.getElementById('main-title');
+            const subtitle = document.getElementById('main-subtitle');
+
+            if (type === 'art') {
+                img.src = 'artbook_menu.jpg';
+                title.innerText = 'Art Book';
+                subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
+            } else if (type === 'memory') {
+                img.src = 'memory_menu.jpg';
+                title.innerText = 'Memory Book';
+                subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
+            }
+        }
+    </script>
 
     <!-- ХӨЛ ХЭСЭГ -->
     <footer class="max-w-7xl w-full mx-auto text-center py-4 text-xs text-gray-400">
