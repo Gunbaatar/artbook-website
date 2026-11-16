@@ -31,17 +31,50 @@
             width: 100%;
             height: 20px;
         }
+        
+        /* Сагсанд нэмэх үеийн animation */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .cart-pop {
+            animation: pop 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
 
     <!-- ТОЛГОЙ ХЭСЭГ (HEADER & MENU) -->
-    <header class="max-w-7xl w-full mx-auto flex flex-col items-center pt-4 pb-2">
-        <!-- Лого файл (logo.png) -->
-        <div class="mb-6">
+    <header class="max-w-7xl w-full mx-auto flex flex-col pt-4 pb-2">
+        
+        <!-- Лого болон Нэвтрэх/Сагс хэсэг -->
+        <div class="relative w-full flex justify-center items-center mb-6">
+            
+            <!-- Лого файл (logo.png) -->
             <a href="#">
                 <img src="logo.png" alt="KidArt Logo" class="h-10 w-auto object-contain">
             </a>
+
+            <!-- Баруун дээд булан: Сагс болон Нэвтрэх -->
+            <div class="absolute right-0 flex items-center space-x-6">
+                <!-- Сагс -->
+                <a href="#" class="relative text-gray-700 hover:text-[#927657] transition flex items-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <!-- Сагсны тоолуур -->
+                    <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
+                </a>
+                
+                <!-- Нэвтрэх товч -->
+                <button onclick="toggleLoginModal(event)" class="text-xs font-semibold text-gray-700 hover:text-[#927657] transition flex items-center space-x-1.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                    <span>Нэвтрэх</span>
+                </button>
+            </div>
         </div>
 
         <!-- Цэс / Category Menu -->
@@ -132,8 +165,9 @@
                 </a>
             </div>
 
+            <!-- Сагсанд нэмэх товч (onclick="addToCart(event)" нэмсэн) -->
             <div>
-                <a id="main-action-btn" href="#" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
+                <a id="main-action-btn" href="#" onclick="addToCart(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md">
                     ЗАХИАЛГА ӨГӨХ
                 </a>
             </div>
@@ -197,7 +231,6 @@
                             <p class="text-[10px] text-gray-500">Бидэнтэй онлайн чатаар холбогдох</p>
                         </div>
                     </div>
-                    <!-- Чат нээх товч (Бүрэн найдвартай ажиллах onclick функц) -->
                     <a href="#" onclick="toggleChat(event)" class="text-xs font-bold text-white bg-[#927657] py-2 px-4 rounded-sm hover:bg-opacity-90 transition">
                         Чатлах
                     </a>
@@ -208,7 +241,47 @@
 
     </main>
 
-    <!-- Facebook / Instagram сонголттой чатын цонх (Анх нуугдмал байна) -->
+    <!-- Нэвтрэх Цонх (Login Modal) -->
+    <div id="login-modal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 z-[60] flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-2xl w-96 p-8 relative">
+            <!-- Хаах товч -->
+            <button onclick="toggleLoginModal(event)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Нэвтрэх</h3>
+                <p class="text-xs text-gray-500 mt-2">Та дараах хаягуудын аль нэгээр нэвтэрч орно уу.</p>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+                <!-- Facebook -->
+                <button class="flex items-center justify-center space-x-2 w-full bg-[#1877F2] text-white py-2.5 rounded-sm hover:bg-opacity-90 transition shadow-sm text-sm font-medium">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/></svg>
+                    <span>Facebook-ээр нэвтрэх</span>
+                </button>
+
+                <!-- Instagram -->
+                <button class="flex items-center justify-center space-x-2 w-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white py-2.5 rounded-sm hover:opacity-90 transition shadow-sm text-sm font-medium">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    <span>Instagram-аар нэвтрэх</span>
+                </button>
+
+                <!-- Gmail/Google -->
+                <button class="flex items-center justify-center space-x-2 w-full bg-white border border-gray-300 text-gray-700 py-2.5 rounded-sm hover:bg-gray-50 transition shadow-sm text-sm font-medium">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span>Gmail-ээр нэвтрэх</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Facebook / Instagram сонголттой чатын цонх -->
     <div id="chat-widget" style="display: none;" class="fixed bottom-6 right-6 w-80 bg-white border border-gray-200 shadow-2xl rounded-lg flex-col z-50 overflow-hidden">
         <!-- Chat Header -->
         <div class="bg-[#927657] text-white px-4 py-3 flex justify-between items-center">
@@ -225,16 +298,14 @@
         <div class="p-6 bg-gray-50 flex flex-col space-y-4 text-center">
             <p class="text-[13px] text-gray-600 mb-2">Та өөрийн ашигладаг сошиал хаягаар нэвтэрч бидэнтэй шууд холбогдоорой.</p>
             
-            <!-- Facebook Messenger товч -->
-            <a href="https://m.me/gunbaatar" target="_blank" class="flex items-center justify-center space-x-2 bg-[#0084ff] text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition shadow-sm">
+            <a href="https://m.me/gunbaatar" target="_blank" class="flex items-center justify-center space-x-2 bg-[#0084ff] text-white py-3 px-4 rounded-sm hover:bg-opacity-90 transition shadow-sm">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.008c.677.19 1.385.292 2.117.292 5.523 0 10-4.145 10-9.259S17.523 2 12 2zm1.09 10.428l-2.616-2.793a.75.75 0 00-1.114-.029l-3.528 3.82c-.328.355.158.85.553.58l2.76-1.895a.75.75 0 01.893.048l2.646 2.8a.75.75 0 001.12.022l3.498-3.79c.325-.352-.16-.842-.55-.572l-2.662 1.81a.75.75 0 01-.893-.05z"/>
                 </svg>
                 <span class="text-sm font-semibold">Messenger-ээр бичих</span>
             </a>
 
-            <!-- Instagram товч (YOUR_IG_USERNAME-г солино уу) -->
-            <a href="https://ig.me/m/YOUR_IG_USERNAME" target="_blank" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white py-3 px-4 rounded-md hover:opacity-90 transition shadow-sm">
+            <a href="https://ig.me/m/YOUR_IG_USERNAME" target="_blank" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white py-3 px-4 rounded-sm hover:opacity-90 transition shadow-sm">
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                 </svg>
@@ -277,16 +348,39 @@
             }
         }
 
-        // Чатын цонхыг нээх/хаах найдвартай функц (Display ашиглан)
+        // Сагсны тоолуур ажиллуулах функц
+        let cartItemCount = 0;
+        function addToCart(e) {
+            e.preventDefault();
+            cartItemCount++;
+            const cartCountElement = document.getElementById('cart-count');
+            cartCountElement.innerText = cartItemCount;
+            
+            // Сагсанд орох үед жижиг animation ажиллуулах
+            cartCountElement.classList.remove('cart-pop');
+            void cartCountElement.offsetWidth; // trigger DOM reflow
+            cartCountElement.classList.add('cart-pop');
+        }
+
+        // Чатын цонх нээх/хаах функц
         function toggleChat(e) {
             if(e) e.preventDefault();
             const chatWidget = document.getElementById('chat-widget');
-            
-            // display нь none байвал flex болгоно, эсрэгээрээ
             if (chatWidget.style.display === 'none' || chatWidget.style.display === '') {
                 chatWidget.style.display = 'flex';
             } else {
                 chatWidget.style.display = 'none';
+            }
+        }
+
+        // Нэвтрэх модал нээх/хаах функц
+        function toggleLoginModal(e) {
+            if(e) e.preventDefault();
+            const loginModal = document.getElementById('login-modal');
+            if (loginModal.style.display === 'none' || loginModal.style.display === '') {
+                loginModal.style.display = 'flex';
+            } else {
+                loginModal.style.display = 'none';
             }
         }
     </script>
