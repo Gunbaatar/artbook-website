@@ -3,16 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtBook & Memory Book</title>
+    <title>KidArt - ArtBook & Memory Book</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* Dropdown цэс хулгана аваачих үед гарч ирэх стил */
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-white text-gray-900 flex items-center justify-center min-h-screen p-6">
+<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
 
-    <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <!-- ТОЛГОЙ ХЭСЭГ (HEADER & MENU) -->
+    <header class="max-w-7xl w-full mx-auto flex flex-col items-center pt-4 pb-8">
+        <!-- Лого файл (logo.png) -->
+        <div class="mb-6">
+            <a href="#">
+                <img src="logo.png" alt="KidArt Logo" class="h-10 w-auto object-contain">
+            </a>
+        </div>
+
+        <!-- Цэс / Category Menu -->
+        <nav class="flex items-center space-x-8 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 pb-4 w-full justify-center">
+            
+            <!-- 1. НОМНУУД (Dropdown цэстэй) -->
+            <div class="relative dropdown group">
+                <a href="#" style="background-color: #927657;" class="text-white py-2 px-4 rounded-xs inline-block">
+                    НОМНУУД
+                </a>
+                
+                <!-- Доошоо бууж харагдах дэд цэс (Dropdown Content) -->
+                <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[600px] bg-gray-50 border border-gray-200 shadow-xl p-6 rounded-sm grid grid-cols-3 gap-4 z-50">
+                    <div class="text-center group/card cursor-pointer">
+                        <div class="bg-black h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Art Book</div>
+                        <p class="text-black font-bold text-xs">Art Book</p>
+                        <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
+                    </div>
+                    <div class="text-center group/card cursor-pointer">
+                        <div class="bg-black h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Memory Book</div>
+                        <p class="text-black font-bold text-xs">Memory Book</p>
+                        <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
+                    </div>
+                    <div class="text-center group/card cursor-pointer opacity-50">
+                        <div class="bg-gray-800 h-28 rounded-sm mb-2 shadow-md flex items-center justify-center text-white text-xs">Coming Soon</div>
+                        <p class="text-black font-bold text-xs">Бусад ном</p>
+                        <p class="text-[10px] text-gray-500">Удахгүй</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ -->
+            <a href="#" class="text-gray-700 hover:text-black py-2">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
+
+            <!-- 3. ФОТО ХЭВЛЭЛ -->
+            <a href="#" class="text-gray-700 hover:text-black py-2">ФОТО ХЭВЛЭЛ</a>
+
+            <span class="text-gray-300">|</span>
+
+            <!-- 4. УРЛАГИЙН БҮТЭЭГДЭХҮҮН -->
+            <a href="#" class="text-gray-700 hover:text-black py-2">УРЛАГИЙН БҮТЭЭГДЭХҮҮН</a>
+
+        </nav>
+    </header>
+
+    <!-- ҮНДСЭН АГУУЛГА (MAIN CONTENT) -->
+    <main class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
         
         <!-- Зүүн тал: Зургийн хэсэг (8 багана) -->
         <div class="lg:col-span-8 relative flex justify-center">
@@ -23,7 +88,7 @@
         <div class="lg:col-span-4 flex flex-col space-y-6">
             
             <div>
-                <h1 class="text-3xl lg:text-4xl font-bold tracking-tight text-black">ArtBook & Memory Book</h1>
+                <h2 class="text-2xl lg:text-3xl font-bold tracking-tight text-black">ArtBook & Memory Book</h2>
                 <p class="text-xs uppercase tracking-wider text-gray-500 mt-2 font-medium">
                     ДУРСАМЖИТ БОЛОН АРТ БҮТЭЭЛИЙН ТАНСАГ ЗЭРЭГЛЭЛИЙН ЗУРАГТ НОМ
                 </p>
@@ -70,7 +135,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Цаас болон хавтас (Зөв бичгийн дүрэмд нийцүүлсэн) -->
+                <!-- 3. Цаас болон хавтсны сонголтууд -->
                 <div class="flex items-start space-x-3">
                     <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
@@ -96,7 +161,12 @@
 
         </div>
 
-    </div>
+    </main>
+
+    <!-- ХӨЛ ХЭСЭГ -->
+    <footer class="max-w-7xl w-full mx-auto text-center py-4 text-xs text-gray-400">
+        © KidArt Studio. All rights reserved.
+    </footer>
 
 </body>
 </html>
