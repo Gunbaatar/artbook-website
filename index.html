@@ -9,20 +9,17 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Дэд цэсийг "НОМНУУД" товчтой яг голлуулж харуулах тохиргоо */
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, 0);
-        }
+        /* Дэд цэсийг илүү цэвэрхэн харагдуулах transition эффект */
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
-            transform: translate(-50%, 10px);
+            transform: translateY(10px);
             transition: all 0.2s ease-in-out;
-            position: absolute;
-            left: 50%;
-            top: 100%;
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -38,35 +35,37 @@
         </div>
 
         <!-- Цэс / Category Menu -->
-        <nav class="flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 pb-4 w-full justify-center">
+        <nav class="flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase border-b border-gray-100 pb-4 w-full justify-center relative">
             
             <!-- 1. НОМНУУД (Dropdown цэстэй) -->
-            <div class="relative dropdown group py-2">
+            <div class="dropdown group py-2 static">
                 <a href="#" class="text-gray-700 hover:text-white py-2 px-4 rounded-xs inline-block transition-colors duration-200 hover:bg-[#927657]">
                     НОМНУУД
                 </a>
                 
-                <!-- Доошоо бууж харагдах жижигхэн, голлогдсон дэд цэс -->
-                <div class="dropdown-menu mt-2 w-[380px] bg-white border border-gray-200 shadow-2xl p-4 rounded-sm grid grid-cols-2 gap-4 z-50">
-                    
-                    <!-- Art Book сонголт -->
-                    <div onclick="switchContent('art')" class="text-center group/card cursor-pointer">
-                        <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
-                            <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
+                <!-- Дэд цэс (Header-ийн доор бүтэн өргөнөөр төвд байрлах контейнер) -->
+                <div class="dropdown-menu absolute left-0 right-0 top-full pt-2 flex justify-center z-50 pointer-events-none group-hover:pointer-events-auto">
+                    <div class="w-[380px] bg-white border border-gray-200 shadow-2xl p-4 rounded-sm grid grid-cols-2 gap-4">
+                        
+                        <!-- Art Book сонголт -->
+                        <div onclick="switchContent('art')" class="text-center group/card cursor-pointer">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                                <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-black font-bold text-xs">Art Book</p>
+                            <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
                         </div>
-                        <p class="text-black font-bold text-xs">Art Book</p>
-                        <p class="text-[10px] text-gray-500">БҮТЭЭЛИЙН НОМ</p>
-                    </div>
 
-                    <!-- Memory Book сонголт -->
-                    <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer">
-                        <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
-                            <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
+                        <!-- Memory Book сонголт -->
+                        <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                                <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-black font-bold text-xs">Memory Book</p>
+                            <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
                         </div>
-                        <p class="text-black font-bold text-xs">Memory Book</p>
-                        <p class="text-[10px] text-gray-500">ДУРСАМЖ НОМ</p>
-                    </div>
 
+                    </div>
                 </div>
             </div>
 
