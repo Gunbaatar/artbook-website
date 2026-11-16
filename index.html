@@ -21,6 +21,16 @@
             visibility: visible;
             transform: translateY(0);
         }
+        
+        /* Хулгана цэс рүү шилжих үед тасрахгүй (хаагдахгүй) байх зориулалттай үл үзэгдэх гүүр */
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -30px; 
+            left: 0;
+            width: 100%;
+            height: 30px;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between p-6">
@@ -43,15 +53,15 @@
                     НОМНУУД
                 </a>
                 
-                <!-- Дэд цэсний гадна тал (Бүтэн өргөнөөр сунгагдсан цагаан дэвсгэртэй) -->
-                <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-white border-b border-gray-100 shadow-xl z-50 pointer-events-none group-hover:pointer-events-auto flex justify-center">
+                <!-- Дэд цэсний гадна тал (Бүтэн өргөнөөр сунгагдсан 10% цайвар саарал дэвсгэртэй) -->
+                <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-gray-50 border-b border-gray-200 shadow-xl z-50 pointer-events-none group-hover:pointer-events-auto flex justify-center">
                     
                     <!-- Доторх контент (Голлож байрлах 2 ном) -->
                     <div class="w-[400px] py-6 grid grid-cols-2 gap-6">
                         
                         <!-- Art Book сонголт -->
-                        <div onclick="switchContent('art')" class="text-center group/card cursor-pointer">
-                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                        <div onclick="switchContent('art')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="artbook_menu.jpg" alt="Art Book" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Art Book</p>
@@ -59,8 +69,8 @@
                         </div>
 
                         <!-- Memory Book сонголт -->
-                        <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer">
-                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition">
+                        <div onclick="switchContent('memory')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="memory_menu.jpg" alt="Memory Book" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Memory Book</p>
