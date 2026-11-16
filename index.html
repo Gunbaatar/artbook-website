@@ -208,7 +208,7 @@
 
     </main>
 
-    <!-- Вебсайт дээр гарч ирэх чатын цонх (Chat Widget) -->
+    <!-- Facebook / Instagram сонголттой чатын цонх -->
     <div id="chat-widget" class="fixed bottom-6 right-6 w-80 bg-white border border-gray-200 shadow-2xl rounded-lg hidden flex-col z-50 overflow-hidden transition-all duration-300 transform translate-y-4 opacity-0">
         <!-- Chat Header -->
         <div class="bg-[#927657] text-white px-4 py-3 flex justify-between items-center">
@@ -221,82 +221,11 @@
             </button>
         </div>
         
-        <!-- Chat Body -->
-        <div class="h-64 p-4 bg-gray-50 overflow-y-auto flex flex-col space-y-3 text-sm">
-            <div class="bg-gray-200 text-gray-800 p-2.5 rounded-lg rounded-tl-none self-start max-w-[85%] shadow-sm">
-                Сайн байна уу? Танд юугаар туслах вэ?
-            </div>
-        </div>
-        
-        <!-- Chat Input -->
-        <div class="border-t border-gray-200 p-3 bg-white flex items-center space-x-2">
-            <input type="text" placeholder="Зурвас бичих..." class="flex-1 bg-gray-100 border-transparent focus:bg-gray-100 focus:ring-0 focus:outline-none rounded-full px-4 py-2 text-sm transition">
-            <button class="bg-[#927657] text-white p-2 rounded-full hover:bg-opacity-90 transition flex-shrink-0">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
-            </button>
-        </div>
-    </div>
-
-    <!-- JS Функцууд -->
-    <script>
-        function switchContent(type) {
-            const img = document.getElementById('main-image');
-            const title = document.getElementById('main-title');
-            const subtitle = document.getElementById('main-subtitle');
-            const price = document.getElementById('main-price');
+        <!-- Chat Body (Сошиал руу үсрэх товчнууд) -->
+        <div class="p-6 bg-gray-50 flex flex-col space-y-4 text-center">
+            <p class="text-[13px] text-gray-600 mb-2">Та өөрийн ашигладаг сошиал хаягаар нэвтэрч бидэнтэй шууд холбогдоорой.</p>
             
-            const btn = document.getElementById('main-action-btn');
-            const f1Title = document.getElementById('feature1-title');
-            const f1Subtitle = document.getElementById('feature1-subtitle');
-
-            if (type === 'art') {
-                img.src = 'book.webp';
-                title.innerText = 'Art Book';
-                subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
-                price.innerText = '200,000₮';
-                
-                btn.innerText = 'ЗАХИАЛГА ӨГӨХ';
-                f1Title.innerText = 'Дижитал хэлбэрт оруулах';
-                f1Subtitle.innerText = 'Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ';
-            } else if (type === 'memory') {
-                img.src = 'book2.webp';
-                title.innerText = 'Memory Book';
-                subtitle.innerText = 'Дурсамжаа дээд зэрэглэлийн хэвлэл бүхий ном болгон хадгалаарай';
-                price.innerText = '70,000₮';
-                
-                btn.innerText = 'НОМ ҮҮСГЭХ';
-                f1Title.innerText = 'Онлайн эх бэлтгэл';
-                f1Subtitle.innerText = 'Хялбараар зургийн өрөлт, текст оруулах';
-            }
-        }
-
-        // Чатын цонхыг нээх/хаах функц
-        function toggleChat(e) {
-            if(e) e.preventDefault();
-            const chatWidget = document.getElementById('chat-widget');
-            
-            if (chatWidget.classList.contains('hidden')) {
-                chatWidget.classList.remove('hidden');
-                // Бага зэрэг хүлээгээд animation ажиллуулах
-                setTimeout(() => {
-                    chatWidget.classList.remove('translate-y-4', 'opacity-0');
-                    chatWidget.classList.add('translate-y-0', 'opacity-100');
-                }, 10);
-            } else {
-                chatWidget.classList.remove('translate-y-0', 'opacity-100');
-                chatWidget.classList.add('translate-y-4', 'opacity-0');
-                // Animation дууссаны дараа hidden болгох
-                setTimeout(() => {
-                    chatWidget.classList.add('hidden');
-                }, 300);
-            }
-        }
-    </script>
-
-    <!-- ХӨЛ ХЭСЭГ -->
-    <footer class="max-w-7xl w-full mx-auto text-center py-4 text-xs text-gray-400">
-        © KidArt Studio. All rights reserved.
-    </footer>
-
-</body>
-</html>
+            <!-- Facebook Messenger товч -->
+            <a href="https://m.me/gunbaatar" target="_blank" class="flex items-center justify-center space-x-2 bg-[#0084ff] text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition shadow-sm">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.923 1.488 5.498 3.79 7.152v3.315c0 .354.385.568.683.393l3.41-2.0
