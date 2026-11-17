@@ -109,7 +109,7 @@
                 </div>
             </div>
             <span class="text-gray-300">|</span>
-            <a href="#" onclick="switchService('framing', event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
+            <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
             <span class="text-gray-300">|</span>
             <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
@@ -119,8 +119,6 @@
 
     <!-- 1. НҮҮР ХУУДАС -->
     <main id="landing-page" class="w-full flex flex-col space-y-6 mt-2">
-        
-        <!-- ЭХНИЙ ВИДЕО ХЭСЭГ -->
         <div class="relative group w-full h-[500px] sm:h-[600px] lg:h-[80vh] min-h-[500px] overflow-hidden shadow-xl bg-black">
             <video autoplay muted loop playsinline class="w-full h-full object-cover object-center">
                 <source src="video_home.mp4" type="video/mp4">
@@ -132,14 +130,13 @@
                     <img src="home text.png" alt="Home Text" class="max-w-[336px] sm:max-w-[540px] w-auto h-auto object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
                 <div>
-                    <button onclick="switchService('framing', event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-sm shadow-xl tracking-wider uppercase transition transform hover:scale-105">
+                    <button onclick="switchService(event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-sm shadow-xl tracking-wider uppercase transition transform hover:scale-105">
                         ЗАХИАЛАХ
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- ДООД ЗУРГУУД -->
         <div class="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 pb-16">
             <div onclick="switchContent('art', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-lg h-80 sm:h-96">
                 <img src="book.webp" alt="Art Book" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
@@ -185,65 +182,94 @@
         </div>
     </main>
 
-    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ 4 ТӨРЛИЙН СОНГОЛТ (Mobile & Desktop Friendly) -->
-    <main id="framing-service-page" style="display: none;" class="max-w-7xl w-full mx-auto px-6 py-8 flex flex-col space-y-8 my-auto">
-        <div class="text-center">
-            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-black">Жаазлах үйлчилгээ</h2>
-            <p class="text-xs sm:text-sm text-gray-500 mt-2">Та өөрийн хүссэн жаазны төрлийг сонгоно уу.</p>
+    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ ЦЭС (WhiteWall Style Background & Left Sidebar List) -->
+    <main id="framing-service-page" style="display: none;" class="relative w-full min-h-[80vh] flex items-center overflow-hidden my-auto">
+        <!-- Ар талын бүтэн зураг (Background) -->
+        <div class="absolute inset-0 z-0">
+            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Background" class="w-full h-full object-cover object-center brightness-75">
+            <div class="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- 1. Модон жааз -->
-            <div onclick="selectFramingType('Модон жааз', '50,000₮-өөс', 'home_hero.jpg')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
-                <div class="h-48 overflow-hidden bg-gray-100">
-                    <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Модон жааз" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        <!-- Зүүн талын цэс болон жаазны жагсаалт -->
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-12 flex flex-col lg:flex-row items-start">
+            <div class="bg-white/95 backdrop-blur-md rounded-sm shadow-2xl w-full max-w-md p-6 sm:p-8 flex flex-col space-y-6">
+                <!-- Гарчиг / Буцах товч -->
+                <div class="flex items-center space-x-3 border-b border-gray-200 pb-4">
+                    <button onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
+                    <h2 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Жаазлах үйлчилгээ</h2>
                 </div>
-                <div class="p-4 text-center">
-                    <h3 class="font-bold text-base text-black mb-1">Модон жааз</h3>
-                    <p class="text-xs text-gray-500 mb-3">Байгалийн модон хийцтэй сонгодог загвар</p>
-                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
-                </div>
-            </div>
 
-            <!-- 2. Металл жааз -->
-            <div onclick="selectFramingType('Металл жааз', '65,000₮-өөс', 'book.webp')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
-                <div class="h-48 overflow-hidden bg-gray-100">
-                    <img src="book.webp" onerror="this.src='home_hero.jpg'" alt="Металл жааз" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <div class="p-4 text-center">
-                    <h3 class="font-bold text-base text-black mb-1">Металл жааз</h3>
-                    <p class="text-xs text-gray-500 mb-3">Орчин үеийн минимал хэв маягтай хөнгөн цагаан жааз</p>
-                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
-                </div>
-            </div>
+                <!-- 4 Жаазны жагсаалт (Thumbnail + Text + Arrow) -->
+                <div class="flex flex-col space-y-3">
+                    <!-- 1. Модон жааз -->
+                    <div onclick="openSubFraming('Модон жааз')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <div class="flex items-center space-x-4">
+                            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Модон жааз" class="w-14 h-14 object-cover rounded-sm border border-gray-200">
+                            <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657] transition">Модон жааз</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg pr-2">›</span>
+                    </div>
 
-            <!-- 3. Шилэн канвас -->
-            <div onclick="selectFramingType('Шилэн канвас', '80,000₮-өөс', 'book2.webp')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
-                <div class="h-48 overflow-hidden bg-gray-100">
-                    <img src="book2.webp" onerror="this.src='home_hero.jpg'" alt="Шилэн канвас" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <div class="p-4 text-center">
-                    <h3 class="font-bold text-base text-black mb-1">Шилэн канвас</h3>
-                    <p class="text-xs text-gray-500 mb-3">Гялалзсан өнгө үзэмжтэй шилэн гадаргуутай хэвлэл</p>
-                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
-                </div>
-            </div>
+                    <!-- 2. Металл жааз -->
+                    <div onclick="openSubFraming('Металл жааз')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <div class="flex items-center space-x-4">
+                            <img src="book.webp" onerror="this.src='home_hero.jpg'" alt="Металл жааз" class="w-14 h-14 object-cover rounded-sm border border-gray-200">
+                            <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657] transition">Металл жааз</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg pr-2">›</span>
+                    </div>
 
-            <!-- 4. Мозайк -->
-            <div onclick="selectFramingType('Мозайк', '95,000₮-өөс', 'artbook_menu.jpg')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
-                <div class="h-48 overflow-hidden bg-gray-100">
-                    <img src="artbook_menu.jpg" onerror="this.src='home_hero.jpg'" alt="Мозайк" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <div class="p-4 text-center">
-                    <h3 class="font-bold text-base text-black mb-1">Мозайк</h3>
-                    <p class="text-xs text-gray-500 mb-3">Олон зургийн нэгдсэн нийлмэл жаазтай бүтээл</p>
-                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
+                    <!-- 3. Шилэн канвас -->
+                    <div onclick="openSubFraming('Шилэн канвас')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <div class="flex items-center space-x-4">
+                            <img src="book2.webp" onerror="this.src='home_hero.jpg'" alt="Шилэн канвас" class="w-14 h-14 object-cover rounded-sm border border-gray-200">
+                            <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657] transition">Шилэн канвас</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg pr-2">›</span>
+                    </div>
+
+                    <!-- 4. Мозайк -->
+                    <div onclick="openSubFraming('Мозайк')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <div class="flex items-center space-x-4">
+                            <img src="artbook_menu.jpg" onerror="this.src='home_hero.jpg'" alt="Мозайк" class="w-14 h-14 object-cover rounded-sm border border-gray-200">
+                            <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657] transition">Мозайк</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg pr-2">›</span>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 4. ХЭРЭГЛЭГЧИЙН САМБАР -->
+    <!-- 4. ДЭД ЖААЗНЫ СОНГОЛТ ХЭСЭГ (Тухайн жааз руу ороход харагдах дэд цэс) -->
+    <main id="sub-framing-page" style="display: none;" class="relative w-full min-h-[80vh] flex items-center overflow-hidden my-auto">
+        <div class="absolute inset-0 z-0">
+            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Background" class="w-full h-full object-cover object-center brightness-75">
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-12 flex flex-col lg:flex-row items-start">
+            <div class="bg-white/95 backdrop-blur-md rounded-sm shadow-2xl w-full max-w-md p-6 sm:p-8 flex flex-col space-y-6">
+                <div class="flex items-center space-x-3 border-b border-gray-200 pb-4">
+                    <button onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
+                    <h2 id="sub-framing-title" class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Жаазны сонголтууд</h2>
+                </div>
+
+                <div class="flex flex-col space-y-3">
+                    <div onclick="selectFinalProduct('Классик загвар', '55,000₮')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657]">Классик загвар (Хар/Цагаан хүрээтэй)</span>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
+                    </div>
+                    <div onclick="selectFinalProduct('Премиум загвар', '75,000₮')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                        <span class="font-semibold text-sm sm:text-base text-gray-800 group-hover:text-[#927657]">Премиум загвар (Давхар хүрээтэй)</span>
+                        <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 5. ХЭРЭГЛЭГЧИЙН САМБАР -->
     <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto px-6 flex-col space-y-6 mt-10 mb-auto">
         <h2 class="text-2xl font-bold text-gray-900">Миний бүртгэл</h2>
         
@@ -298,30 +324,43 @@
                 img.src = 'book2.webp';
                 title.innerText = 'Memory Book';
             }
-            showDetail();
+            hideAllPages();
+            document.getElementById('detail-page').style.display = 'grid';
         }
 
-        function switchService(service, e) {
+        function switchService(e) {
             if(e) e.preventDefault();
-            document.getElementById('landing-page').style.display = 'none';
-            document.getElementById('detail-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'none';
+            hideAllPages();
             document.getElementById('framing-service-page').style.display = 'flex';
         }
 
-        function selectFramingType(typeName, priceText, imageSrc) {
-            const img = document.getElementById('main-image');
+        function openSubFraming(frameName) {
+            document.getElementById('sub-framing-title').innerText = frameName;
+            hideAllPages();
+            document.getElementById('sub-framing-page').style.display = 'flex';
+        }
+
+        function selectFinalProduct(productName, priceText) {
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
             const price = document.getElementById('main-price');
+            const img = document.getElementById('main-image');
 
-            img.src = imageSrc;
-            title.innerText = typeName;
-            subtitle.innerText = 'Таны сонгосон загварын жаазлах үйлчилгээ';
+            title.innerText = productName;
+            subtitle.innerText = 'Таны сонгосон жаазны загвар';
             price.innerText = priceText;
+            img.src = 'home_hero.jpg';
 
-            document.getElementById('framing-service-page').style.display = 'none';
+            hideAllPages();
             document.getElementById('detail-page').style.display = 'grid';
+        }
+
+        function hideAllPages() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'none';
+            document.getElementById('framing-service-page').style.display = 'none';
+            document.getElementById('sub-framing-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'none';
         }
 
         function handleActionBtn(e) {
@@ -363,24 +402,13 @@
 
         function goHome(e) {
             if(e) e.preventDefault();
+            hideAllPages();
             document.getElementById('landing-page').style.display = 'flex';
-            document.getElementById('detail-page').style.display = 'none';
-            document.getElementById('framing-service-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'none';
-        }
-
-        function showDetail() {
-            document.getElementById('landing-page').style.display = 'none';
-            document.getElementById('framing-service-page').style.display = 'none';
-            document.getElementById('detail-page').style.display = 'grid';
-            document.getElementById('dashboard-page').style.display = 'none';
         }
 
         function showDashboard(e) {
             if(e) e.preventDefault();
-            document.getElementById('landing-page').style.display = 'none';
-            document.getElementById('detail-page').style.display = 'none';
-            document.getElementById('framing-service-page').style.display = 'none';
+            hideAllPages();
             document.getElementById('dashboard-page').style.display = 'flex';
         }
 
