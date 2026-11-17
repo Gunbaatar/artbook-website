@@ -182,41 +182,37 @@
         </div>
     </main>
 
-    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ ЦЭС (Зүүн дээд буланд байрласан, зургууд хасагдсан, том үсгээр) -->
+    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ ЦЭС (Зүүн дээд буланд байрласан) -->
     <main id="framing-service-page" style="display: none;" class="relative w-full min-h-[80vh] flex items-center overflow-hidden my-auto">
         <div class="absolute inset-0 z-0">
             <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Background" class="w-full h-full object-cover object-center brightness-75">
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <!-- Зүүн дээд буланд байрлуулах container -->
+        <!-- Зүүн дээд буланд байрлуулах container (justify-start items-start) -->
         <div class="relative z-10 max-w-7xl w-full mx-auto px-6 py-8 flex flex-col items-start justify-start h-full">
             <div class="bg-white/95 backdrop-blur-md rounded-sm shadow-2xl w-full max-w-sm p-6 flex flex-col space-y-4">
                 <div class="flex items-center space-x-3 border-b border-gray-200 pb-3">
                     <button onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
-                    <h2 class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">Жаазлах үйлчилгээ</h2>
+                    <h2 class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</h2>
                 </div>
 
                 <div class="flex flex-col space-y-2">
-                    <!-- 1. МОДОН ЖААЗ -->
                     <div onclick="openSubFraming('МОДОН ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
                         <span class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОДОН ЖААЗ</span>
                         <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                     </div>
 
-                    <!-- 2. МЕТАЛЛ ЖААЗ -->
                     <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
                         <span class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МЕТАЛЛ ЖААЗ</span>
                         <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                     </div>
 
-                    <!-- 3. ШИЛЭН КАНВАС -->
                     <div onclick="openSubFraming('ШИЛЭН КАНВАС')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
                         <span class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ШИЛЭН КАНВАС</span>
                         <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                     </div>
 
-                    <!-- 4. МОЗАЙК -->
                     <div onclick="openSubFraming('МОЗАЙК')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
                         <span class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОЗАЙК</span>
                         <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
@@ -414,5 +410,3 @@
 
 </body>
 </html>
-
-```
