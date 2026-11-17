@@ -113,33 +113,30 @@
 
             <span class="text-gray-300">|</span>
 
-            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (ШИНЭЭР НЭМСЭН) -->
+            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (Гадаад нэр нь дээрээ, монгол нэр нь доороо) -->
             <div class="dropdown group static">
                 <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
                 </a>
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
-                    <div class="w-[500px] grid grid-cols-3 gap-6">
+                    <div class="w-[600px] grid grid-cols-3 gap-6">
                         <div onclick="openSubFraming('МОДОН ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-[10px] font-bold text-gray-600">Wood Frame</span>
+                                <span class="text-xs font-bold text-gray-700 tracking-wider">Wood Frame</span>
                             </div>
                             <p class="text-black font-bold text-xs">Модон жааз</p>
-                            <p class="text-[9px] text-gray-500">WOOD FRAME</p>
                         </div>
                         <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-[10px] font-bold text-gray-600">Metal Frame</span>
+                                <span class="text-xs font-bold text-gray-700 tracking-wider">Aluminum Frame</span>
                             </div>
                             <p class="text-black font-bold text-xs">Металь жааз</p>
-                            <p class="text-[9px] text-gray-500">ALUMINUM FRAME</p>
                         </div>
                         <div onclick="openSubFraming('ОЛОН ЗУРАГТАЙ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-[10px] font-bold text-gray-600">Collage</span>
+                                <span class="text-xs font-bold text-gray-700 tracking-wider">Collage Frame</span>
                             </div>
-                            <p class="text-black font-bold text-xs">Олон зурагтай</p>
-                            <p class="text-[9px] text-gray-500">COLLAGE FRAME</p>
+                            <p class="text-black font-bold text-xs">Олон зурагтай жааз</p>
                         </div>
                     </div>
                 </div>
@@ -231,18 +228,18 @@
             </div>
 
             <div class="flex flex-col space-y-2">
-                <div onclick="openSubFraming('МОДОН ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОДОН ЖААЗ (WOOD FRAME)</span>
+                <div onclick="openSubFraming('WOOD FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">WOOD FRAME (МОДОН ЖААЗ)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
 
-                <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МЕТАЛЛ ЖААЗ (ALUMINUM FRAME)</span>
+                <div onclick="openSubFraming('ALUMINUM FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ALUMINUM FRAME (МЕТАЛЛ ЖААЗ)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
 
-                <div onclick="openSubFraming('ОЛОН ЗУРАГТАЙ ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ОЛОН ЗУРАГТАЙ ЖААЗ (COLLAGE FRAME)</span>
+                <div onclick="openSubFraming('COLLAGE FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">COLLAGE FRAME (ОЛОН ЗУРАГТАЙ ЖААЗ)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
             </div>
