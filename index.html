@@ -52,13 +52,38 @@
 
             <!-- Баруун дээд булан -->
             <div class="flex items-center space-x-4 sm:space-x-6 sm:absolute sm:right-0">
-                <!-- Сагс -->
-                <a href="#" class="relative text-gray-700 hover:text-[#927657] transition flex items-center">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                    <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
-                </a>
+                
+                <!-- САГСНЫ ХЭСЭГ (Дээд тал руу хулгана аваачихад жагсаалт гарна) -->
+                <div class="dropdown group relative">
+                    <a href="#" class="relative text-gray-700 hover:text-[#927657] transition flex items-center py-2">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                        <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
+                    </a>
+                    
+                    <!-- Сагсны доошоо унах цэс (Dropdown) -->
+                    <div class="dropdown-menu absolute right-0 top-full w-72 bg-white border border-gray-200 shadow-xl rounded-sm z-50 p-4">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-800 border-b border-gray-100 pb-2 mb-3">Миний сагс</h4>
+                        
+                        <!-- Сагс хоосон байх үеийн төлөв -->
+                        <div id="cart-empty-msg" class="text-xs text-gray-400 text-center py-4">
+                            Сагс хоосон байна
+                        </div>
+
+                        <!-- Сагсанд бараа нэмэгдсэн үед харагдах жагсаалт -->
+                        <div id="cart-items-container" class="space-y-3 max-h-60 overflow-y-auto">
+                            <!-- JS-ээр бараанууд энд нэмэгдэнэ -->
+                        </div>
+
+                        <!-- Сагсны доод хэсэг (Нийт дүнгүй) -->
+                        <div id="cart-footer" class="hidden border-t border-gray-100 pt-3 mt-3">
+                            <button onclick="alert('Төлбөр төлөх хуудас руу шилжих')" class="w-full bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold py-2.5 rounded-sm transition text-center uppercase tracking-wider">
+                                Захиал өгөх
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- Нэвтрэх товч -->
                 <div id="login-btn-container">
@@ -327,7 +352,7 @@
                 </div>
             </div>
 
-            <!-- Доод талын Хэлбэр сонгох хэсэг (Англи нь дээрээ, монгол нь доороо) -->
+            <!-- Доод талын Хэлбэр сонгох хэсэг -->
             <div class="border-t border-gray-100 pt-6 text-center">
                 <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase mb-4">ХЭЛБЭР СОНГОХ</p>
                 <div class="grid grid-cols-3 gap-4">
@@ -363,8 +388,9 @@
     <!-- JS Функцууд -->
     <script>
         let isLoggedIn = false;
-        let cartItemCount = 0;
+        let cartItems = []; // Сагсанд орсон бараануудын жагсаалт
         let selectedCurrentProduct = '';
+        let currentPriceText = '';
 
         function switchContent(type, e) {
             if(e) e.preventDefault();
@@ -379,12 +405,14 @@
                 title.innerText = 'Art Book';
                 subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
                 price.innerText = '200,000₮';
+                currentPriceText = '200,000₮';
             } else if (type === 'memory') {
                 selectedCurrentProduct = 'Memory Book';
                 img.src = 'book2.webp';
                 title.innerText = 'Memory Book';
                 subtitle.innerText = 'Хүүхдийнхээ дурсамжийг нандигнан хадгалах дэвтэр ном';
                 price.innerText = '180,000₮';
+                currentPriceText = '180,000₮';
             }
             hideAllPages();
             document.getElementById('detail-page').style.display = 'grid';
@@ -399,35 +427,47 @@
             const price = document.getElementById('main-price');
 
             if (productKey === 'wood') {
+                selectedCurrentProduct = 'Wood Frame';
                 img.src = 'home_hero.jpg';
                 title.innerText = 'Wood Frame (Модон жааз)';
                 subtitle.innerText = 'Чанартай байгалийн модон хийцтэй жааз';
                 price.innerText = '55,000₮';
+                currentPriceText = '55,000₮';
             } else if (productKey === 'aluminum') {
+                selectedCurrentProduct = 'Aluminum Frame';
                 img.src = 'book2.webp';
                 title.innerText = 'Aluminum Frame (Металь жааз)';
                 subtitle.innerText = 'Орчин үеийн загвартай хөнгөн цагаан металь жааз';
                 price.innerText = '75,000₮';
+                currentPriceText = '75,000₮';
             } else if (productKey === 'collage') {
+                selectedCurrentProduct = 'Collage Frame';
                 img.src = 'book.webp';
                 title.innerText = 'Collage Frame (Олон зурагтай жааз)';
                 subtitle.innerText = 'Олон дурсамжит зургийг нэг дор багтаах жааз';
                 price.innerText = '95,000₮';
+                currentPriceText = '95,000₮';
             } else if (productKey === 'calendar') {
+                selectedCurrentProduct = 'Desk & Wall Calendars';
                 img.src = 'book.webp';
                 title.innerText = 'Desk & Wall Calendars (Ширээний болон ханын хуанли)';
                 subtitle.innerText = 'Хүүхдийнхээ зурмаг бүтээлээр чимэглэсэн хуанли';
                 price.innerText = '35,000₮';
+                currentPriceText = '35,000₮';
             } else if (productKey === 'apparel') {
+                selectedCurrentProduct = 'T-shirt & Hoodies';
                 img.src = 'book2.webp';
                 title.innerText = 'T-shirt & Hoodies (Богино ханцуйт болон малгайтай цамц)';
                 subtitle.innerText = 'Хүүхдийн уран бүтээл хэвлэсэн өмсгөл хувцас';
                 price.innerText = '45,000₮';
+                currentPriceText = '45,000₮';
             } else if (productKey === 'totebag') {
+                selectedCurrentProduct = 'Cotton Tote Bag';
                 img.src = 'home_hero.jpg';
                 title.innerText = 'Cotton Tote Bag (Даавуун тор)';
                 subtitle.innerText = 'Байгальд ээлтэй 100% цэвэр даавуун тор';
                 price.innerText = '25,000₮';
+                currentPriceText = '25,000₮';
             }
 
             hideAllPages();
@@ -448,7 +488,7 @@
                 if (selectedCurrentProduct === 'Art Book' || selectedCurrentProduct === 'Memory Book') {
                     toggleUploadModal();
                 } else {
-                    addToCart();
+                    addToCart(selectedCurrentProduct, currentPriceText);
                 }
             }
         }
@@ -460,16 +500,55 @@
         }
 
         function selectLayout(layoutName) {
-            alert(selectedCurrentProduct + ' - ' + layoutName + ' хэлбэр амжилттай сонгогдлоо!');
             toggleUploadModal();
-            addToCart();
+            addToCart(selectedCurrentProduct + ' (' + layoutName + ')', currentPriceText);
         }
 
-        function addToCart() {
-            cartItemCount++;
-            const cartCountElement = document.getElementById('cart-count');
-            cartCountElement.innerText = cartItemCount;
-            alert('Сагсанд амжилттай нэмэгдлээ!');
+        function addToCart(itemName, itemPrice) {
+            cartItems.push({ name: itemName, price: itemPrice });
+            updateCartUI();
+            
+            // Pop хөдөлгөөн
+            const cartBadge = document.getElementById('cart-count');
+            cartBadge.classList.add('cart-pop');
+            setTimeout(() => cartBadge.classList.remove('cart-pop'), 300);
+        }
+
+        function updateCartUI() {
+            const countElem = document.getElementById('cart-count');
+            const emptyMsg = document.getElementById('cart-empty-msg');
+            const container = document.getElementById('cart-items-container');
+            const footer = document.getElementById('cart-footer');
+
+            countElem.innerText = cartItems.length;
+
+            if (cartItems.length === 0) {
+                emptyMsg.style.display = 'block';
+                container.innerHTML = '';
+                footer.style.display = 'none';
+            } else {
+                emptyMsg.style.display = 'none';
+                footer.style.display = 'block';
+                
+                let html = '';
+                cartItems.forEach((item, index) => {
+                    html += `
+                        <div class="flex justify-between items-center text-xs border-b border-gray-50 pb-2">
+                            <div>
+                                <p class="font-bold text-gray-800">${item.name}</p>
+                                <p class="text-[10px] text-gray-500">${item.price}</p>
+                            </div>
+                            <button onclick="removeItem(${index})" class="text-gray-400 hover:text-red-500 font-bold px-1">×</button>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+        }
+
+        function removeItem(index) {
+            cartItems.splice(index, 1);
+            updateCartUI();
         }
 
         function toggleLoginModal(e) {
@@ -539,4 +618,3 @@
 
 </body>
 </html>
-```[cite: 3, 4]
