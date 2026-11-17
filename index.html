@@ -86,6 +86,7 @@
 
         <!-- Үндсэн Цэс -->
         <nav class="flex items-center space-x-3 sm:space-x-6 text-[10px] sm:text-xs font-semibold tracking-wider uppercase border-b border-gray-100 w-full justify-start sm:justify-center overflow-visible py-1 relative">
+            
             <!-- 1. НОМНУУД ДЭД ЦЭС -->
             <div class="dropdown group static">
                 <a href="#" onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
@@ -113,28 +114,28 @@
 
             <span class="text-gray-300">|</span>
 
-            <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС -->
+            <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (Шууд ордог болсон) -->
             <div class="dropdown group static">
-                <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
+                <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
                 </a>
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
                     <div class="w-[600px] grid grid-cols-3 gap-6">
-                        <div onclick="openSubFraming('WOOD FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('wood', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Wood Frame" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Wood Frame</p>
                             <p class="text-[10px] text-gray-500">МОДОН ЖААЗ</p>
                         </div>
-                        <div onclick="openSubFraming('ALUMINUM FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('aluminum', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="Aluminum Frame" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Aluminum Frame</p>
                             <p class="text-[10px] text-gray-500">МЕТАЛЛ ЖААЗ</p>
                         </div>
-                        <div onclick="openSubFraming('COLLAGE FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('collage', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Collage Frame" class="w-full h-full object-cover">
                             </div>
@@ -149,31 +150,28 @@
             <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
 
-            <!-- 3. УРЛАГИЙН БҮТЭЭГДЭХҮҮН ДЭД ЦЭС (ШИНЭЭР НЭМСЭН) -->
+            <!-- 3. УРЛАГИЙН БҮТЭЭГДЭХҮҮН ДЭД ЦЭС (Шууд ордог болсон) -->
             <div class="dropdown group static">
                 <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     УРЛАГИЙН БҮТЭЭГДЭХҮҮН
                 </a>
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
                     <div class="w-[600px] grid grid-cols-3 gap-6">
-                        <!-- Хуанли -->
-                        <div onclick="openSubFraming('CALENDARS')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('calendar', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Desk & Wall Calendars" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">Desk & Wall Calendars</p>
                             <p class="text-[10px] text-gray-500">ШИРЭЭНИЙ БОЛОН ХАНЫН ХУАНЛИ</p>
                         </div>
-                        <!-- Цамц -->
-                        <div onclick="openSubFraming('APPAREL')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('apparel', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="T-shirt & Hoodies" class="w-full h-full object-cover">
                             </div>
                             <p class="text-black font-bold text-xs">T-shirt & Hoodies</p>
                             <p class="text-[10px] text-gray-500">БОГИНО ХАНЦУЙТ БОЛОН МАЛГАЙТАЙ ЦАМЦ</p>
                         </div>
-                        <!-- Даавуун тор -->
-                        <div onclick="openSubFraming('TOTE BAG')" class="text-center group/card cursor-pointer relative z-10">
+                        <div onclick="switchProduct('totebag', event)" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="home_hero.jpg" onerror="this.src='artbook_menu.jpg'" alt="Cotton Tote Bag" class="w-full h-full object-cover">
                             </div>
@@ -199,7 +197,7 @@
                     <img src="home text.png" alt="Home Text" class="max-w-[336px] sm:max-w-[540px] w-auto h-auto object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
                 <div>
-                    <button onclick="switchService(event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-sm shadow-xl tracking-wider uppercase transition transform hover:scale-105">
+                    <button onclick="switchContent('art', event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-sm shadow-xl tracking-wider uppercase transition transform hover:scale-105">
                         ЗАХИАЛАХ
                     </button>
                 </div>
@@ -229,10 +227,10 @@
         </div>
     </main>
 
-    <!-- 2. БҮТЭЭГДЭХҮҮНИЙ ДЭЛГЭРЭНГҮЙ ХЭСЭГ (ArtBook / MemoryBook) -->
+    <!-- 2. БҮТЭЭГДЭХҮҮНИЙ ДЭЛГЭРЭНГҮЙ ХЭСЭГ (Бүх категориудад ашиглагдана) -->
     <main id="detail-page" style="display: none;" class="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mt-6 my-auto">
         <div class="lg:col-span-8 relative flex justify-center">
-            <img id="main-image" src="book.webp" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
+            <img id="main-image" src="book.webp" alt="Product Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
         </div>
         <div class="lg:col-span-4 flex flex-col space-y-6">
             <div>
@@ -247,64 +245,6 @@
                 <a id="main-action-btn" href="#" onclick="handleActionBtn(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md text-xs sm:text-sm">
                     ЗАХИАЛГА ӨГӨХ
                 </a>
-            </div>
-        </div>
-    </main>
-
-    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ ЦЭС -->
-    <main id="framing-service-page" style="display: none;" class="relative w-full min-h-[80vh] flex flex-col justify-start items-start overflow-hidden my-auto p-6 sm:p-12">
-        <div class="absolute inset-0 z-0">
-            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Background" class="w-full h-full object-cover object-center brightness-75">
-            <div class="absolute inset-0 bg-black/40"></div>
-        </div>
-
-        <div class="relative z-10 w-full max-w-sm bg-white/95 backdrop-blur-md rounded-sm shadow-2xl p-6 flex flex-col space-y-4">
-            <div class="flex items-center space-x-3 border-b border-gray-200 pb-3">
-                <button onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
-                <h2 class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</h2>
-            </div>
-
-            <div class="flex flex-col space-y-2">
-                <div onclick="openSubFraming('WOOD FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">WOOD FRAME (МОДОН ЖААЗ)</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
-
-                <div onclick="openSubFraming('ALUMINUM FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ALUMINUM FRAME (МЕТАЛЛ ЖААЗ)</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
-
-                <div onclick="openSubFraming('COLLAGE FRAME')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">COLLAGE FRAME (ОЛОН ЗУРАГТАЙ ЖААЗ)</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 4. ДЭД ЖААЗНЫ СОНГОЛТ ХЭСЭГ -->
-    <main id="sub-framing-page" style="display: none;" class="relative w-full min-h-[80vh] flex flex-col justify-start items-start overflow-hidden my-auto p-6 sm:p-12">
-        <div class="absolute inset-0 z-0">
-            <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Background" class="w-full h-full object-cover object-center brightness-75">
-            <div class="absolute inset-0 bg-black/40"></div>
-        </div>
-
-        <div class="relative z-10 w-full max-w-sm bg-white/95 backdrop-blur-md rounded-sm shadow-2xl p-6 flex flex-col space-y-4">
-            <div class="flex items-center space-x-3 border-b border-gray-200 pb-3">
-                <button onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
-                <h2 id="sub-framing-title" class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">БҮТЭЭГДЭХҮҮНИЙ СОНГОЛТУУД</h2>
-            </div>
-
-            <div class="flex flex-col space-y-2">
-                <div onclick="selectFinalProduct('КЛАССИК ЗАГВАР', '55,000₮')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">КЛАССИК ЗАГВАР</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
-                <div onclick="selectFinalProduct('ПРЕМИУМ ЗАГВАР', '75,000₮')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ПРЕМИУМ ЗАГВАР</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
             </div>
         </div>
     </main>
@@ -353,43 +293,68 @@
         let isLoggedIn = false;
         let cartItemCount = 0;
 
+        // Номнууд болон бусад категори дээр шууд үсрэх функц
         function switchContent(type, e) {
             if(e) e.preventDefault();
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
+            const subtitle = document.getElementById('main-subtitle');
+            const price = document.getElementById('main-price');
+
             if (type === 'art') {
                 img.src = 'book.webp';
                 title.innerText = 'Art Book';
+                subtitle.innerText = 'Таны хүүхдийн бүтээлийг дээд зэрэглэлийн ном болгоно';
+                price.innerText = '200,000₮';
             } else if (type === 'memory') {
                 img.src = 'book2.webp';
                 title.innerText = 'Memory Book';
+                subtitle.innerText = 'Хүүхдийнхээ дурсамжийг нандигнан хадгалах дэвтэр ном';
+                price.innerText = '180,000₮';
             }
             hideAllPages();
             document.getElementById('detail-page').style.display = 'grid';
         }
 
-        function switchService(e) {
+        // Жааз болон Урлагийн бүтээгдэхүүний категориудаас шууд дэлгэрэнгүй рүү орох функц
+        function switchProduct(productKey, e) {
             if(e) e.preventDefault();
-            hideAllPages();
-            document.getElementById('framing-service-page').style.display = 'flex';
-        }
-
-        function openSubFraming(frameName) {
-            document.getElementById('sub-framing-title').innerText = frameName;
-            hideAllPages();
-            document.getElementById('sub-framing-page').style.display = 'flex';
-        }
-
-        function selectFinalProduct(productName, priceText) {
+            const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
             const subtitle = document.getElementById('main-subtitle');
             const price = document.getElementById('main-price');
-            const img = document.getElementById('main-image');
 
-            title.innerText = productName;
-            subtitle.innerText = 'Таны сонгосон бүтээгдэхүүний загвар';
-            price.innerText = priceText;
-            img.src = 'home_hero.jpg';
+            if (productKey === 'wood') {
+                img.src = 'home_hero.jpg';
+                title.innerText = 'Wood Frame (Модон жааз)';
+                subtitle.innerText = 'Чанартай байгалийн модон хийцтэй жааз';
+                price.innerText = '55,000₮';
+            } else if (productKey === 'aluminum') {
+                img.src = 'book2.webp';
+                title.innerText = 'Aluminum Frame (Металь жааз)';
+                subtitle.innerText = 'Орчин үеийн загвартай хөнгөн цагаан металь жааз';
+                price.innerText = '75,000₮';
+            } else if (productKey === 'collage') {
+                img.src = 'book.webp';
+                title.innerText = 'Collage Frame (Олон зурагтай жааз)';
+                subtitle.innerText = 'Олон дурсамжит зургийг нэг дор багтаах жааз';
+                price.innerText = '95,000₮';
+            } else if (productKey === 'calendar') {
+                img.src = 'book.webp';
+                title.innerText = 'Desk & Wall Calendars (Ширээний болон ханын хуанли)';
+                subtitle.innerText = 'Хүүхдийнхээ зурмаг бүтээлээр чимэглэсэн хуанли';
+                price.innerText = '35,000₮';
+            } else if (productKey === 'apparel') {
+                img.src = 'book2.webp';
+                title.innerText = 'T-shirt & Hoodies (Богино ханцуйт болон малгайтай цамц)';
+                subtitle.innerText = 'Хүүхдийн уран бүтээл хэвлэсэн өмсгөл хувцас';
+                price.innerText = '45,000₮';
+            } else if (productKey === 'totebag') {
+                img.src = 'home_hero.jpg';
+                title.innerText = 'Cotton Tote Bag (Даавуун тор)';
+                subtitle.innerText = 'Байгальд ээлтэй 100% цэвэр даавуун тор';
+                price.innerText = '25,000₮';
+            }
 
             hideAllPages();
             document.getElementById('detail-page').style.display = 'grid';
@@ -398,8 +363,6 @@
         function hideAllPages() {
             document.getElementById('landing-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'none';
-            document.getElementById('framing-service-page').style.display = 'none';
-            document.getElementById('sub-framing-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'none';
         }
 
