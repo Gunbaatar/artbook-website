@@ -9,7 +9,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Хуучин ажиллаж байсан dropdown загварыг сэргээв */
+        /* Dropdown загвар болон зай завсар гаргах хэсэг */
         .dropdown-menu {
             opacity: 0;
             visibility: hidden;
@@ -84,8 +84,9 @@
             </div>
         </div>
 
-        <!-- Цэс (Номнууд дээр ху้าчин ёсоор dropdown ажиллана) -->
+        <!-- Үндсэн Цэс -->
         <nav class="flex items-center space-x-3 sm:space-x-6 text-[10px] sm:text-xs font-semibold tracking-wider uppercase border-b border-gray-100 w-full justify-start sm:justify-center overflow-visible py-1 relative">
+            <!-- НОМНУУД ДЭД ЦЭС -->
             <div class="dropdown group static">
                 <a href="#" onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     НОМНУУД
@@ -109,8 +110,41 @@
                     </div>
                 </div>
             </div>
+
             <span class="text-gray-300">|</span>
-            <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ЖААЗЛАХ ҮЙЛЧИЛГЭЭ</a>
+
+            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (ШИНЭЭР НЭМСЭН) -->
+            <div class="dropdown group static">
+                <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
+                    ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
+                </a>
+                <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
+                    <div class="w-[500px] grid grid-cols-3 gap-6">
+                        <div onclick="openSubFraming('МОДОН ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
+                                <span class="text-[10px] font-bold text-gray-600">Wood Frame</span>
+                            </div>
+                            <p class="text-black font-bold text-xs">Модон жааз</p>
+                            <p class="text-[9px] text-gray-500">WOOD FRAME</p>
+                        </div>
+                        <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
+                                <span class="text-[10px] font-bold text-gray-600">Metal Frame</span>
+                            </div>
+                            <p class="text-black font-bold text-xs">Металь жааз</p>
+                            <p class="text-[9px] text-gray-500">ALUMINUM FRAME</p>
+                        </div>
+                        <div onclick="openSubFraming('ОЛОН ЗУРАГТАЙ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
+                                <span class="text-[10px] font-bold text-gray-600">Collage</span>
+                            </div>
+                            <p class="text-black font-bold text-xs">Олон зурагтай</p>
+                            <p class="text-[9px] text-gray-500">COLLAGE FRAME</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <span class="text-gray-300">|</span>
             <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
@@ -198,22 +232,17 @@
 
             <div class="flex flex-col space-y-2">
                 <div onclick="openSubFraming('МОДОН ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОДОН ЖААЗ</span>
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОДОН ЖААЗ (WOOD FRAME)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
 
                 <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МЕТАЛЛ ЖААЗ</span>
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МЕТАЛЛ ЖААЗ (ALUMINUM FRAME)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
 
-                <div onclick="openSubFraming('ШИЛЭН КАНВАС')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ШИЛЭН КАНВАС</span>
-                    <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
-                </div>
-
-                <div onclick="openSubFraming('МОЗАЙК')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
-                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">МОЗАЙК</span>
+                <div onclick="openSubFraming('ОЛОН ЗУРАГТАЙ ЖААЗ')" class="flex items-center justify-between p-3 rounded-sm border border-gray-100 bg-white hover:border-[#927657] hover:shadow-md cursor-pointer transition group">
+                    <span class="font-normal text-xs sm:text-sm text-gray-900 group-hover:text-[#927657] uppercase tracking-wider">ОЛОН ЗУРАГТАЙ ЖААЗ (COLLAGE FRAME)</span>
                     <span class="text-gray-400 group-hover:text-[#927657] font-bold text-lg">›</span>
                 </div>
             </div>
