@@ -53,7 +53,7 @@
             <!-- Баруун дээд булан -->
             <div class="flex items-center space-x-4 sm:space-x-6 sm:absolute sm:right-0">
                 
-                <!-- САГСНЫ ХЭСЭГ (Дээд тал руу хулгана аваачихад жагсаалт гарна) -->
+                <!-- САГСНЫ ХЭСЭГ -->
                 <div class="dropdown group relative">
                     <a href="#" class="relative text-gray-700 hover:text-[#927657] transition flex items-center py-2">
                         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -62,7 +62,7 @@
                         <span id="cart-count" class="absolute -top-1.5 -right-2 bg-[#927657] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">0</span>
                     </a>
                     
-                    <!-- Сагсны доошоо унах цэс (Dropdown) -->
+                    <!-- Сагсны доошоо унах цэс (Захиал өгөх товчгүй болсон) -->
                     <div class="dropdown-menu absolute right-0 top-full w-72 bg-white border border-gray-200 shadow-xl rounded-sm z-50 p-4">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-gray-800 border-b border-gray-100 pb-2 mb-3">Миний сагс</h4>
                         
@@ -74,13 +74,6 @@
                         <!-- Сагсанд бараа нэмэгдсэн үед харагдах жагсаалт -->
                         <div id="cart-items-container" class="space-y-3 max-h-60 overflow-y-auto">
                             <!-- JS-ээр бараанууд энд нэмэгдэнэ -->
-                        </div>
-
-                        <!-- Сагсны доод хэсэг (Нийт дүнгүй) -->
-                        <div id="cart-footer" class="hidden border-t border-gray-100 pt-3 mt-3">
-                            <button onclick="alert('Төлбөр төлөх хуудас руу шилжих')" class="w-full bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold py-2.5 rounded-sm transition text-center uppercase tracking-wider">
-                                Захиал өгөх
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -388,7 +381,7 @@
     <!-- JS Функцууд -->
     <script>
         let isLoggedIn = false;
-        let cartItems = []; // Сагсанд орсон бараануудын жагсаалт
+        let cartItems = [];
         let selectedCurrentProduct = '';
         let currentPriceText = '';
 
@@ -508,7 +501,6 @@
             cartItems.push({ name: itemName, price: itemPrice });
             updateCartUI();
             
-            // Pop хөдөлгөөн
             const cartBadge = document.getElementById('cart-count');
             cartBadge.classList.add('cart-pop');
             setTimeout(() => cartBadge.classList.remove('cart-pop'), 300);
@@ -518,17 +510,14 @@
             const countElem = document.getElementById('cart-count');
             const emptyMsg = document.getElementById('cart-empty-msg');
             const container = document.getElementById('cart-items-container');
-            const footer = document.getElementById('cart-footer');
 
             countElem.innerText = cartItems.length;
 
             if (cartItems.length === 0) {
                 emptyMsg.style.display = 'block';
                 container.innerHTML = '';
-                footer.style.display = 'none';
             } else {
                 emptyMsg.style.display = 'none';
-                footer.style.display = 'block';
                 
                 let html = '';
                 cartItems.forEach((item, index) => {
