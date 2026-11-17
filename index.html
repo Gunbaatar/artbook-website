@@ -113,30 +113,36 @@
 
             <span class="text-gray-300">|</span>
 
-            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (Гадаад нэр нь дээрээ, монгол нэр нь доороо) -->
+            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (Зурагтай, Томруулсан хэмжээтэй) -->
             <div class="dropdown group static">
                 <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
                 </a>
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
                     <div class="w-[600px] grid grid-cols-3 gap-6">
-                        <div onclick="openSubFraming('МОДОН ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
-                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-xs font-bold text-gray-700 tracking-wider">Wood Frame</span>
+                        <!-- 1. Модон жааз -->
+                        <div onclick="openSubFraming('WOOD FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Wood Frame" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-black font-bold text-xs">Модон жааз</p>
+                            <p class="text-black font-bold text-xs">Wood Frame</p>
+                            <p class="text-[10px] text-gray-500">МОДОН ЖААЗ</p>
                         </div>
-                        <div onclick="openSubFraming('МЕТАЛЛ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
-                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-xs font-bold text-gray-700 tracking-wider">Aluminum Frame</span>
+                        <!-- 2. Металь жааз -->
+                        <div onclick="openSubFraming('ALUMINUM FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="Aluminum Frame" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-black font-bold text-xs">Металь жааз</p>
+                            <p class="text-black font-bold text-xs">Aluminum Frame</p>
+                            <p class="text-[10px] text-gray-500">МЕТАЛЛ ЖААЗ</p>
                         </div>
-                        <div onclick="openSubFraming('ОЛОН ЗУРАГТАЙ ЖААЗ')" class="text-center group/card cursor-pointer relative z-10">
-                            <div class="h-20 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white flex items-center justify-center bg-gray-50">
-                                <span class="text-xs font-bold text-gray-700 tracking-wider">Collage Frame</span>
+                        <!-- 3. Олон зурагтай жааз -->
+                        <div onclick="openSubFraming('COLLAGE FRAME')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Collage Frame" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-black font-bold text-xs">Олон зурагтай жааз</p>
+                            <p class="text-black font-bold text-xs">Collage Frame</p>
+                            <p class="text-[10px] text-gray-500">ОЛОН ЗУРАГТАЙ ЖААЗ</p>
                         </div>
                     </div>
                 </div>
