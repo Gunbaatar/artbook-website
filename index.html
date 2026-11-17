@@ -120,35 +120,27 @@
     <!-- 1. НҮҮР ХУУДАС -->
     <main id="landing-page" class="w-full flex flex-col space-y-6 mt-2">
         
-        <!-- 1. ЭХНИЙ ВИДЕО ХЭСЭГ (video_home.mp4) -->
+        <!-- ЭХНИЙ ВИДЕО ХЭСЭГ -->
         <div class="relative group w-full h-[500px] sm:h-[600px] lg:h-[80vh] min-h-[500px] overflow-hidden shadow-xl bg-black">
             <video autoplay muted loop playsinline class="w-full h-full object-cover object-center">
                 <source src="video_home.mp4" type="video/mp4">
                 Таны браузер видео дэмжихгүй байна.
             </video>
             
-            <!-- Видеоны дээрх давхарга (Layer) - home text.png (20% томруулсан) болон гологдсон ЗАХИАЛАХ товч -->
             <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-center p-6 sm:p-12">
-                
-                <!-- HOME TEXT LAYER (home text.png zurgiig 20% tomruulav) -->
                 <div class="flex flex-col items-center justify-center mb-8">
                     <img src="home text.png" alt="Home Text" class="max-w-[336px] sm:max-w-[540px] w-auto h-auto object-contain drop-shadow-lg" onerror="this.style.display='none'">
                 </div>
-
-                <!-- ГОЛЛУУЛСАН ЗАХИАЛАХ ТОВЧ -->
                 <div>
                     <button onclick="switchService('framing', event)" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-sm shadow-xl tracking-wider uppercase transition transform hover:scale-105">
                         ЗАХИАЛАХ
                     </button>
                 </div>
-
             </div>
         </div>
 
-        <!-- 2 ширхэг ДООД ЗУРГУУД (Доошоо scroll хийхэд харагдана) -->
+        <!-- ДООД ЗУРГУУД -->
         <div class="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 pb-16">
-            
-            <!-- Доод зүүн талын зураг (Art Book) -->
             <div onclick="switchContent('art', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-lg h-80 sm:h-96">
                 <img src="book.webp" alt="Art Book" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
                 <div class="absolute inset-0 bg-black/30 flex items-center justify-center transition group-hover:bg-opacity-20">
@@ -159,7 +151,6 @@
                 </div>
             </div>
 
-            <!-- Доод баруун талын зураг (Memory Book) -->
             <div onclick="switchContent('memory', event)" class="relative group cursor-pointer overflow-hidden rounded-sm shadow-lg h-80 sm:h-96">
                 <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="Memory Book" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
                 <div class="absolute inset-0 bg-black/30 flex items-center justify-center transition group-hover:bg-opacity-20">
@@ -169,11 +160,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- 2. БҮТЭЭГДЭХҮҮНИЙ ДЭЛГЭРЭНГҮЙ ХЭСЭГ -->
+    <!-- 2. БҮТЭЭГДЭХҮҮНИЙ ДЭЛГЭРЭНГҮЙ ХЭСЭГ (ArtBook / MemoryBook) -->
     <main id="detail-page" style="display: none;" class="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mt-6 my-auto">
         <div class="lg:col-span-8 relative flex justify-center">
             <img id="main-image" src="book.webp" alt="Book Preview" class="w-full h-auto object-cover rounded-sm shadow-xl transition-all duration-300">
@@ -186,28 +176,74 @@
             <div class="space-y-1 pt-2 border-t border-gray-100">
                 <div class="text-lg font-semibold text-black">Эхлэх үнэ: <span id="main-price" class="font-bold">200,000₮</span></div>
                 <p class="text-xs text-gray-500">Татвар болон хүргэлтийн зардал ороогүй үнэ</p>
-                <a href="#" style="color: #927657;" class="inline-block text-xs font-semibold underline mt-2 hover:opacity-80">Бүх хэвлэлийн хэмжээ & Үнийн жагсаалт →</a>
             </div>
-            
             <div>
                 <a id="main-action-btn" href="#" onclick="handleActionBtn(event)" class="inline-block w-full text-center bg-black text-white py-3.5 px-6 rounded-full font-medium tracking-wide hover:bg-gray-800 transition shadow-md text-xs sm:text-sm">
                     ЗАХИАЛГА ӨГӨХ
                 </a>
             </div>
+        </div>
+    </main>
 
-            <div class="grid grid-cols-1 gap-4 pt-4 border-t border-gray-100">
-                <div class="flex items-start space-x-3">
-                    <svg class="w-6 h-6 text-black mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.875 2.122L7.5 21h9l-.625-.621A3 3 0 0115 18.25V17.25m-6 0h6m-6 0H6.75A2.25 2.25 0 014.5 15V6.75A2.25 2.25 0 016.75 4.5h10.5a2.25 2.25 0 012.25 2.25v8.25a2.25 2.25 0 01-2.25 2.25H15m-6 0V15h6v2.25m-6-9h6m-6 3h4.5"/></svg>
-                    <div>
-                        <h4 id="feature1-title" class="text-sm font-semibold text-black">Дижитал хэлбэрт оруулах</h4>
-                        <p id="feature1-subtitle" class="text-xs text-gray-500">Бүтээлийн зургийн засвар, эх бэлтгэл хийнэ</p>
-                    </div>
+    <!-- 3. ЖААЗЛАХ ҮЙЛЧИЛГЭЭНИЙ 4 ТӨРЛИЙН СОНГОЛТ (Mobile & Desktop Friendly) -->
+    <main id="framing-service-page" style="display: none;" class="max-w-7xl w-full mx-auto px-6 py-8 flex flex-col space-y-8 my-auto">
+        <div class="text-center">
+            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-black">Жаазлах үйлчилгээ</h2>
+            <p class="text-xs sm:text-sm text-gray-500 mt-2">Та өөрийн хүссэн жаазны төрлийг сонгоно уу.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- 1. Модон жааз -->
+            <div onclick="selectFramingType('Модон жааз', '50,000₮-өөс', 'home_hero.jpg')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
+                <div class="h-48 overflow-hidden bg-gray-100">
+                    <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Модон жааз" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-base text-black mb-1">Модон жааз</h3>
+                    <p class="text-xs text-gray-500 mb-3">Байгалийн модон хийцтэй сонгодог загвар</p>
+                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
+                </div>
+            </div>
+
+            <!-- 2. Металл жааз -->
+            <div onclick="selectFramingType('Металл жааз', '65,000₮-өөс', 'book.webp')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
+                <div class="h-48 overflow-hidden bg-gray-100">
+                    <img src="book.webp" onerror="this.src='home_hero.jpg'" alt="Металл жааз" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-base text-black mb-1">Металл жааз</h3>
+                    <p class="text-xs text-gray-500 mb-3">Орчин үеийн минимал хэв маягтай хөнгөн цагаан жааз</p>
+                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
+                </div>
+            </div>
+
+            <!-- 3. Шилэн канвас -->
+            <div onclick="selectFramingType('Шилэн канвас', '80,000₮-өөс', 'book2.webp')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
+                <div class="h-48 overflow-hidden bg-gray-100">
+                    <img src="book2.webp" onerror="this.src='home_hero.jpg'" alt="Шилэн канвас" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-base text-black mb-1">Шилэн канвас</h3>
+                    <p class="text-xs text-gray-500 mb-3">Гялалзсан өнгө үзэмжтэй шилэн гадаргуутай хэвлэл</p>
+                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
+                </div>
+            </div>
+
+            <!-- 4. Мозайк -->
+            <div onclick="selectFramingType('Мозайк', '95,000₮-өөс', 'artbook_menu.jpg')" class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-md cursor-pointer group hover:border-[#927657] transition">
+                <div class="h-48 overflow-hidden bg-gray-100">
+                    <img src="artbook_menu.jpg" onerror="this.src='home_hero.jpg'" alt="Мозайк" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-base text-black mb-1">Мозайк</h3>
+                    <p class="text-xs text-gray-500 mb-3">Олон зургийн нэгдсэн нийлмэл жаазтай бүтээл</p>
+                    <span class="inline-block bg-[#927657] text-white text-xs font-semibold py-2 px-4 rounded-sm">Сонгох</span>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 3. ХЭРЭГЛЭГЧИЙН САМБАР -->
+    <!-- 4. ХЭРЭГЛЭГЧИЙН САМБАР -->
     <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto px-6 flex-col space-y-6 mt-10 mb-auto">
         <h2 class="text-2xl font-bold text-gray-900">Миний бүртгэл</h2>
         
@@ -267,11 +303,25 @@
 
         function switchService(service, e) {
             if(e) e.preventDefault();
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('framing-service-page').style.display = 'flex';
+        }
+
+        function selectFramingType(typeName, priceText, imageSrc) {
             const img = document.getElementById('main-image');
             const title = document.getElementById('main-title');
-            img.src = 'home_hero.jpg';
-            title.innerText = 'Жаазлах үйлчилгээ';
-            showDetail();
+            const subtitle = document.getElementById('main-subtitle');
+            const price = document.getElementById('main-price');
+
+            img.src = imageSrc;
+            title.innerText = typeName;
+            subtitle.innerText = 'Таны сонгосон загварын жаазлах үйлчилгээ';
+            price.innerText = priceText;
+
+            document.getElementById('framing-service-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'grid';
         }
 
         function handleActionBtn(e) {
@@ -315,11 +365,13 @@
             if(e) e.preventDefault();
             document.getElementById('landing-page').style.display = 'flex';
             document.getElementById('detail-page').style.display = 'none';
+            document.getElementById('framing-service-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'none';
         }
 
         function showDetail() {
             document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('framing-service-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'grid';
             document.getElementById('dashboard-page').style.display = 'none';
         }
@@ -328,6 +380,7 @@
             if(e) e.preventDefault();
             document.getElementById('landing-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'none';
+            document.getElementById('framing-service-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'flex';
         }
 
@@ -348,3 +401,5 @@
 
 </body>
 </html>
+
+```
