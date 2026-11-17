@@ -86,7 +86,7 @@
 
         <!-- Үндсэн Цэс -->
         <nav class="flex items-center space-x-3 sm:space-x-6 text-[10px] sm:text-xs font-semibold tracking-wider uppercase border-b border-gray-100 w-full justify-start sm:justify-center overflow-visible py-1 relative">
-            <!-- НОМНУУД ДЭД ЦЭС -->
+            <!-- 1. НОМНУУД ДЭД ЦЭС -->
             <div class="dropdown group static">
                 <a href="#" onclick="goHome(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     НОМНУУД
@@ -113,14 +113,13 @@
 
             <span class="text-gray-300">|</span>
 
-            <!-- ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС (Зурагтай, Томруулсан хэмжээтэй) -->
+            <!-- 2. ЖААЗЛАХ ҮЙЛЧИЛГЭЭ ДЭД ЦЭС -->
             <div class="dropdown group static">
                 <a href="#" onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
                     ЖААЗЛАХ ҮЙЛЧИЛГЭЭ
                 </a>
                 <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
                     <div class="w-[600px] grid grid-cols-3 gap-6">
-                        <!-- 1. Модон жааз -->
                         <div onclick="openSubFraming('WOOD FRAME')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="home_hero.jpg" onerror="this.src='book.webp'" alt="Wood Frame" class="w-full h-full object-cover">
@@ -128,7 +127,6 @@
                             <p class="text-black font-bold text-xs">Wood Frame</p>
                             <p class="text-[10px] text-gray-500">МОДОН ЖААЗ</p>
                         </div>
-                        <!-- 2. Металь жааз -->
                         <div onclick="openSubFraming('ALUMINUM FRAME')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="Aluminum Frame" class="w-full h-full object-cover">
@@ -136,7 +134,6 @@
                             <p class="text-black font-bold text-xs">Aluminum Frame</p>
                             <p class="text-[10px] text-gray-500">МЕТАЛЛ ЖААЗ</p>
                         </div>
-                        <!-- 3. Олон зурагтай жааз -->
                         <div onclick="openSubFraming('COLLAGE FRAME')" class="text-center group/card cursor-pointer relative z-10">
                             <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
                                 <img src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Collage Frame" class="w-full h-full object-cover">
@@ -151,7 +148,41 @@
             <span class="text-gray-300">|</span>
             <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">УРЛАГИЙН БҮТЭЭГДЭХҮҮН</a>
+
+            <!-- 3. УРЛАГИЙН БҮТЭЭГДЭХҮҮН ДЭД ЦЭС (ШИНЭЭР НЭМСЭН) -->
+            <div class="dropdown group static">
+                <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">
+                    УРЛАГИЙН БҮТЭЭГДЭХҮҮН
+                </a>
+                <div class="dropdown-menu absolute left-0 right-0 top-full w-full bg-[#f9f9f9] border-b border-gray-200 shadow-md z-50 flex justify-center py-6">
+                    <div class="w-[600px] grid grid-cols-3 gap-6">
+                        <!-- Хуанли -->
+                        <div onclick="openSubFraming('CALENDARS')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="book.webp" onerror="this.src='artbook_menu.jpg'" alt="Desk & Wall Calendars" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-black font-bold text-xs">Desk & Wall Calendars</p>
+                            <p class="text-[10px] text-gray-500">ШИРЭЭНИЙ БОЛОН ХАНЫН ХУАНЛИ</p>
+                        </div>
+                        <!-- Цамц -->
+                        <div onclick="openSubFraming('APPAREL')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="book2.webp" onerror="this.src='artbook_menu.jpg'" alt="T-shirt & Hoodies" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-black font-bold text-xs">T-shirt & Hoodies</p>
+                            <p class="text-[10px] text-gray-500">БОГИНО ХАНЦУЙТ БОЛОН МАЛГАЙТАЙ ЦАМЦ</p>
+                        </div>
+                        <!-- Даавуун тор -->
+                        <div onclick="openSubFraming('TOTE BAG')" class="text-center group/card cursor-pointer relative z-10">
+                            <div class="h-24 rounded-sm mb-1.5 shadow-sm border border-gray-200 overflow-hidden group-hover/card:border-[#927657] transition bg-white">
+                                <img src="home_hero.jpg" onerror="this.src='artbook_menu.jpg'" alt="Cotton Tote Bag" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-black font-bold text-xs">Cotton Tote Bag</p>
+                            <p class="text-[10px] text-gray-500">ДААВУУН ТОР</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -262,7 +293,7 @@
         <div class="relative z-10 w-full max-w-sm bg-white/95 backdrop-blur-md rounded-sm shadow-2xl p-6 flex flex-col space-y-4">
             <div class="flex items-center space-x-3 border-b border-gray-200 pb-3">
                 <button onclick="switchService(event)" class="text-gray-700 hover:text-[#927657] font-bold text-lg">←</button>
-                <h2 id="sub-framing-title" class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">ЖААЗНЫ СОНГОЛТУУД</h2>
+                <h2 id="sub-framing-title" class="text-base sm:text-lg font-bold text-gray-900 uppercase tracking-wide">БҮТЭЭГДЭХҮҮНИЙ СОНГОЛТУУД</h2>
             </div>
 
             <div class="flex flex-col space-y-2">
@@ -356,7 +387,7 @@
             const img = document.getElementById('main-image');
 
             title.innerText = productName;
-            subtitle.innerText = 'Таны сонгосон жаазны загвар';
+            subtitle.innerText = 'Таны сонгосон бүтээгдэхүүний загвар';
             price.innerText = priceText;
             img.src = 'home_hero.jpg';
 
