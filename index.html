@@ -273,6 +273,46 @@
         </div>
     </main>
 
+    <!-- 3. ДИЗАЙНЫ РЕДАКТОР (MEMORY BOOK LAYOUT EDITOR) ХЭСЭГ -->
+    <main id="editor-page" style="display: none;" class="w-full flex-1 flex flex-col bg-[#f1f3f4] min-h-[85vh]">
+        <!-- Толгойн хэсэг -->
+        <div class="bg-white border-b border-gray-200 px-6 py-3 flex justify-between items-center shadow-sm">
+            <div class="flex items-center space-x-4">
+                <button onclick="goHome(event)" class="text-xs text-gray-600 hover:text-black font-semibold flex items-center space-x-1">
+                    <span>← Буцах</span>
+                </button>
+                <span class="text-gray-300">|</span>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-800">Memory Book - Загвар зохион байгуулалт</h3>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="addCurrentBookToCart()" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs px-6 py-2 rounded-sm shadow transition tracking-wider uppercase">
+                    Сагсанд нэмэх
+                </button>
+            </div>
+        </div>
+
+        <!-- Редакторын үндсэн бие (Зүүн талын sidebar + Баруун талын layout хэсэг) -->
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Зүүн талын зургуудын жагсаалт -->
+            <div class="w-72 bg-white border-r border-gray-200 p-4 flex flex-col h-[calc(85vh-53px)]">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Зургууд (<span id="editor-total-photos">0</span>)</span>
+                    <button onclick="openFileExplorer()" class="text-[11px] text-[#927657] hover:underline font-bold">+ Нэмэх</button>
+                </div>
+                <div id="editor-sidebar-photos" class="grid grid-cols-2 gap-2 overflow-y-auto flex-1 p-1">
+                    <!-- JS-ээр зургууд энд орно -->
+                </div>
+            </div>
+
+            <!-- Баруун талын номын хуудас preview-нууд (Spread samples) -->
+            <div class="flex-1 p-8 overflow-y-auto bg-[#e8eaed]">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="editor-spreads-container">
+                    <!-- JS-ээр номын хуудасны загварууд энд үүснэ[cite: 3] -->
+                </div>
+            </div>
+        </div>
+    </main>
+
     <!-- 5. ХЭРЭГЛЭГЧИЙН САМБАР -->
     <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto px-6 flex-col space-y-6 mt-10 mb-auto">
         <h2 id="dashboard-title" class="text-2xl font-bold text-gray-900">Хэрэглэгчийн мэдээлэл</h2>
@@ -319,7 +359,7 @@
         </div>
     </div>
 
-    <!-- ФАЙЛ БОЛОН ХЭЛБЭР СОНГОХ МОДАЛ ЦОНХ -->
+    <!-- ФАЙЛ ОРУУЛАХ МОДАЛ ЦОНХ -->
     <div id="upload-modal" style="display: none;" class="fixed inset-0 bg-black/50 z-[70] flex justify-center items-center p-4">
         <div class="bg-white rounded-sm shadow-2xl w-full max-w-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             <!-- Хаах товч -->
@@ -357,14 +397,14 @@
                     <button onclick="openFileExplorer()" class="text-xs text-[#927657] hover:underline font-semibold">+ Зураг нэмэх</button>
                 </div>
 
-                <!-- Зургуудын томруулсан грид харагдац (өндрийг нэмэгдүүлсэн) -->
+                <!-- Зургуудын томруулсан грид харагдац -->
                 <div id="uploaded-images-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-6 max-h-80 overflow-y-auto p-1 border border-gray-100 rounded-sm bg-gray-50/30">
                     <!-- JS-ээр зургууд энд нэмэгдэнэ -->
                 </div>
 
                 <!-- Доод талын Үргэлжлүүлэх товч -->
                 <div class="pt-4 border-t border-gray-100">
-                    <button onclick="finishUploadAndProceed()" class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm py-3.5 rounded-sm shadow-md transition tracking-wider uppercase flex items-center justify-center space-x-2">
+                    <button onclick="finishUploadAndOpenEditor()" class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm py-3.5 rounded-sm shadow-md transition tracking-wider uppercase flex items-center justify-center space-x-2">
                         <span>ҮРГЭЛЖЛҮҮЛЭХ</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
                     </button>
@@ -467,6 +507,7 @@
             document.getElementById('landing-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('editor-page').style.display = 'none';
         }
 
         function handleActionBtn(e) {
@@ -541,11 +582,76 @@
             updateUploadedImagesUI();
         }
 
-        function finishUploadAndProceed() {
+        // Үргэлжлүүлэх товч дарахад редактор хэсэг рүү шилжих
+        function finishUploadAndOpenEditor() {
             if (uploadedFilesArray.length === 0) return;
             toggleUploadModal();
-            addToCart(selectedCurrentProduct + ' (' + uploadedFilesArray.length + ' зураг)', currentPriceText);
-            document.getElementById('computer-file-input').value = '';
+            hideAllPages();
+            initEditorView();
+            document.getElementById('editor-page').style.display = 'flex';
+        }
+
+        // Редакторын UI-г бэлтгэх (Зүүн талын зураг, баруун талын spread sample хуудаснууд)[cite: 3]
+        function initEditorView() {
+            document.getElementById('editor-total-photos').innerText = uploadedFilesArray.length;
+            
+            // 1. Зүүн талын sidebar зураг жагсаалт
+            let sidebarHtml = '';
+            uploadedFilesArray.forEach((file) => {
+                let fileURL = URL.createObjectURL(file);
+                sidebarHtml += `
+                    <div class="h-20 bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
+                        <img src="${fileURL}" class="w-full h-full object-cover">
+                    </div>
+                `;
+            });
+            document.getElementById('editor-sidebar-photos').innerHTML = sidebarHtml;
+
+            // 2. Баруун талын Spread хуудасны загварууд (Cover, Page 1, Page 2-3 гэх мэт)[cite: 3]
+            let spreadsContainer = document.getElementById('editor-spreads-container');
+            let spreadsHtml = '';
+            
+            // Cover хуудас
+            spreadsHtml += `
+                <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 flex flex-col">
+                    <div class="bg-gray-50 border border-dashed border-gray-300 h-44 rounded-sm flex p-2 space-x-2">
+                        <div class="w-1/2 bg-white border border-gray-200 h-full flex items-center justify-center text-gray-300 text-xs">Cover</div>
+                        <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
+                            ${uploadedFilesArray[0] ? `<img src="${URL.createObjectURL(uploadedFilesArray[0])}" class="w-full h-full object-cover">` : ''}
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-semibold text-gray-500 text-center mt-2">Cover</span>
+                </div>
+            `;
+
+            // Бусад зургуудаар spread хуудаснуудыг автоматаар үүсгэх[cite: 3]
+            let pageNum = 1;
+            for (let i = 1; i < uploadedFilesArray.length; i += 2) {
+                let img1Url = uploadedFilesArray[i] ? URL.createObjectURL(uploadedFilesArray[i]) : '';
+                let img2Url = uploadedFilesArray[i+1] ? URL.createObjectURL(uploadedFilesArray[i+1]) : '';
+                
+                spreadsHtml += `
+                    <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 flex flex-col">
+                        <div class="bg-gray-50 border border-dashed border-gray-300 h-44 rounded-sm flex p-2 space-x-2">
+                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
+                                ${img1Url ? `<img src="${img1Url}" class="w-full h-full object-cover">` : ''}
+                            </div>
+                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
+                                ${img2Url ? `<img src="${img2Url}" class="w-full h-full object-cover">` : ''}
+                            </div>
+                        </div>
+                        <span class="text-[11px] font-semibold text-gray-500 text-center mt-2">Page ${pageNum}-${pageNum+1}</span>
+                    </div>
+                `;
+                pageNum += 2;
+            }
+
+            spreadsContainer.innerHTML = spreadsHtml;
+        }
+
+        function addCurrentBookToCart() {
+            addToCart(selectedCurrentProduct + ' (' + uploadedFilesArray.length + ' зураг - Дизайн бэлэн)', currentPriceText);
+            goHome();
         }
 
         function addToCart(itemName, itemPrice) {
