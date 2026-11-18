@@ -291,23 +291,23 @@
             </div>
         </div>
 
-        <!-- Редакторын үндсэн бие (Зүүн талын sidebar + Баруун талын layout хэсэг) -->
+        <!-- Редакторын үндсэн бие -->
         <div class="flex flex-1 overflow-hidden">
-            <!-- Зүүн талын зургуудын жагсаалт -->
+            <!-- Зүүн талын түүхий зургууд (sidebar) -->
             <div class="w-72 bg-white border-r border-gray-200 p-4 flex flex-col h-[calc(85vh-53px)]">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Зургууд (<span id="editor-total-photos">0</span>)</span>
                     <button onclick="openFileExplorer()" class="text-[11px] text-[#927657] hover:underline font-bold">+ Нэмэх</button>
                 </div>
                 <div id="editor-sidebar-photos" class="grid grid-cols-2 gap-2 overflow-y-auto flex-1 p-1">
-                    <!-- JS-ээр зургууд энд орно -->
+                    <!-- JS-ээр зургууд устгах товчтойгоо энд орно -->
                 </div>
             </div>
 
             <!-- Баруун талын номын хуудас preview-нууд (Spread samples) -->
             <div class="flex-1 p-8 overflow-y-auto bg-[#e8eaed]">
                 <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="editor-spreads-container">
-                    <!-- JS-ээр номын хуудасны загварууд энд үүснэ[cite: 3] -->
+                    <!-- JS-ээр хуудас болон хооронд нь чирж сольж болох зургууд энд үүснэ -->
                 </div>
             </div>
         </div>
@@ -420,6 +420,7 @@
         let selectedCurrentProduct = '';
         let currentPriceText = '';
         let uploadedFilesArray = [];
+        let draggedPhotoIndex = null;
 
         function switchContent(type, e) {
             if(e) e.preventDefault();
@@ -582,7 +583,6 @@
             updateUploadedImagesUI();
         }
 
-        // Үргэлжлүүлэх товч дарахад редактор хэсэг рүү шилжих
         function finishUploadAndOpenEditor() {
             if (uploadedFilesArray.length === 0) return;
             toggleUploadModal();
@@ -591,53 +591,84 @@
             document.getElementById('editor-page').style.display = 'flex';
         }
 
-        // Редакторын UI-г бэлтгэх (Зүүн талын зураг, баруун талын spread sample хуудаснууд)[cite: 3]
+        // Редакторын UI болон Drag & Drop, Устгах үйлдэл
         function initEditorView() {
             document.getElementById('editor-total-photos').innerText = uploadedFilesArray.length;
             
-            // 1. Зүүн талын sidebar зураг жагсаалт
+            // 1. Зүүн талын sidebar зураг жагсаалт (Устгах боломжтойгоор)
             let sidebarHtml = '';
-            uploadedFilesArray.forEach((file) => {
+            uploadedFilesArray.forEach((file, index) => {
                 let fileURL = URL.createObjectURL(file);
                 sidebarHtml += `
-                    <div class="h-20 bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
+                    <div class="relative group h-20 bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
                         <img src="${fileURL}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <button onclick="removeEditorPhoto(${index})" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full" title="Устгах">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 `;
             });
             document.getElementById('editor-sidebar-photos').innerHTML = sidebarHtml;
 
-            // 2. Баруун талын Spread хуудасны загварууд (Cover, Page 1, Page 2-3 гэх мэт)[cite: 3]
+            // 2. Баруун талын Spread хуудасны загварууд (Drag & Drop Shuffle болон Устгах боломжтойгоор)[cite: 4]
             let spreadsContainer = document.getElementById('editor-spreads-container');
             let spreadsHtml = '';
             
             // Cover хуудас
+            let coverImgUrl = uploadedFilesArray[0] ? URL.createObjectURL(uploadedFilesArray[0]) : '';
             spreadsHtml += `
                 <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 flex flex-col">
                     <div class="bg-gray-50 border border-dashed border-gray-300 h-44 rounded-sm flex p-2 space-x-2">
                         <div class="w-1/2 bg-white border border-gray-200 h-full flex items-center justify-center text-gray-300 text-xs">Cover</div>
-                        <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
-                            ${uploadedFilesArray[0] ? `<img src="${URL.createObjectURL(uploadedFilesArray[0])}" class="w-full h-full object-cover">` : ''}
+                        <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden relative group/img">
+                            ${coverImgUrl ? `
+                                <img src="${coverImgUrl}" draggable="true" ondragstart="onDragStart(0, event)" ondragover="event.preventDefault()" ondrop="onDrop(0, event)" class="w-full h-full object-cover cursor-grab">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex items-center justify-center pointer-events-none">
+                                    <button onclick="removeEditorPhoto(0)" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full pointer-events-auto" title="Устгах">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </button>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                     <span class="text-[11px] font-semibold text-gray-500 text-center mt-2">Cover</span>
                 </div>
             `;
 
-            // Бусад зургуудаар spread хуудаснуудыг автоматаар үүсгэх[cite: 3]
+            // Бусад хуудас spread-үүд
             let pageNum = 1;
             for (let i = 1; i < uploadedFilesArray.length; i += 2) {
-                let img1Url = uploadedFilesArray[i] ? URL.createObjectURL(uploadedFilesArray[i]) : '';
-                let img2Url = uploadedFilesArray[i+1] ? URL.createObjectURL(uploadedFilesArray[i+1]) : '';
+                let idx1 = i;
+                let idx2 = i + 1;
+                let img1Url = uploadedFilesArray[idx1] ? URL.createObjectURL(uploadedFilesArray[idx1]) : '';
+                let img2Url = uploadedFilesArray[idx2] ? URL.createObjectURL(uploadedFilesArray[idx2]) : '';
                 
                 spreadsHtml += `
                     <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 flex flex-col">
                         <div class="bg-gray-50 border border-dashed border-gray-300 h-44 rounded-sm flex p-2 space-x-2">
-                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
-                                ${img1Url ? `<img src="${img1Url}" class="w-full h-full object-cover">` : ''}
+                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden relative group/img">
+                                ${img1Url ? `
+                                    <img src="${img1Url}" draggable="true" ondragstart="onDragStart(${idx1}, event)" ondragover="event.preventDefault()" ondrop="onDrop(${idx1}, event)" class="w-full h-full object-cover cursor-grab">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex items-center justify-center pointer-events-none">
+                                        <button onclick="removeEditorPhoto(${idx1})" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full pointer-events-auto" title="Устгах">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                    </div>
+                                ` : ''}
                             </div>
-                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden">
-                                ${img2Url ? `<img src="${img2Url}" class="w-full h-full object-cover">` : ''}
+                            <div class="w-1/2 bg-white border border-gray-200 h-full overflow-hidden relative group/img">
+                                ${img2Url ? `
+                                    <img src="${img2Url}" draggable="true" ondragstart="onDragStart(${idx2}, event)" ondragover="event.preventDefault()" ondrop="onDrop(${idx2}, event)" class="w-full h-full object-cover cursor-grab">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex items-center justify-center pointer-events-none">
+                                        <button onclick="removeEditorPhoto(${idx2})" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full pointer-events-auto" title="Устгах">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                    </div>
+                                ` : ''}
                             </div>
                         </div>
                         <span class="text-[11px] font-semibold text-gray-500 text-center mt-2">Page ${pageNum}-${pageNum+1}</span>
@@ -647,6 +678,33 @@
             }
 
             spreadsContainer.innerHTML = spreadsHtml;
+        }
+
+        // Зураг чирж эхлэх үед индекшийг хадгалах
+        function onDragStart(index, event) {
+            draggedPhotoIndex = index;
+        }
+
+        // Өөр зураг дээр чирж тавихад (Drop) байрлалаа хооронд нь солих (Shuffle)
+        function onDrop(targetIndex, event) {
+            event.preventDefault();
+            if (draggedPhotoIndex !== null && draggedPhotoIndex !== targetIndex) {
+                let temp = uploadedFilesArray[draggedPhotoIndex];
+                uploadedFilesArray[draggedPhotoIndex] = uploadedFilesArray[targetIndex];
+                uploadedFilesArray[targetIndex] = temp;
+                initEditorView(); // Дахин зурах
+            }
+            draggedPhotoIndex = null;
+        }
+
+        // Редакторын дотроос зураг хасах
+        function removeEditorPhoto(index) {
+            uploadedFilesArray.splice(index, 1);
+            if (uploadedFilesArray.length === 0) {
+                goHome();
+            } else {
+                initEditorView();
+            }
         }
 
         function addCurrentBookToCart() {
