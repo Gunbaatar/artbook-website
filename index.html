@@ -327,30 +327,33 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
-            <!-- 1. ЭХЛЭЭД ЗУРАГ ОРУУЛАХ ХЭСЭГ (Drag & Drop) -->
+            <!-- Далд файл сонгогч (컴퓨тер файлаас сонгох input) -->
+            <input type="file" id="computer-file-input" multiple accept="image/*,.tiff,.heic" class="hidden" onchange="handleFilesSelected(event)">
+
+            <!-- 1. ЭХЛЭЭД ЗУРАГ ОРУУЛАХ ХЭСЭГ (Drag & Drop эсвэл товч дарахад компютер файлын цонх нээгдэнэ) -->
             <div id="upload-step-view" class="block">
-                <div class="border-2 border-dashed border-gray-300 rounded-sm p-8 text-center flex flex-col items-center justify-center space-y-4 mb-2 bg-gray-50/55">
+                <div onclick="openFileExplorer()" class="border-2 border-dashed border-gray-300 hover:border-[#927657] cursor-pointer rounded-sm p-8 text-center flex flex-col items-center justify-center space-y-4 mb-2 bg-gray-50/55 transition">
                     <div class="w-12 h-12 text-[#927657] flex items-center justify-center">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                         </svg>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-gray-800">Drag & Drop Your Files Here</h4>
+                        <h4 class="text-sm font-bold text-gray-800">Drag & Drop Your Files Here or Click to Browse</h4>
                         <p class="text-[11px] text-gray-400 mt-1">JPG/TIFF/HEIC, min 700 x 700 px, max 50,000 x 50,000 px or 1,000 MP, max 2 GB.</p>
                     </div>
                     <div class="flex items-center justify-center pt-2">
-                        <button onclick="simulateFileUpload()" class="bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold px-8 py-3 rounded-sm shadow-md transition tracking-wider uppercase">
+                        <button type="button" class="bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold px-8 py-3 rounded-sm shadow-md transition tracking-wider uppercase pointer-events-none">
                             Зураг оруулах
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. ЗУРАГ ОРУУЛСНЫ ДАРАА ГАРАХ ХЭЛБЭР СОНГОХ ХЭСЭГ (Эхэндээ хаалттай байна) -->
+            <!-- 2. ЗУРАГ ОРУУЛСНЫ ДАРАА ГАРАХ ХЭЛБЭР СОНГОХ ХЭСЭГ -->
             <div id="layout-step-view" style="display: none;" class="text-center py-4">
                 <div class="mb-6 bg-green-50 border border-green-200 p-3 rounded-sm text-green-700 text-xs font-medium">
-                    Зураг амжилттай байршлаа! Одоо номын хэлбэрээ сонгоно уу.
+                    <span id="selected-files-count">0</span> зураг амжилттай сонгогдлоо! Одоо номын хэлбэрээ сонгоно уу.
                 </div>
                 <p class="text-[11px] font-bold text-gray-400 tracking-wider uppercase mb-4">ХЭЛБЭР СОНГОХ</p>
                 <div class="grid grid-cols-3 gap-4">
@@ -389,6 +392,7 @@
         let cartItems = [];
         let selectedCurrentProduct = '';
         let currentPriceText = '';
+        let uploadedFilesCount = 0;
 
         function switchContent(type, e) {
             if(e) e.preventDefault();
@@ -500,15 +504,29 @@
             uploadModal.style.display = (uploadModal.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // Зураг оруулах товч дарахад эсвэл зураг сонгоход хэлбэр сонгох хэсэг гарч ирэх функц
-        function simulateFileUpload() {
-            document.getElementById('upload-step-view').style.display = 'none';
-            document.getElementById('layout-step-view').style.display = 'block';
+        // Компьютерийн файл сонгох цонхыг дуудах функц
+        function openFileExplorer() {
+            document.getElementById('computer-file-input').click();
+        }
+
+        // Файлуудыг сонгосны дараа ажиллах функц
+        function handleFilesSelected(event) {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                uploadedFilesCount = files.length;
+                document.getElementById('selected-files-count').innerText = uploadedFilesCount;
+                
+                // Зураг амжилттай сонгогдсоны дараа хэлбэр сонгох хэсэг рүү шилжих
+                document.getElementById('upload-step-view').style.display = 'none';
+                document.getElementById('layout-step-view').style.display = 'block';
+            }
         }
 
         function selectLayout(layoutName) {
             toggleUploadModal();
-            addToCart(selectedCurrentProduct + ' (' + layoutName + ')', currentPriceText);
+            addToCart(selectedCurrentProduct + ' (' + layoutName + ' - ' + uploadedFilesCount + ' зураг)', currentPriceText);
+            // Файл input-ийг цэвэрлэх
+            document.getElementById('computer-file-input').value = '';
         }
 
         function addToCart(itemName, itemPrice) {
