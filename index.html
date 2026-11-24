@@ -409,7 +409,7 @@
                 <!-- Layouts цэс -->
                 <div id="left-panel-layouts" class="p-3 overflow-y-auto flex-1 space-y-2">
                     <div class="flex items-center justify-between text-[10px] font-semibold text-gray-500 pb-1">
-                        <span>Тал: <strong id="active-side-badge" class="text-gray-800">Баруун</strong></span>
+                        <span>Тал: <strong id="active-side-badge" class="text-[#927657]">Баруун</strong></span>
                         <button type="button" onclick="toggleActiveSide()" class="text-[#927657] hover:underline">Тал солих</button>
                     </div>
                     <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
@@ -430,7 +430,7 @@
                 </div>
             </aside>
 
-            <!-- 2. Төв хэсгийн ТОМ дэлгэмэл хуудасны ажлын талбар (Захын хэсгүүдээс ~2cm / 76px зайтайгаар аль болох том) -->
+            <!-- 2. Төв хэсгийн ТОМ дэлгэмэл хуудасны ажлын талбар -->
             <section class="flex-1 bg-[#e5e7eb] p-[76px] flex items-center justify-center overflow-auto relative">
                 <div id="main-spread-stage-container" class="w-full h-full flex items-center justify-center">
                     <!-- JS-ээр том дэлгэмэл хуудас (зүүн + баруун нүүр) энд зурна -->
@@ -662,14 +662,14 @@
         const MIN_IMAGE_PX = 2000;
         const MAX_IMAGE_PX = 9000;
 
-        // Номын формат ба хэмжээний сонголтууд (~2cm захын зайтайгаар аль болох томруулсан харагдац)
+        // Номын формат ба хэмжээний сонголтууд (LANDSCAPE max-width: 1600px)
         const BOOK_FORMATS = [
             {
                 key: 'landscape',
                 title: 'LANDSCAPE',
                 subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
                 boxClass: 'w-44 h-32',
-                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 1260px; max-height: calc(100vh - 290px);',
+                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 1600px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 8 / 3; width: 108px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
@@ -681,7 +681,7 @@
                 title: 'PORTRAIT',
                 subtitle: 'БОСОО ХЭЛБЭР',
                 boxClass: 'w-32 h-44',
-                mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 1020px; max-height: calc(100vh - 290px);',
+                mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 1120px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 6 / 4; width: 84px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
@@ -693,7 +693,7 @@
                 title: 'SQUARE',
                 subtitle: 'ДӨРВӨЛЖИН ХЭЛБЭР',
                 boxClass: 'w-36 h-36',
-                mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 1120px; max-height: calc(100vh - 290px);',
+                mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 1240px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 2 / 1; width: 96px;',
                 sizes: [
                     'Жижиг хэмжээ ( 29 × 29см )',
@@ -727,7 +727,7 @@
         // Идэвхтэй текст элемент: { spreadIdx, textId }
         let activeTextTarget = null;
 
-        // Зөвхөн хэрэглэгчийн сүүлд илгээсэн 1_2.jpg - 10_2.jpg загварууд
+        // Зөвхөн хэрэглэгчийн өгсөн 1_2.jpg - 10_2.jpg загварууд
         const LAYOUT_OPTIONS = [
             {
                 key: '1_2',
@@ -1972,16 +1972,16 @@
                     <button
                         type="button"
                         ${!pane || pane.blank ? 'disabled' : `onclick="setPagePaneLayout(${currentSpreadIdx}, '${activeSide}', '${opt.key}')"`}
-                        class="p-2 rounded-sm border flex flex-col items-center space-y-1 transition ${
+                        class="p-2 rounded-sm flex flex-col items-center space-y-1 transition ${
                             isSelected
-                                ? 'border-[#927657] bg-[#927657]/10 text-[#927657]'
-                                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400 disabled:opacity-40'
+                                ? 'border-2 border-[#927657] bg-[#927657]/15 text-[#927657] ring-2 ring-[#927657]/30 shadow-sm'
+                                : 'border border-gray-200 bg-white text-gray-600 hover:border-[#927657]/60 disabled:opacity-40'
                         }"
                     >
-                        <div class="w-12 h-9 p-[3px] bg-white border border-gray-200 rounded-[2px]">
+                        <div class="w-12 h-9 p-[3px] bg-white border ${isSelected ? 'border-[#927657]' : 'border-gray-200'} rounded-[2px]">
                             ${opt.icon}
                         </div>
-                        <span class="text-[10px] font-semibold">${opt.label}</span>
+                        <span class="text-[10px] font-bold">${opt.label}</span>
                     </button>
                 `;
             }).join('');
@@ -2069,7 +2069,7 @@
                             width: ${tb.w}%;
                             height: ${tb.h}%;
                         "
-                        class="absolute z-30 ${isSelected ? 'outline-1 outline-dashed outline-[#2563eb]' : 'hover:outline-1 hover:outline-dashed hover:outline-gray-400'} bg-transparent cursor-move group/txt flex items-center"
+                        class="absolute z-30 ${isSelected ? 'outline-2 outline-dashed outline-[#927657]' : 'hover:outline-1 hover:outline-dashed hover:outline-gray-400'} bg-transparent cursor-move group/txt flex items-center"
                     >
                         <div
                             onmousedown="startCanvasElementAction('text-resize-e', ${currentSpreadIdx}, '${tb.id}', event)"
@@ -2100,6 +2100,9 @@
                 `;
             }).join('');
 
+            const leftSelected = !sp.left.blank && activeSide === 'left';
+            const rightSelected = !sp.right.blank && activeSide === 'right';
+
             container.innerHTML = `
                 <div
                     id="spread-canvas-surface"
@@ -2110,8 +2113,10 @@
                 >
                     <div
                         onclick="setActiveSide('left', event)"
-                        class="relative w-full h-full border-r border-gray-200 book-spine-left overflow-hidden ${
-                            !sp.left.blank && activeSide === 'left' ? 'ring-2 ring-inset ring-[#927657]/40' : ''
+                        class="relative w-full h-full border-r border-gray-200 book-spine-left overflow-hidden transition ${
+                            !sp.left.blank ? 'cursor-pointer' : ''
+                        } ${
+                            leftSelected ? 'ring-2 ring-inset ring-[#927657] shadow-inner' : ''
                         }"
                     >
                         ${renderPaneCanvas(currentSpreadIdx, 'left', sp.left, false)}
@@ -2119,8 +2124,10 @@
 
                     <div
                         onclick="setActiveSide('right', event)"
-                        class="relative w-full h-full book-spine-right overflow-hidden ${
-                            !sp.right.blank && activeSide === 'right' ? 'ring-2 ring-inset ring-[#927657]/40' : ''
+                        class="relative w-full h-full book-spine-right overflow-hidden transition ${
+                            !sp.right.blank ? 'cursor-pointer' : ''
+                        } ${
+                            rightSelected ? 'ring-2 ring-inset ring-[#927657] shadow-inner' : ''
                         }"
                     >
                         ${renderPaneCanvas(currentSpreadIdx, 'right', sp.right, false)}
@@ -2151,7 +2158,7 @@
                         <div
                             style="${fmtCfg.thumbSpreadStyle}"
                             class="bg-white grid grid-cols-2 overflow-hidden border-2 transition ${
-                                active ? 'border-[#3d8b37] shadow-sm' : 'border-gray-200 group-hover:border-gray-400'
+                                active ? 'border-[#927657] ring-2 ring-[#927657]/30 shadow-sm' : 'border-gray-200 group-hover:border-gray-400'
                             }"
                         >
                             <div class="w-full h-full border-r border-gray-200 overflow-hidden">
@@ -2161,7 +2168,7 @@
                                 ${renderPaneCanvas(idx, 'right', sp.right, true)}
                             </div>
                         </div>
-                        <span class="text-[10px] ${active ? 'font-bold text-[#3d8b37]' : 'text-gray-500'}">
+                        <span class="text-[10px] ${active ? 'font-bold text-[#927657]' : 'text-gray-500'}">
                             ${getSpreadCaption(sp, idx)}
                         </span>
                     </button>
@@ -2426,4 +2433,4 @@
 
 </body>
 </html>
-```[cite: 3, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+```[cite: 3, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
