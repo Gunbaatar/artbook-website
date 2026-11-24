@@ -286,7 +286,7 @@
         <!-- Толгойн хэсэг -->
         <div class="bg-white border-b border-gray-200 px-6 py-3 flex flex-wrap gap-3 justify-between items-center shadow-sm">
             <div class="flex items-center space-x-4">
-                <button onclick="goHome(event)" class="text-xs text-gray-600 hover:text-black font-semibold flex items-center space-x-1">
+                <button onclick="handleEditorBack(event)" type="button" class="text-xs text-gray-600 hover:text-black font-semibold flex items-center space-x-1">
                     <span>← Буцах</span>
                 </button>
                 <span class="text-gray-300">|</span>
@@ -321,7 +321,7 @@
 
             <!-- Баруун талын номын хуудас preview-нууд (Spread samples) -->
             <div class="flex-1 p-8 overflow-y-auto bg-[#e8eaed]">
-                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start" id="editor-spreads-container">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center" id="editor-spreads-container">
                     <!-- JS-ээр хуудас болон тусдаа layout-тай нүднүүд энд үүснэ -->
                 </div>
             </div>
@@ -443,7 +443,13 @@
             <!-- 2. ЗУРАГ ОРУУЛСНЫ ДАРААХ ЖАГСААЛТ БОЛОН ҮРГЭЛЖЛҮҮЛЭХ ТОВЧ -->
             <div id="layout-step-view" style="display: none;" class="py-2">
                 <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Оруулсан зургууд (<span id="selected-files-count">0</span>)</h4>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="backToFormatStep()" type="button" class="text-xs font-semibold text-gray-500 hover:text-[#927657] transition">
+                            ← Хэлбэр солих
+                        </button>
+                        <span class="text-gray-300">|</span>
+                        <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Оруулсан зургууд (<span id="selected-files-count">0</span>)</h4>
+                    </div>
                     <button onclick="openFileExplorer()" type="button" class="text-xs text-[#927657] hover:underline font-semibold">+ Зураг нэмэх</button>
                 </div>
 
@@ -481,7 +487,7 @@
                 title: 'LANDSCAPE',
                 subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
                 boxClass: 'w-44 h-32',
-                canvasAspectClass: 'aspect-[4/3] max-h-72 mx-auto',
+                canvasBoxStyle: 'width: 360px; max-width: 100%; aspect-ratio: 4 / 3;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
                     'A4 хэмжээ ( 21 × 29.7см )'
@@ -492,7 +498,7 @@
                 title: 'PORTRAIT',
                 subtitle: 'БОСОО ХЭЛБЭР',
                 boxClass: 'w-32 h-44',
-                canvasAspectClass: 'aspect-[3/4] max-h-80 mx-auto',
+                canvasBoxStyle: 'width: 240px; max-width: 100%; aspect-ratio: 3 / 4;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
                     'A4 хэмжээ ( 21 × 29.7см )'
@@ -503,7 +509,7 @@
                 title: 'SQUARE',
                 subtitle: 'ДӨРВӨЛЖИН ХЭЛБЭР',
                 boxClass: 'w-36 h-36',
-                canvasAspectClass: 'aspect-square max-h-72 mx-auto',
+                canvasBoxStyle: 'width: 290px; max-width: 100%; aspect-ratio: 1 / 1;',
                 sizes: [
                     'Жижиг хэмжээ ( 29 × 29см )',
                     'Том хэмжээ ( 20 × 20см )'
@@ -625,10 +631,17 @@
 
         function confirmFormatAndShowUpload() {
             document.getElementById('format-step-view').style.display = 'none';
-            document.getElementById('upload-step-view').style.display = 'block';
-            document.getElementById('layout-step-view').style.display = 'none';
             document.getElementById('loading-step-view').style.display = 'none';
             document.getElementById('active-book-format-badge').innerText = getActiveBookFormatLabel();
+
+            if (photoAssets.length > 0) {
+                updateUploadedImagesUI();
+                document.getElementById('upload-step-view').style.display = 'none';
+                document.getElementById('layout-step-view').style.display = 'block';
+            } else {
+                document.getElementById('upload-step-view').style.display = 'block';
+                document.getElementById('layout-step-view').style.display = 'none';
+            }
         }
 
         function backToFormatStep() {
@@ -637,6 +650,25 @@
             document.getElementById('loading-step-view').style.display = 'none';
             document.getElementById('format-step-view').style.display = 'block';
             renderBookFormatCards();
+        }
+
+        // Редактор доторх "← Буцах" товч: 1 алхам ухарч оруулсан зургуудын жагсаалт руу буцна
+        function handleEditorBack(e) {
+            if (e) e.preventDefault();
+            hideAllPages();
+            document.getElementById('detail-page').style.display = 'grid';
+            renderBookFormatCards();
+            document.getElementById('format-step-view').style.display = 'none';
+            document.getElementById('upload-step-view').style.display = 'none';
+            document.getElementById('loading-step-view').style.display = 'none';
+            if (photoAssets.length > 0) {
+                updateUploadedImagesUI();
+                document.getElementById('layout-step-view').style.display = 'block';
+            } else {
+                document.getElementById('active-book-format-badge').innerText = getActiveBookFormatLabel();
+                document.getElementById('upload-step-view').style.display = 'block';
+            }
+            document.getElementById('upload-modal').style.display = 'flex';
         }
 
         function getPhotoById(photoId) {
@@ -875,6 +907,7 @@
             container.innerHTML = html;
 
             if (photoAssets.length === 0) {
+                document.getElementById('active-book-format-badge').innerText = getActiveBookFormatLabel();
                 document.getElementById('upload-step-view').style.display = 'block';
                 document.getElementById('layout-step-view').style.display = 'none';
             }
@@ -1190,7 +1223,7 @@
 
                         <!-- Сонгосон формат ба хэмжээнд тохирсон хуудасны талбар -->
                         <div class="w-full py-2 flex items-center justify-center">
-                            <div class="${fmtCfg.canvasAspectClass} w-full bg-[#f8f9fa] border border-gray-200 rounded-sm overflow-hidden shadow-inner">
+                            <div style="${fmtCfg.canvasBoxStyle}" class="bg-[#f8f9fa] border border-gray-200 rounded-sm overflow-hidden shadow-inner">
                                 ${renderSpreadCanvas(spread, spreadIdx)}
                             </div>
                         </div>
@@ -1415,6 +1448,4 @@
 
 </body>
 </html>
-```[cite: 3]
-
-Сонгосон **LANDSCAPE**, **PORTRAIT**, **SQUARE** хэлбэр бүр дээр хуудасны доторх нүдний хуваагдлыг (`1 зураг`, `2 босоо`, `2 хэвтээ`, `3L`, `4 хуваагдал`) мөн тухайн форматын онцлогт тааруулж өөрчлөх үү?
+```[cite: 3, 6]
