@@ -269,35 +269,10 @@
     <!-- 1.5 ФОТО ХЭВЛЭЛ (ЦААС СОНГОХ ХУУДАС) -->
     <main id="photo-print-page" style="display: none;" class="max-w-6xl w-full mx-auto px-6 py-12 my-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start">
-            <!-- 1. PREMIUM SATIN PAPER -->
+            <!-- 1. PREMIUM HIGH GLOSS -->
             <div class="flex flex-col">
                 <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
-                    <img src="satin_paper.jpg" onerror="this.src='book.webp'" alt="Premium Satin Paper" class="w-full h-full object-cover">
-                </div>
-                <div class="text-center mb-5">
-                    <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM SATIN PAPER</h3>
-                    <p class="text-[11px] font-medium tracking-wider uppercase text-gray-500 mt-1">САТИН ЦААС</p>
-                </div>
-                <div class="border-t-2 border-gray-900 pt-4 mb-8 flex-1">
-                    <ul class="space-y-1.5 text-xs text-gray-700 leading-relaxed">
-                        <li>• Зөөлөн, бага зэрэг гялгар</li>
-                        <li>• Гэрлийн ойлт бага</li>
-                        <li>• Фото зураг, хөрөг хэвлэхэд тохиромжтой</li>
-                    </ul>
-                </div>
-                <button
-                    type="button"
-                    onclick="selectPhotoPaper('Premium Satin Paper (Сатин цаас)', '30,000₮')"
-                    class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
-                >
-                    СОНГОХ
-                </button>
-            </div>
-
-            <!-- 2. PREMIUM HIGH GLOSS -->
-            <div class="flex flex-col">
-                <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
-                    <img src="high_gloss_paper.jpg" onerror="this.src='book2.webp'" alt="Premium High Gloss" class="w-full h-full object-cover">
+                    <img src="paper_glossy.jpg" onerror="this.src='book2.webp'" alt="Premium High Gloss" class="w-full h-full object-cover">
                 </div>
                 <div class="text-center mb-5">
                     <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM HIGH GLOSS</h3>
@@ -319,10 +294,10 @@
                 </button>
             </div>
 
-            <!-- 3. PREMIUM LUSTER PAPER -->
+            <!-- 2. PREMIUM LUSTER PAPER -->
             <div class="flex flex-col">
                 <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
-                    <img src="luster_paper.jpg" onerror="this.src='artbook_menu.jpg'" alt="Premium Luster Paper" class="w-full h-full object-cover">
+                    <img src="paper_luster.jpg" onerror="this.src='artbook_menu.jpg'" alt="Premium Luster Paper" class="w-full h-full object-cover">
                 </div>
                 <div class="text-center mb-5">
                     <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM LUSTER PAPER</h3>
@@ -338,6 +313,31 @@
                 <button
                     type="button"
                     onclick="selectPhotoPaper('Premium Luster Paper (Хагас гялгар цаас)', '30,000₮')"
+                    class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
+                >
+                    СОНГОХ
+                </button>
+            </div>
+
+            <!-- 3. PREMIUM SATIN PAPER -->
+            <div class="flex flex-col">
+                <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
+                    <img src="paper_satin.jpg" onerror="this.src='book.webp'" alt="Premium Satin Paper" class="w-full h-full object-cover">
+                </div>
+                <div class="text-center mb-5">
+                    <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM SATIN PAPER</h3>
+                    <p class="text-[11px] font-medium tracking-wider uppercase text-gray-500 mt-1">САТИН ЦААС</p>
+                </div>
+                <div class="border-t-2 border-gray-900 pt-4 mb-8 flex-1">
+                    <ul class="space-y-1.5 text-xs text-gray-700 leading-relaxed">
+                        <li>• Зөөлөн, бага зэрэг гялгар</li>
+                        <li>• Гэрлийн ойлт бага</li>
+                        <li>• Фото зураг, хөрөг хэвлэхэд тохиромжтой</li>
+                    </ul>
+                </div>
+                <button
+                    type="button"
+                    onclick="selectPhotoPaper('Premium Satin Paper (Сатин цаас)', '30,000₮')"
                     class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
                 >
                     СОНГОХ
@@ -496,7 +496,7 @@
                         <span>Тал: <strong id="active-side-badge" class="text-[#927657]">Баруун</strong></span>
                         <button type="button" onclick="toggleActiveSide()" class="text-[#927657] hover:underline">Тал солих</button>
                     </div>
-                    <p class="text-[10px] text-gray-400">Layout дээр дарж загвар сонгох эсвэл зураг чирж тавина.</p>
+                    <p class="text-[10px] text-gray-400">Layout дээр дарж загвар сонгох эсвэл зураг чирж тавина (4 талаас 1.5см зайтай).</p>
                     <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
                         <!-- JS-ээр 1_2.jpg - 11_2.jpg загварын мини картууд орно -->
                     </div>
@@ -747,6 +747,9 @@
         const MIN_MAJOR_SIDE_PX = 2000;
         const MAX_MAJOR_SIDE_PX = 9000;
 
+        // Нэг хуудасны 4 талаас авах бодит зай (см)
+        const PAGE_MARGIN_CM = 1.5;
+
         // Номын формат ба хэмжээний сонголтууд (LANDSCAPE max-width: 2000px)
         const BOOK_FORMATS = [
             {
@@ -757,8 +760,8 @@
                 mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 2000px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 8 / 3; width: 108px;',
                 sizes: [
-                    'A3 хэмжээ ( 29.7 × 42см )',
-                    'A4 хэмжээ ( 21 × 29.7см )'
+                    { label: 'A3 хэмжээ ( 29.7 × 42см )', pageWcm: 42, pageHcm: 29.7 },
+                    { label: 'A4 хэмжээ ( 21 × 29.7см )', pageWcm: 29.7, pageHcm: 21 }
                 ]
             },
             {
@@ -769,8 +772,8 @@
                 mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 1120px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 6 / 4; width: 84px;',
                 sizes: [
-                    'A3 хэмжээ ( 29.7 × 42см )',
-                    'A4 хэмжээ ( 21 × 29.7см )'
+                    { label: 'A3 хэмжээ ( 29.7 × 42см )', pageWcm: 29.7, pageHcm: 42 },
+                    { label: 'A4 хэмжээ ( 21 × 29.7см )', pageWcm: 21, pageHcm: 29.7 }
                 ]
             },
             {
@@ -781,8 +784,8 @@
                 mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 1240px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 2 / 1; width: 96px;',
                 sizes: [
-                    'Жижиг хэмжээ ( 29 × 29см )',
-                    'Том хэмжээ ( 20 × 20см )'
+                    { label: 'Жижиг хэмжээ ( 29 × 29см )', pageWcm: 29, pageHcm: 29 },
+                    { label: 'Том хэмжээ ( 20 × 20см )', pageWcm: 20, pageHcm: 20 }
                 ]
             }
         ];
@@ -1035,10 +1038,23 @@
             return BOOK_FORMATS.find(f => f.key === selectedBookFormat) || BOOK_FORMATS[0];
         }
 
+        function getActiveSizeObj() {
+            const cfg = getActiveFormatConfig();
+            return cfg.sizes[selectedBookSizeIndex[cfg.key] || 0] || cfg.sizes[0];
+        }
+
         function getActiveBookFormatLabel() {
             const cfg = getActiveFormatConfig();
-            const sizeLabel = cfg.sizes[selectedBookSizeIndex[cfg.key] || 0];
-            return `${cfg.title} • ${sizeLabel}`;
+            const sizeObj = getActiveSizeObj();
+            return `${cfg.title} • ${sizeObj.label}`;
+        }
+
+        // Нэг хуудасны 4 талаас 1.5см зайг хувиар (%) тооцоолж буцаана
+        function getPageMarginPercent() {
+            const sizeObj = getActiveSizeObj();
+            const hPct = Math.min(25, Math.max(2, (PAGE_MARGIN_CM / sizeObj.pageHcm) * 100));
+            const vPct = Math.min(25, Math.max(2, (PAGE_MARGIN_CM / sizeObj.pageWcm) * 100));
+            return { hPct, vPct };
         }
 
         function renderBookFormatCards() {
@@ -1049,7 +1065,7 @@
                 const isSelected = selectedBookFormat === fmt.key;
                 const activeSizeIdx = selectedBookSizeIndex[fmt.key] || 0;
 
-                const radiosHtml = fmt.sizes.map((sizeText, idx) => {
+                const radiosHtml = fmt.sizes.map((sizeObj, idx) => {
                     const checked = isSelected && activeSizeIdx === idx;
                     return `
                         <button
@@ -1066,7 +1082,7 @@
                             </span>
                             <span class="text-xs ${
                                 checked ? 'font-semibold text-gray-900' : 'text-gray-500'
-                            }">${sizeText}</span>
+                            }">${sizeObj.label}</span>
                         </button>
                     `;
                 }).join('');
@@ -2061,7 +2077,7 @@
             `;
         }
 
-        // 1_2.jpg - 11_2.jpg загварууд
+        // 1_2.jpg - 11_2.jpg загварууд: цаасны 4 талаас 1.5см дотогшоо маржинтай
         function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
@@ -2074,20 +2090,23 @@
             }
 
             const s = pane.slots;
-            const padClass = isThumbnail ? 'p-[3px]' : 'p-[10px]';
-            const gapClass = isThumbnail ? 'gap-[3px]' : 'gap-[10px]';
+            const gapClass = isThumbnail ? 'gap-[2px]' : 'gap-[8px]';
+            const { hPct, vPct } = getPageMarginPercent();
+            const marginStyle = `padding: ${hPct.toFixed(2)}% ${vPct.toFixed(2)}%;`;
 
+            let innerGrid = '';
             switch (pane.layout) {
                 case '2_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                         </div>
                     `;
+                    break;
                 case '3_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
@@ -2095,9 +2114,10 @@
                             </div>
                         </div>
                     `;
+                    break;
                 case '4_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 ${gapClass}">
                             <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
@@ -2105,9 +2125,10 @@
                             ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                         </div>
                     `;
+                    break;
                 case '5_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             <div class="grid grid-rows-2 h-full ${gapClass}">
                                 <div class="grid grid-cols-2 h-full ${gapClass}">
@@ -2118,9 +2139,10 @@
                             </div>
                         </div>
                     `;
+                    break;
                 case '6_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
@@ -2131,9 +2153,10 @@
                             </div>
                         </div>
                     `;
+                    break;
                 case '7_2':
-                    return `
-                        <div class="w-full h-full grid grid-rows-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-rows-2 ${gapClass}">
                             <div class="grid grid-cols-4 h-full ${gapClass}">
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
@@ -2146,10 +2169,11 @@
                             </div>
                         </div>
                     `;
+                    break;
                 case '8_2':
                 case '9_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-5 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-5 ${gapClass}">
                             <div class="col-span-3 grid grid-rows-5 h-full ${gapClass}">
                                 <div class="row-span-3 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
                                 <div class="row-span-2 grid grid-cols-2 h-full ${gapClass}">
@@ -2160,18 +2184,20 @@
                             <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
+                    break;
                 case '10_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                         </div>
                     `;
+                    break;
                 case '11_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
+                    innerGrid = `
+                        <div class="w-full h-full grid grid-cols-3 ${gapClass}">
                             <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
                             <div class="col-span-1 grid grid-rows-3 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
@@ -2180,14 +2206,22 @@
                             </div>
                         </div>
                     `;
+                    break;
                 case '1_2':
                 default:
-                    return `
-                        <div class="w-full h-full bg-white ${padClass}">
+                    innerGrid = `
+                        <div class="w-full h-full">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                         </div>
                     `;
+                    break;
             }
+
+            return `
+                <div class="w-full h-full bg-white" style="${marginStyle}">
+                    ${innerGrid}
+                </div>
+            `;
         }
 
         function renderSidebarLayouts() {
