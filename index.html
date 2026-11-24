@@ -667,14 +667,14 @@
         const MIN_MAJOR_SIDE_PX = 2000;
         const MAX_MAJOR_SIDE_PX = 9000;
 
-        // Номын формат ба хэмжээний сонголтууд (LANDSCAPE max-width: 1600px)
+        // Номын формат ба хэмжээний сонголтууд (LANDSCAPE max-width: 2000px)
         const BOOK_FORMATS = [
             {
                 key: 'landscape',
                 title: 'LANDSCAPE',
                 subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
                 boxClass: 'w-44 h-32',
-                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 1600px; max-height: calc(100vh - 280px);',
+                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 2000px; max-height: calc(100vh - 280px);',
                 thumbSpreadStyle: 'aspect-ratio: 8 / 3; width: 108px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
@@ -837,57 +837,71 @@
             return result;
         }
 
-        // Cover болон бусад хуудсанд аль хэдийн байгаа зургуудыг өөр нүдэнд давхардуулж хуваарилахгүй,
-        // зөвхөн ашиглагдаагүй (unused) зургуудыг хоосон слотуудад тараана.
+        // Cover-оос бусад (first-page, double-page, last-page) хуудсуудын зургийг
+        // layout өөрчлөх үед автоматаар урагшлуулж слотуудад жигд тааруулна.
         function reflowPhotosAcrossSpreads() {
             const validIds = new Set(photoAssets.map(p => p.id));
-            const usedIds = new Set();
+            const coverUsedIds = new Set();
+            const nonCoverOrdered = [];
+            const seenNonCover = new Set();
 
             bookSpreads.forEach(sp => {
                 ['left', 'right'].forEach(side => {
                     if (sp[side].blank) return;
                     sp[side].slots.forEach(sl => {
                         if (sl.type === 'image' && sl.photoId) {
-                            if (validIds.has(sl.photoId)) {
-                                usedIds.add(sl.photoId);
-                            } else {
+                            if (!validIds.has(sl.photoId)) {
                                 sl.photoId = null;
+                                return;
+                            }
+                            if (sp.kind === 'cover') {
+                                coverUsedIds.add(sl.photoId);
+                            } else if (!seenNonCover.has(sl.photoId)) {
+                                seenNonCover.add(sl.photoId);
+                                nonCoverOrdered.push({
+                                    photoId: sl.photoId,
+                                    posX: typeof sl.posX === 'number' ? sl.posX : 50,
+                                    posY: typeof sl.posY === 'number' ? sl.posY : 50,
+                                    zoom: typeof sl.zoom === 'number' ? sl.zoom : 100
+                                });
                             }
                         }
                     });
                 });
             });
 
-            const unusedPool = photoAssets
-                .filter(asset => !usedIds.has(asset.id))
-                .map(asset => ({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 }));
+            photoAssets.forEach(asset => {
+                if (!coverUsedIds.has(asset.id) && !seenNonCover.has(asset.id)) {
+                    seenNonCover.add(asset.id);
+                    nonCoverOrdered.push({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 });
+                }
+            });
 
-            let totalEmptyAfterCover = 0;
+            let nonCoverCapacity = 0;
             bookSpreads.forEach(sp => {
                 if (sp.kind === 'cover') return;
                 ['left', 'right'].forEach(side => {
                     if (sp[side].blank) return;
-                    sp[side].slots.forEach(sl => {
-                        if (!sl.photoId) totalEmptyAfterCover++;
-                    });
+                    nonCoverCapacity += sp[side].slots.length;
                 });
             });
 
-            const extraNeeded = Math.max(0, unusedPool.length - totalEmptyAfterCover);
-            const extraDoublePages = Math.ceil(extraNeeded / 2);
+            if (nonCoverOrdered.length > nonCoverCapacity) {
+                const extraSlotsNeeded = nonCoverOrdered.length - nonCoverCapacity;
+                const extraDoublePages = Math.ceil(extraSlotsNeeded / 2);
+                const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
+                const insertAt = lastIdx >= 0 ? lastIdx : bookSpreads.length;
 
-            const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
-            const insertAt = lastIdx >= 0 ? lastIdx : bookSpreads.length;
-
-            for (let i = 0; i < extraDoublePages; i++) {
-                bookSpreads.splice(insertAt + i, 0, {
-                    id: 'spread_dbl_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2, 5),
-                    kind: 'double-page',
-                    left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
-                    right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
-                    textBoxes: [],
-                    shapes: []
-                });
+                for (let i = 0; i < extraDoublePages; i++) {
+                    bookSpreads.splice(insertAt + i, 0, {
+                        id: 'spread_dbl_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2, 5),
+                        kind: 'double-page',
+                        left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                        right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                        textBoxes: [],
+                        shapes: []
+                    });
+                }
             }
 
             let poolIdx = 0;
@@ -897,12 +911,18 @@
                     const pane = sp[side];
                     if (pane.blank) return;
                     pane.slots.forEach(sl => {
-                        if (!sl.photoId && poolIdx < unusedPool.length) {
-                            sl.photoId = unusedPool[poolIdx].photoId;
-                            sl.posX = unusedPool[poolIdx].posX;
-                            sl.posY = unusedPool[poolIdx].posY;
-                            sl.zoom = unusedPool[poolIdx].zoom;
+                        if (poolIdx < nonCoverOrdered.length) {
+                            sl.type = 'image';
+                            sl.photoId = nonCoverOrdered[poolIdx].photoId;
+                            sl.posX = nonCoverOrdered[poolIdx].posX;
+                            sl.posY = nonCoverOrdered[poolIdx].posY;
+                            sl.zoom = nonCoverOrdered[poolIdx].zoom;
                             poolIdx++;
+                        } else {
+                            sl.photoId = null;
+                            sl.posX = 50;
+                            sl.posY = 50;
+                            sl.zoom = 100;
                         }
                     });
                 });
@@ -1455,7 +1475,9 @@
                 activeImageTarget = { spreadIdx, side, slotIdx: 0 };
             }
 
-            reflowPhotosAcrossSpreads();
+            if (spread.kind !== 'cover') {
+                reflowPhotosAcrossSpreads();
+            }
             renderAllStudioViews();
         }
 
@@ -1492,6 +1514,9 @@
             }
 
             dragState = null;
+            if (sp.kind !== 'cover') {
+                reflowPhotosAcrossSpreads();
+            }
             renderAllStudioViews();
         }
 
@@ -1833,7 +1858,9 @@
             slot.posX = 50;
             slot.posY = 50;
             slot.zoom = 100;
-            reflowPhotosAcrossSpreads();
+            if (bookSpreads[spreadIdx]?.kind !== 'cover') {
+                reflowPhotosAcrossSpreads();
+            }
             renderAllStudioViews();
         }
 
@@ -1925,7 +1952,7 @@
             `;
         }
 
-        // 1_2.jpg - 11_2.jpg загварууд (8_2, 9_2 нь 8.jpg-ийн харьцаатай; 11_2 нь 11.jpg-ийн загвар)
+        // 1_2.jpg - 11_2.jpg загварууд
         function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
