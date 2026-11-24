@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KidArt - ArtBook & Memory Book</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Marck+Script&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         
@@ -47,10 +47,10 @@
         }
         /* Номын голын нугалаас (Spine shadow) */
         .book-spine-left {
-            box-shadow: inset -10px 0 14px -10px rgba(0, 0, 0, 0.16);
+            box-shadow: inset -12px 0 18px -12px rgba(0, 0, 0, 0.18);
         }
         .book-spine-right {
-            box-shadow: inset 10px 0 14px -10px rgba(0, 0, 0, 0.16);
+            box-shadow: inset 12px 0 18px -12px rgba(0, 0, 0, 0.18);
         }
     </style>
 </head>
@@ -288,83 +288,227 @@
         </div>
     </main>
 
-    <!-- 3. ДИЗАЙНЫ РЕДАКТОР (MEMORY BOOK SPREAD EDITOR) ХЭСЭГ -->
-    <main id="editor-page" style="display: none;" class="w-full flex-1 flex flex-col bg-[#f1f3f4] min-h-[85vh]">
-        <!-- Толгойн хэсэг -->
-        <div class="bg-white border-b border-gray-200 px-6 py-3 flex flex-wrap gap-3 justify-between items-center shadow-sm">
-            <div class="flex items-center space-x-4">
-                <button onclick="handleEditorBack(event)" type="button" class="text-xs text-gray-600 hover:text-black font-semibold flex items-center space-x-1">
+    <!-- 3. МЭРГЭЖЛИЙН НОМЫН РЕДАКТОР (STUDIO WORKSPACE) -->
+    <main id="editor-page" style="display: none;" class="w-full flex-1 flex flex-col bg-[#e9ecef] min-h-[90vh]">
+        <!-- Дээд удирдлагын самбар -->
+        <div class="bg-white border-b border-gray-200 px-4 lg:px-6 py-2.5 flex flex-wrap gap-3 justify-between items-center shadow-sm">
+            <div class="flex items-center space-x-3">
+                <button onclick="handleEditorBack(event)" type="button" class="text-xs text-gray-700 hover:text-black font-semibold flex items-center space-x-1">
                     <span>← Буцах</span>
                 </button>
                 <span class="text-gray-300">|</span>
-                <h3 id="editor-book-heading" class="text-xs font-bold uppercase tracking-wider text-gray-800">Memory Book - Загвар зохион байгуулалт</h3>
+                <span class="text-xs font-extrabold tracking-widest uppercase text-gray-900">KIDART STUDIO</span>
+                <span class="hidden md:inline text-gray-300">|</span>
+                <span id="editor-book-heading" class="hidden md:inline text-xs font-medium text-gray-500">Memory Book</span>
             </div>
-            <div class="flex items-center space-x-3">
-                <button onclick="addNewSpread()" type="button" class="border border-gray-300 hover:border-[#927657] text-gray-700 hover:text-[#927657] font-semibold text-xs px-4 py-2 rounded-sm transition">
-                    + Хуудас нэмэх
+
+            <!-- Текстийн болон зургийн форматлах хөвөгч/дээд хэрэгслийн самбар -->
+            <div id="studio-inspector-bar" class="flex flex-wrap items-center gap-2 text-xs">
+                <div class="flex items-center space-x-1.5 bg-gray-50 border border-gray-200 px-2 py-1 rounded-sm">
+                    <span class="text-[11px] text-gray-500">Зураг:</span>
+                    <input
+                        id="studio-zoom-slider"
+                        type="range"
+                        min="100"
+                        max="250"
+                        step="5"
+                        value="100"
+                        oninput="onStudioZoomChange(this.value)"
+                        class="w-20 accent-[#927657] cursor-pointer"
+                    >
+                    <span id="studio-zoom-label" class="text-[11px] font-bold text-[#927657] w-9">100%</span>
+                    <button onclick="centerActivePhoto()" type="button" title="Зургийг голлуулах" class="text-[10px] px-1.5 py-0.5 bg-white border border-gray-300 rounded-sm hover:border-[#927657]">Гол</button>
+                </div>
+
+                <select
+                    id="studio-font-family"
+                    onchange="onStudioTextPropChange('fontFamily', this.value)"
+                    class="border border-gray-300 rounded-sm px-2 py-1 text-xs bg-white text-gray-800 focus:outline-none focus:border-[#927657]"
+                >
+                    <option value="'Inter', sans-serif">Inter (Кирилл)</option>
+                    <option value="'Roboto', sans-serif">Roboto (Кирилл)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Кирилл)</option>
+                    <option value="'Playfair Display', serif">Playfair Display (Кирилл)</option>
+                    <option value="'Marck Script', cursive">Marck Script (Бичмэл Кирилл)</option>
+                </select>
+
+                <select
+                    id="studio-font-size"
+                    onchange="onStudioTextPropChange('fontSize', Number(this.value))"
+                    class="border border-gray-300 rounded-sm px-2 py-1 text-xs bg-white text-gray-800 focus:outline-none focus:border-[#927657]"
+                >
+                    <option value="13">13px</option>
+                    <option value="15">15px</option>
+                    <option value="18" selected>18px</option>
+                    <option value="22">22px</option>
+                    <option value="28">28px</option>
+                    <option value="36">36px</option>
+                </select>
+
+                <button
+                    id="studio-bold-btn"
+                    type="button"
+                    onclick="toggleStudioTextProp('bold')"
+                    class="px-2 py-1 border border-gray-300 rounded-sm font-bold text-xs bg-white hover:border-[#927657] transition"
+                    title="Тод (Bold)"
+                >B</button>
+
+                <button
+                    id="studio-underline-btn"
+                    type="button"
+                    onclick="toggleStudioTextProp('underline')"
+                    class="px-2 py-1 border border-gray-300 rounded-sm underline text-xs bg-white hover:border-[#927657] transition"
+                    title="Доогуур зураас"
+                >U</button>
+
+                <input
+                    id="studio-text-color"
+                    type="color"
+                    value="#111827"
+                    title="Үсгийн өнгө"
+                    oninput="onStudioTextPropChange('color', this.value)"
+                    class="w-7 h-7 p-0 border border-gray-300 rounded-sm cursor-pointer bg-white"
+                >
+
+                <div class="flex items-center border border-gray-300 rounded-sm bg-white overflow-hidden">
+                    <button type="button" onclick="onStudioTextPropChange('align', 'left')" class="px-2 py-1 hover:bg-gray-100 text-[11px]">Зүүн</button>
+                    <button type="button" onclick="onStudioTextPropChange('align', 'center')" class="px-2 py-1 hover:bg-gray-100 text-[11px] border-x border-gray-300">Гол</button>
+                    <button type="button" onclick="onStudioTextPropChange('align', 'right')" class="px-2 py-1 hover:bg-gray-100 text-[11px]">Баруун</button>
+                </div>
+
+                <button
+                    type="button"
+                    onclick="applyCurrentTextStyleToAll()"
+                    class="bg-[#3d8b37] hover:bg-[#32752d] text-white font-semibold text-[11px] px-2.5 py-1 rounded-sm transition"
+                    title="Одоогийн текст загварыг бүх текстэд хэрэглэх"
+                >
+                    Бүгдэд хэрэглэх
                 </button>
-                <button onclick="autoFillSpreads()" type="button" class="border border-gray-300 hover:border-[#927657] text-gray-700 hover:text-[#927657] font-semibold text-xs px-4 py-2 rounded-sm transition">
-                    Автомат өрөх
-                </button>
-                <button onclick="addCurrentBookToCart()" type="button" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs px-6 py-2 rounded-sm shadow transition tracking-wider uppercase">
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <button onclick="addCurrentBookToCart()" type="button" class="bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs px-5 py-2 rounded-sm shadow transition tracking-wider uppercase">
                     Сагсанд нэмэх
                 </button>
             </div>
         </div>
 
-        <!-- Редакторын үндсэн бие -->
-        <div class="flex flex-1 overflow-hidden">
-            <!-- Зүүн талын түүхий зургууд (sidebar) -->
-            <div class="w-64 lg:w-72 bg-white border-r border-gray-200 p-4 flex flex-col h-[calc(85vh-53px)] shrink-0">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Зургууд (<span id="editor-total-photos">0</span>)</span>
-                    <button onclick="openFileExplorer()" type="button" class="text-[11px] text-[#927657] hover:underline font-bold">+ Нэмэх</button>
+        <!-- Гол ажлын хэсэг: Зүүн загварын самбар + Том дэлгэмэл талбар + Баруун хэрэгслийн цэс -->
+        <div class="flex flex-1 min-h-[540px] overflow-hidden">
+            <!-- 1. Зүүн талын Layouts & Зургийн самбар -->
+            <aside class="w-60 lg:w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
+                <div class="flex border-b border-gray-200 text-[11px] font-bold">
+                    <button id="left-tab-layouts" type="button" onclick="switchLeftPanelTab('layouts')" class="flex-1 py-2.5 text-center border-b-2 border-[#927657] text-[#927657]">
+                        Layouts
+                    </button>
+                    <button id="left-tab-photos" type="button" onclick="switchLeftPanelTab('photos')" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-gray-500 hover:text-gray-800">
+                        Зургууд (<span id="editor-total-photos">0</span>)
+                    </button>
                 </div>
-                <p class="text-[10px] text-gray-400 mb-3">Нүүр дээр дарж томруулан засна. Зургийг нүд рүү чирнэ.</p>
-                <div id="editor-sidebar-photos" class="grid grid-cols-2 gap-2 overflow-y-auto flex-1 p-1 content-start">
-                    <!-- JS-ээр зургууд устгах болон чирэх боломжтойгоор энд орно -->
-                </div>
-            </div>
 
-            <!-- Баруун талын номын дэлгэмэл хуудаснууд (Book Spreads Overview) -->
-            <div class="flex-1 p-6 lg:p-8 overflow-y-auto bg-[#e8eaed]">
-                <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 items-start" id="editor-spreads-container">
-                    <!-- JS-ээр Cover, 1-р нүүр, 2-3 нүүр... дэлгэмэл хуудаснууд энд үүснэ -->
+                <!-- Layouts цэс -->
+                <div id="left-panel-layouts" class="p-3 overflow-y-auto flex-1 space-y-2">
+                    <div class="flex items-center justify-between text-[10px] font-semibold text-gray-500 pb-1">
+                        <span>Идэвхтэй тал: <strong id="active-side-badge" class="text-gray-800">Баруун</strong></span>
+                        <button type="button" onclick="toggleActiveSide()" class="text-[#927657] hover:underline">Тал солих</button>
+                    </div>
+                    <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
+                        <!-- JS-ээр 0.jpg - 10.jpg загварын мини картууд орно -->
+                    </div>
                 </div>
-            </div>
+
+                <!-- Зургууд цэс -->
+                <div id="left-panel-photos" style="display: none;" class="p-3 overflow-y-auto flex-1 flex-col">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[10px] font-bold text-gray-500 uppercase">Оруулсан зураг</span>
+                        <button onclick="openFileExplorer()" type="button" class="text-[11px] text-[#927657] hover:underline font-bold">+ Нэмэх</button>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mb-2">Зургийг хуудасны нүд рүү чирж тавина.</p>
+                    <div id="editor-sidebar-photos" class="grid grid-cols-2 gap-2 content-start">
+                        <!-- JS-ээр зургууд орно -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 2. Төв хэсгийн ТОМ дэлгэмэл хуудасны ажлын талбар -->
+            <section class="flex-1 bg-[#e5e7eb] p-4 sm:p-7 flex flex-col items-center justify-center overflow-auto relative">
+                <div id="main-spread-stage-container" class="w-full flex items-center justify-center my-auto">
+                    <!-- JS-ээр том дэлгэмэл хуудас (зүүн + баруун нүүр) энд зурна -->
+                </div>
+            </section>
+
+            <!-- 3. Баруун талын хэрэгслийн цэс (Text, Photo, Layout, Rectangle, Ellipse) -->
+            <aside class="w-16 sm:w-20 bg-white border-l border-gray-200 py-4 flex flex-col items-center space-y-3 shrink-0 select-none">
+                <button
+                    type="button"
+                    onclick="addFloatingTextBox()"
+                    class="w-12 sm:w-14 py-2 rounded-sm border border-gray-200 hover:border-[#927657] hover:bg-[#faf8f5] flex flex-col items-center space-y-1 transition"
+                >
+                    <span class="text-xs font-extrabold text-gray-800">A+</span>
+                    <span class="text-[10px] text-gray-600 font-medium">Text</span>
+                </button>
+
+                <button
+                    type="button"
+                    onclick="openFileExplorer()"
+                    class="w-12 sm:w-14 py-2 rounded-sm border border-gray-200 hover:border-[#927657] hover:bg-[#faf8f5] flex flex-col items-center space-y-1 transition"
+                >
+                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    <span class="text-[10px] text-gray-600 font-medium">Photo</span>
+                </button>
+
+                <button
+                    type="button"
+                    onclick="switchLeftPanelTab('layouts')"
+                    class="w-12 sm:w-14 py-2 rounded-sm border border-gray-200 hover:border-[#927657] hover:bg-[#faf8f5] flex flex-col items-center space-y-1 transition"
+                >
+                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                    </svg>
+                    <span class="text-[10px] text-gray-600 font-medium">Layout</span>
+                </button>
+
+                <button
+                    type="button"
+                    onclick="addShapeToCurrentSpread('rect')"
+                    class="w-12 sm:w-14 py-2 rounded-sm border border-gray-200 hover:border-[#927657] hover:bg-[#faf8f5] flex flex-col items-center space-y-1 transition"
+                >
+                    <span class="w-4 h-3.5 border-[1.7px] border-gray-700 inline-block"></span>
+                    <span class="text-[10px] text-gray-600 font-medium">Rectangle</span>
+                </button>
+
+                <button
+                    type="button"
+                    onclick="addShapeToCurrentSpread('circle')"
+                    class="w-12 sm:w-14 py-2 rounded-sm border border-gray-200 hover:border-[#927657] hover:bg-[#faf8f5] flex flex-col items-center space-y-1 transition"
+                >
+                    <span class="w-4 h-4 rounded-full border-[1.7px] border-gray-700 inline-block"></span>
+                    <span class="text-[10px] text-gray-600 font-medium">Ellipse</span>
+                </button>
+            </aside>
         </div>
-    </main>
 
-    <!-- ТОМРУУЛЖ ЗАСАХ ЦОНХ (SPREAD ZOOM & EDIT MODAL) -->
-    <div id="spread-zoom-modal" style="display: none;" class="fixed inset-0 bg-black/70 z-[80] flex justify-center items-center p-4">
-        <div class="bg-[#f3f4f6] rounded-sm shadow-2xl w-full max-w-6xl p-5 sm:p-7 relative max-h-[94vh] overflow-y-auto flex flex-col space-y-5">
-            <!-- Толгой -->
-            <div class="flex flex-wrap items-center justify-between gap-3 bg-white px-4 py-3 border border-gray-200 rounded-sm">
-                <div>
-                    <h4 id="zoom-spread-title" class="text-sm font-bold text-gray-900">Нүүр засварлах</h4>
-                    <p class="text-[11px] text-gray-500">Зургийг чирж нүд хооронд солино, зургийн дотор чирж байрлалыг тааруулна, эсвэл <span class="font-semibold">Т</span> дарж текст бичнэ.</p>
+        <!-- Доод талын бүх хуудсуудын мини цуваа (Filmstrip + Өмнөх/Дараагийн товч) -->
+        <footer class="bg-white border-t border-gray-200 px-4 py-2.5 flex flex-col space-y-2 shadow-inner">
+            <div class="flex items-center justify-between text-[11px] text-gray-600 px-1">
+                <div class="flex items-center space-x-2">
+                    <span class="font-bold text-gray-800">Хуудсууд:</span>
+                    <span id="filmstrip-page-counter" class="font-semibold text-[#927657]"></span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <button onclick="resetZoomSlotOffsets()" type="button" class="border border-gray-300 hover:border-[#927657] text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-sm transition">
-                        Зургийн байрлал сэргээх
-                    </button>
-                    <button onclick="closeSpreadZoomModal()" type="button" class="bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold px-5 py-1.5 rounded-sm transition">
-                        Хадгалах & Хаах
-                    </button>
+                    <button type="button" onclick="prevSpread()" class="px-2.5 py-1 border border-gray-300 rounded-sm hover:border-[#927657] font-semibold">← Өмнөх хуудас</button>
+                    <span id="filmstrip-active-label" class="font-bold text-gray-800 px-2"></span>
+                    <button type="button" onclick="nextSpread()" class="px-2.5 py-1 border border-gray-300 rounded-sm hover:border-[#927657] font-semibold">Дараагийн хуудас →</button>
                 </div>
             </div>
 
-            <!-- Зүүн ба Баруун талын layout сонгогч -->
-            <div id="zoom-layout-controls" class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-3.5 border border-gray-200 rounded-sm">
-                <!-- JS-ээр зүүн/баруун талын layout товчнууд орно -->
+            <div id="filmstrip-thumbnails-row" class="flex items-center space-x-3 overflow-x-auto pb-1">
+                <!-- JS-ээр бүх хуудасны мини зурагнууд энд цуварна -->
             </div>
-
-            <!-- Томруулсан дэлгэмэл хуудас -->
-            <div id="zoom-spread-stage-wrap" class="w-full flex items-center justify-center py-2">
-                <!-- JS-ээр томруулсан spread stage орно -->
-            </div>
-        </div>
-    </div>
+        </footer>
+    </main>
 
     <!-- 5. ХЭРЭГЛЭГЧИЙН САМБАР -->
     <main id="dashboard-page" style="display: none;" class="max-w-4xl w-full mx-auto px-6 flex-col space-y-6 mt-10 mb-auto">
@@ -525,8 +669,8 @@
                 title: 'LANDSCAPE',
                 subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
                 boxClass: 'w-44 h-32',
-                spreadAspectStyle: 'aspect-ratio: 8 / 3;',
-                zoomAspectStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 960px;',
+                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 980px;',
+                thumbSpreadStyle: 'aspect-ratio: 8 / 3; width: 108px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
                     'A4 хэмжээ ( 21 × 29.7см )'
@@ -537,8 +681,8 @@
                 title: 'PORTRAIT',
                 subtitle: 'БОСОО ХЭЛБЭР',
                 boxClass: 'w-32 h-44',
-                spreadAspectStyle: 'aspect-ratio: 6 / 4;',
-                zoomAspectStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 780px;',
+                mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 780px;',
+                thumbSpreadStyle: 'aspect-ratio: 6 / 4; width: 84px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
                     'A4 хэмжээ ( 21 × 29.7см )'
@@ -549,8 +693,8 @@
                 title: 'SQUARE',
                 subtitle: 'ДӨРВӨЛЖИН ХЭЛБЭР',
                 boxClass: 'w-36 h-36',
-                spreadAspectStyle: 'aspect-ratio: 2 / 1;',
-                zoomAspectStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 860px;',
+                mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 860px;',
+                thumbSpreadStyle: 'aspect-ratio: 2 / 1; width: 96px;',
                 sizes: [
                     'Жижиг хэмжээ ( 29 × 29см )',
                     'Том хэмжээ ( 20 × 20см )'
@@ -571,91 +715,99 @@
         // Дэлгэмэл хуудасны өгөгдөл
         let bookSpreads = [];
 
-        // Одоо томруулж засварлаж буй дэлгэмэл хуудасны индекс
-        let activeZoomSpreadIdx = null;
+        // Одоо том ажлын талбарт харагдаж буй дэлгэмэл хуудасны индекс
+        let currentSpreadIdx = 0;
 
-        // Зургийн дотор байрлал тааруулах (pan) төлөв
-        let panState = null;
+        // Идэвхтэй тал ('left' эсвэл 'right')
+        let activeSide = 'right';
 
-        // Drag төлөв
-        let dragState = null;
+        // Идэвхтэй зураг слот: { spreadIdx, side, slotIdx }
+        let activeImageTarget = null;
 
-        // Зөвхөн хэрэглэгчийн өгсөн 0.jpg - 10.jpg загварууд
+        // Идэвхтэй текст элемент: { spreadIdx, textId }
+        let activeTextTarget = null;
+
+        // Хуваагдлын загварууд (0.jpg - 10.jpg)
         const LAYOUT_OPTIONS = [
             {
                 key: '1-full',
-                label: '1.jpg (1 нүд)',
+                label: '1.jpg',
                 slots: 1,
                 icon: `<div class="w-full h-full bg-gray-800 rounded-[1px]"></div>`
             },
             {
                 key: '2-v',
-                label: '2.jpg (2 босоо)',
+                label: '2.jpg',
                 slots: 2,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div>`
             },
             {
                 key: '3-l-right',
-                label: '3.jpg (3 нүд)',
+                label: '3.jpg',
                 slots: 3,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div>`
             },
             {
                 key: '3-l-left',
-                label: '4.jpg (3 нүд)',
+                label: '4.jpg',
                 slots: 3,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="bg-gray-800"></div></div>`
             },
             {
                 key: '4-top-bot',
-                label: '5.jpg (4 нүд)',
+                label: '5.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="grid grid-rows-3 gap-[1px]"><div class="row-span-2 bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="grid grid-rows-3 gap-[1px]"><div class="bg-gray-800"></div><div class="row-span-2 bg-gray-800"></div></div></div>`
             },
             {
                 key: '5-mix',
-                label: '6.jpg (5 нүд)',
+                label: '6.jpg',
                 slots: 5,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div></div>`
             },
             {
                 key: '7-spread',
-                label: '7.jpg (6 нүд)',
+                label: '7.jpg',
                 slots: 6,
                 icon: `<div class="w-full h-full grid grid-rows-2 gap-[1px]"><div class="grid grid-cols-4 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="col-span-2 bg-gray-800"></div></div><div class="grid grid-cols-4 gap-[1px]"><div class="col-span-2 bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div>`
             },
             {
                 key: '8-grid',
-                label: '8.jpg (4 нүд)',
+                label: '8.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-3 gap-[1px]"><div class="col-span-2 grid grid-rows-3 gap-[1px]"><div class="row-span-2 bg-gray-800"></div><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div><div class="bg-gray-800"></div></div>`
             },
             {
                 key: '9-grid',
-                label: '9.jpg (4 нүд)',
+                label: '9.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-3 gap-[1px]"><div class="col-span-2 grid grid-rows-3 gap-[1px]"><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="row-span-2 bg-gray-800"></div></div><div class="bg-gray-800"></div></div>`
             },
             {
                 key: '10-quad',
-                label: '10.jpg (4 нүд)',
+                label: '10.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div>`
             },
             {
                 key: 'text-photo',
-                label: '0.jpg (Зураг + Текст)',
+                label: '0.jpg',
                 slots: 2,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px] items-center"><div class="h-full bg-gray-800"></div><div class="space-y-[1px] px-[1px]"><div class="h-[2px] bg-gray-600"></div><div class="h-[2px] bg-gray-400 w-3/4"></div></div></div>`
             }
         ];
 
-        function makeImageSlot(photoId = null, posX = 50, posY = 50) {
-            return { type: 'image', photoId, text: '', posX, posY };
+        // Чөлөөтэй байрлах элементүүдийн drag / resize төлөв
+        let canvasInteraction = null;
+        let photoPanState = null;
+        let dragState = null;
+
+        function makeImageSlot(photoId = null, posX = 50, posY = 50, zoom = 100) {
+            return { type: 'image', photoId, text: '', posX, posY, zoom };
         }
 
-        function makeTextSlot(text = 'Энд дурсамж эсвэл тайлбар бичнэ үү...') {
-            return { type: 'text', photoId: null, text, posX: 50, posY: 50 };
+        function makeTextSlot(text = 'Энд дурсамж бичнэ үү...') {
+            return { type: 'text', photoId: null, text, posX: 50, posY: 50, zoom: 100 };
         }
 
         function getLayoutSlotCount(layoutKey) {
@@ -663,11 +815,27 @@
             return found ? found.slots : 1;
         }
 
-        // Хуудасны layout өөрчлөх үед:
-        // - Илүүдсэн зургуудыг дараагийн хуудаснууд руу урсгаж оруулна
-        // - Багассан нүд рүү дараагийн хуудаснаас зураг автоматаар татагдана
-        // - Дэлгэмэл хуудасны тоо автоматаар нэмэгдэж/багасна
-        function reflowPhotosAcrossSpreads(preferredSpreadIdx = null, preferredSide = null) {
+        function normalizeSlotsForLayout(layoutKey, existingSlots = []) {
+            const count = getLayoutSlotCount(layoutKey);
+            const result = [];
+            for (let i = 0; i < count; i++) {
+                if (existingSlots[i]) {
+                    result.push({
+                        ...existingSlots[i],
+                        zoom: typeof existingSlots[i].zoom === 'number' ? existingSlots[i].zoom : 100,
+                        posX: typeof existingSlots[i].posX === 'number' ? existingSlots[i].posX : 50,
+                        posY: typeof existingSlots[i].posY === 'number' ? existingSlots[i].posY : 50
+                    });
+                } else if (layoutKey === 'text-photo' && i === 1) {
+                    result.push(makeTextSlot('Энд тайлбар бичнэ үү...'));
+                } else {
+                    result.push(makeImageSlot(null));
+                }
+            }
+            return result;
+        }
+
+        function reflowPhotosAcrossSpreads() {
             const collected = [];
             bookSpreads.forEach(sp => {
                 ['left', 'right'].forEach(side => {
@@ -677,45 +845,38 @@
                             collected.push({
                                 photoId: sl.photoId,
                                 posX: typeof sl.posX === 'number' ? sl.posX : 50,
-                                posY: typeof sl.posY === 'number' ? sl.posY : 50
+                                posY: typeof sl.posY === 'number' ? sl.posY : 50,
+                                zoom: typeof sl.zoom === 'number' ? sl.zoom : 100
                             });
                         }
                     });
                 });
             });
 
-            // Хэрэв хэрэглэгч sidebar-аас шинэ зураг оруулсан болон устгасан бол photoAssets-тэй синхрончилж дарааллыг хадгална
             const validIds = new Set(photoAssets.map(p => p.id));
             const orderedPool = [];
-            const seenInCollected = new Set();
+            const seen = new Set();
 
             collected.forEach(item => {
-                if (validIds.has(item.photoId) && !seenInCollected.has(item.photoId)) {
+                if (validIds.has(item.photoId) && !seen.has(item.photoId)) {
                     orderedPool.push(item);
-                    seenInCollected.add(item.photoId);
+                    seen.add(item.photoId);
                 }
             });
 
             photoAssets.forEach(asset => {
-                if (!seenInCollected.has(asset.id)) {
-                    orderedPool.push({ photoId: asset.id, posX: 50, posY: 50 });
-                    seenInCollected.add(asset.id);
+                if (!seen.has(asset.id)) {
+                    orderedPool.push({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 });
+                    seen.add(asset.id);
                 }
             });
 
-            // Дунд хэсгийн double-page хуудаснуудын тоог хэрэгцээтэй зурагт тааруулж тооцоолох
-            const coverCapacity = 1;
-            const firstPageCapacity = 1;
-            const lastPageCapacity = 1;
-
-            // Сүүлийн хуудасны нүдэнд 1 зураг үлдээх боломжтой тул дунд хэсгийн хуудсуудад үлдэх зургийн тоо
-            const remainingForDoubleAndLast = Math.max(0, orderedPool.length - (coverCapacity + firstPageCapacity));
+            const remainingForDoubleAndLast = Math.max(0, orderedPool.length - 2);
             const neededDoublePages = Math.max(
                 1,
-                Math.ceil(Math.max(0, remainingForDoubleAndLast - lastPageCapacity) / 2)
+                Math.ceil(Math.max(0, remainingForDoubleAndLast - 1) / 2)
             );
 
-            // Одоо байгаа double-page-үүдийн layout болон текст слотуудыг хадгалж авна
             const existingDoubles = bookSpreads.filter(sp => sp.kind === 'double-page');
             const rebuildDoubles = [];
 
@@ -729,28 +890,22 @@
                 const leftSlots = [];
                 for (let k = 0; k < leftCount; k++) {
                     const prevSlot = prev?.left?.slots?.[k];
-                    if (prevSlot && prevSlot.type === 'text') {
-                        leftSlots.push({ ...prevSlot });
-                    } else {
-                        leftSlots.push(makeImageSlot(null));
-                    }
+                    leftSlots.push(prevSlot && prevSlot.type === 'text' ? { ...prevSlot } : makeImageSlot(null));
                 }
 
                 const rightSlots = [];
                 for (let k = 0; k < rightCount; k++) {
                     const prevSlot = prev?.right?.slots?.[k];
-                    if (prevSlot && prevSlot.type === 'text') {
-                        rightSlots.push({ ...prevSlot });
-                    } else {
-                        rightSlots.push(makeImageSlot(null));
-                    }
+                    rightSlots.push(prevSlot && prevSlot.type === 'text' ? { ...prevSlot } : makeImageSlot(null));
                 }
 
                 rebuildDoubles.push({
                     id: prev ? prev.id : ('spread_dbl_' + Date.now() + '_' + i),
                     kind: 'double-page',
                     left: { blank: false, layout: leftLayout, slots: leftSlots },
-                    right: { blank: false, layout: rightLayout, slots: rightSlots }
+                    right: { blank: false, layout: rightLayout, slots: rightSlots },
+                    textBoxes: prev?.textBoxes ? prev.textBoxes.map(t => ({ ...t })) : [],
+                    shapes: prev?.shapes ? prev.shapes.map(sh => ({ ...sh })) : []
                 });
             }
 
@@ -758,42 +913,46 @@
             const existingFirst = bookSpreads.find(sp => sp.kind === 'first-page');
             const existingLast = bookSpreads.find(sp => sp.kind === 'last-page');
 
-            const coverSpread = {
-                id: existingCover ? existingCover.id : ('spread_cover_' + Date.now()),
-                kind: 'cover',
-                left: { blank: true, blankLabel: 'Арын хавтас', layout: '1-full', slots: [] },
-                right: {
-                    blank: false,
-                    layout: existingCover?.right?.layout || '1-full',
-                    slots: normalizeSlotsForLayout(existingCover?.right?.layout || '1-full', existingCover?.right?.slots || [makeImageSlot(null)])
-                }
-            };
-
-            const firstSpread = {
-                id: existingFirst ? existingFirst.id : ('spread_p1_' + Date.now()),
-                kind: 'first-page',
-                left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
-                right: {
-                    blank: false,
-                    layout: existingFirst?.right?.layout || '1-full',
-                    slots: normalizeSlotsForLayout(existingFirst?.right?.layout || '1-full', existingFirst?.right?.slots || [makeImageSlot(null)])
-                }
-            };
-
-            const lastSpread = {
-                id: existingLast ? existingLast.id : ('spread_last_' + Date.now()),
-                kind: 'last-page',
-                left: {
-                    blank: false,
-                    layout: existingLast?.left?.layout || '1-full',
-                    slots: normalizeSlotsForLayout(existingLast?.left?.layout || '1-full', existingLast?.left?.slots || [makeImageSlot(null)])
+            const nextSpreads = [
+                {
+                    id: existingCover ? existingCover.id : ('spread_cover_' + Date.now()),
+                    kind: 'cover',
+                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1-full', slots: [] },
+                    right: {
+                        blank: false,
+                        layout: existingCover?.right?.layout || '1-full',
+                        slots: normalizeSlotsForLayout(existingCover?.right?.layout || '1-full', existingCover?.right?.slots || [makeImageSlot(null)])
+                    },
+                    textBoxes: existingCover?.textBoxes ? existingCover.textBoxes.map(t => ({ ...t })) : [],
+                    shapes: existingCover?.shapes ? existingCover.shapes.map(sh => ({ ...sh })) : []
                 },
-                right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] }
-            };
+                {
+                    id: existingFirst ? existingFirst.id : ('spread_p1_' + Date.now()),
+                    kind: 'first-page',
+                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    right: {
+                        blank: false,
+                        layout: existingFirst?.right?.layout || '1-full',
+                        slots: normalizeSlotsForLayout(existingFirst?.right?.layout || '1-full', existingFirst?.right?.slots || [makeImageSlot(null)])
+                    },
+                    textBoxes: existingFirst?.textBoxes ? existingFirst.textBoxes.map(t => ({ ...t })) : [],
+                    shapes: existingFirst?.shapes ? existingFirst.shapes.map(sh => ({ ...sh })) : []
+                },
+                ...rebuildDoubles,
+                {
+                    id: existingLast ? existingLast.id : ('spread_last_' + Date.now()),
+                    kind: 'last-page',
+                    left: {
+                        blank: false,
+                        layout: existingLast?.left?.layout || '1-full',
+                        slots: normalizeSlotsForLayout(existingLast?.left?.layout || '1-full', existingLast?.left?.slots || [makeImageSlot(null)])
+                    },
+                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    textBoxes: existingLast?.textBoxes ? existingLast.textBoxes.map(t => ({ ...t })) : [],
+                    shapes: existingLast?.shapes ? existingLast.shapes.map(sh => ({ ...sh })) : []
+                }
+            ];
 
-            const nextSpreads = [coverSpread, firstSpread, ...rebuildDoubles, lastSpread];
-
-            // Зургуудыг дэс дараагаар нь бүх нүд рүү автоматаар татаж оруулах
             let poolIdx = 0;
             nextSpreads.forEach(sp => {
                 ['left', 'right'].forEach(side => {
@@ -805,11 +964,13 @@
                                 sl.photoId = orderedPool[poolIdx].photoId;
                                 sl.posX = orderedPool[poolIdx].posX;
                                 sl.posY = orderedPool[poolIdx].posY;
+                                sl.zoom = orderedPool[poolIdx].zoom;
                                 poolIdx++;
                             } else {
                                 sl.photoId = null;
                                 sl.posX = 50;
                                 sl.posY = 50;
+                                sl.zoom = 100;
                             }
                         }
                     });
@@ -817,22 +978,9 @@
             });
 
             bookSpreads = nextSpreads;
-        }
-
-        function normalizeSlotsForLayout(layoutKey, existingSlots = []) {
-            const count = getLayoutSlotCount(layoutKey);
-            const result = [];
-
-            for (let i = 0; i < count; i++) {
-                if (existingSlots[i]) {
-                    result.push({ ...existingSlots[i] });
-                } else if (layoutKey === 'text-photo' && i === 1) {
-                    result.push(makeTextSlot('Энд тайлбар бичнэ үү...'));
-                } else {
-                    result.push(makeImageSlot(null));
-                }
+            if (currentSpreadIdx >= bookSpreads.length) {
+                currentSpreadIdx = Math.max(0, bookSpreads.length - 1);
             }
-            return result;
         }
 
         function getActiveFormatConfig() {
@@ -943,7 +1091,6 @@
             renderBookFormatCards();
         }
 
-        // Редактор доторх "← Буцах" товч: 1 алхам ухарч зургийн цонх руу буцна
         function handleEditorBack(e) {
             if (e) e.preventDefault();
             hideAllPages();
@@ -1212,28 +1359,37 @@
                     id: 'spread_cover_' + Date.now(),
                     kind: 'cover',
                     left: { blank: true, blankLabel: 'Арын хавтас', layout: '1-full', slots: [] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] }
+                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    textBoxes: [],
+                    shapes: []
                 },
                 {
                     id: 'spread_p1_' + Date.now(),
                     kind: 'first-page',
                     left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] }
+                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    textBoxes: [],
+                    shapes: []
                 },
                 {
                     id: 'spread_dbl_' + Date.now() + '_0',
                     kind: 'double-page',
                     left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] }
+                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    textBoxes: [],
+                    shapes: []
                 },
                 {
                     id: 'spread_last_' + Date.now(),
                     kind: 'last-page',
                     left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] }
+                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    textBoxes: [],
+                    shapes: []
                 }
             ];
 
+            currentSpreadIdx = 0;
             reflowPhotosAcrossSpreads();
         }
 
@@ -1252,7 +1408,44 @@
             document.getElementById('editor-page').style.display = 'flex';
         }
 
-        // Хуудасны layout солих үед зургууд автоматаар татагдаж, хуудасны тоо шинэчлэгдэнэ
+        function switchLeftPanelTab(tab) {
+            const layoutsTab = document.getElementById('left-tab-layouts');
+            const photosTab = document.getElementById('left-tab-photos');
+            const layoutsPanel = document.getElementById('left-panel-layouts');
+            const photosPanel = document.getElementById('left-panel-photos');
+
+            if (tab === 'photos') {
+                photosTab.className = 'flex-1 py-2.5 text-center border-b-2 border-[#927657] text-[#927657]';
+                layoutsTab.className = 'flex-1 py-2.5 text-center border-b-2 border-transparent text-gray-500 hover:text-gray-800';
+                photosPanel.style.display = 'flex';
+                layoutsPanel.style.display = 'none';
+            } else {
+                layoutsTab.className = 'flex-1 py-2.5 text-center border-b-2 border-[#927657] text-[#927657]';
+                photosTab.className = 'flex-1 py-2.5 text-center border-b-2 border-transparent text-gray-500 hover:text-gray-800';
+                layoutsPanel.style.display = 'block';
+                photosPanel.style.display = 'none';
+            }
+        }
+
+        function setActiveSide(side, event) {
+            if (event) event.stopPropagation();
+            const sp = bookSpreads[currentSpreadIdx];
+            if (!sp || !sp[side] || sp[side].blank) return;
+            activeSide = side;
+            document.getElementById('active-side-badge').innerText = side === 'left' ? 'Зүүн' : 'Баруун';
+            renderSidebarLayouts();
+            renderMainSpreadStage();
+        }
+
+        function toggleActiveSide() {
+            const sp = bookSpreads[currentSpreadIdx];
+            if (!sp) return;
+            const nextSide = activeSide === 'left' ? 'right' : 'left';
+            if (sp[nextSide] && !sp[nextSide].blank) {
+                setActiveSide(nextSide);
+            }
+        }
+
         function setPagePaneLayout(spreadIdx, side, layoutKey) {
             const spread = bookSpreads[spreadIdx];
             if (!spread || !spread[side] || spread[side].blank) return;
@@ -1261,11 +1454,8 @@
             pane.layout = layoutKey;
             pane.slots = normalizeSlotsForLayout(layoutKey, pane.slots);
 
-            reflowPhotosAcrossSpreads(spreadIdx, side);
-            renderSpreads();
-            if (activeZoomSpreadIdx !== null) {
-                renderZoomModalContent();
-            }
+            reflowPhotosAcrossSpreads();
+            renderAllStudioViews();
         }
 
         function addNewSpread() {
@@ -1273,89 +1463,281 @@
                 id: 'spread_dbl_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
                 kind: 'double-page',
                 left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] }
+                right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                textBoxes: [],
+                shapes: []
             };
             const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
             if (lastIdx >= 0) {
                 bookSpreads.splice(lastIdx, 0, newSpread);
+                currentSpreadIdx = lastIdx;
             } else {
                 bookSpreads.push(newSpread);
+                currentSpreadIdx = bookSpreads.length - 1;
             }
-            renderSpreads();
+            renderAllStudioViews();
         }
 
-        function removeSpread(spreadIdx) {
-            if (bookSpreads[spreadIdx]?.kind !== 'double-page') return;
-            bookSpreads.splice(spreadIdx, 1);
-            reflowPhotosAcrossSpreads();
-            renderSpreads();
+        function goToSpread(idx) {
+            if (idx < 0 || idx >= bookSpreads.length) return;
+            currentSpreadIdx = idx;
+            const sp = bookSpreads[currentSpreadIdx];
+            if (sp.left && !sp.left.blank) activeSide = 'left';
+            else if (sp.right && !sp.right.blank) activeSide = 'right';
+            activeTextTarget = null;
+            renderAllStudioViews();
         }
 
-        function autoFillSpreads() {
-            if (photoAssets.length === 0) return;
-            buildInitialSpreadsFromPhotos();
-            renderSpreads();
+        function prevSpread() {
+            if (currentSpreadIdx > 0) {
+                goToSpread(currentSpreadIdx - 1);
+            }
         }
 
-        function toggleSlotTextMode(spreadIdx, side, slotIdx, event) {
+        function nextSpread() {
+            if (currentSpreadIdx < bookSpreads.length - 1) {
+                goToSpread(currentSpreadIdx + 1);
+            }
+        }
+
+        // Чөлөөтэй нүүлгэж, хэмжээг нь сунгаж бичих текст хайрцаг нэмэх
+        function addFloatingTextBox() {
+            const sp = bookSpreads[currentSpreadIdx];
+            if (!sp) return;
+            if (!sp.textBoxes) sp.textBoxes = [];
+
+            const id = 'txt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5);
+            const defaultX = activeSide === 'left' ? 14 : 58;
+            const newBox = {
+                id,
+                text: 'Энд текст бичнэ үү...',
+                x: defaultX,
+                y: 22,
+                w: 32,
+                h: 16,
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 18,
+                bold: false,
+                underline: false,
+                color: '#111827',
+                align: 'left'
+            };
+            sp.textBoxes.push(newBox);
+            activeTextTarget = { spreadIdx: currentSpreadIdx, textId: id };
+            syncInspectorWithActive();
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        // Дөрвөлжин / Дугуй дүрс нэмэх
+        function addShapeToCurrentSpread(shapeType) {
+            const sp = bookSpreads[currentSpreadIdx];
+            if (!sp) return;
+            if (!sp.shapes) sp.shapes = [];
+
+            sp.shapes.push({
+                id: 'shp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+                type: shapeType,
+                x: activeSide === 'left' ? 18 : 62,
+                y: 55,
+                w: 16,
+                h: shapeType === 'circle' ? 22 : 16,
+                color: '#927657',
+                opacity: 0.25
+            });
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function removeShape(spreadIdx, shapeId, event) {
             if (event) event.stopPropagation();
-            const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
-            if (!slot) return;
-
-            if (slot.type === 'text') {
-                slot.type = 'image';
-                slot.text = '';
-            } else {
-                slot.type = 'text';
-                slot.photoId = null;
-                if (!slot.text) slot.text = 'Энд дурсамж эсвэл тайлбар бичнэ үү...';
-            }
-
-            reflowPhotosAcrossSpreads();
-            renderSpreads();
-            if (activeZoomSpreadIdx !== null) {
-                renderZoomModalContent();
-            }
+            const sp = bookSpreads[spreadIdx];
+            if (!sp || !sp.shapes) return;
+            sp.shapes = sp.shapes.filter(s => s.id !== shapeId);
+            renderMainSpreadStage();
+            renderFilmstrip();
         }
 
-        function updateSlotTextValue(spreadIdx, side, slotIdx, value) {
-            const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
-            if (!slot) return;
-            slot.text = value;
-        }
-
-        // Нүдийг устгах / цэвэрлэх ба зургуудыг хойноос нь татаж авах
-        function deleteOrClearSlot(spreadIdx, side, slotIdx, event) {
+        function removeTextBox(spreadIdx, textId, event) {
             if (event) event.stopPropagation();
-            const pane = bookSpreads[spreadIdx]?.[side];
-            if (!pane || !pane.slots[slotIdx]) return;
-
-            const targetSlot = pane.slots[slotIdx];
-            if (targetSlot.type === 'text') {
-                targetSlot.text = '';
-            } else {
-                targetSlot.photoId = null;
-                targetSlot.posX = 50;
-                targetSlot.posY = 50;
-                reflowPhotosAcrossSpreads();
+            const sp = bookSpreads[spreadIdx];
+            if (!sp || !sp.textBoxes) return;
+            sp.textBoxes = sp.textBoxes.filter(t => t.id !== textId);
+            if (activeTextTarget && activeTextTarget.textId === textId) {
+                activeTextTarget = null;
             }
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
 
-            renderSpreads();
-            if (activeZoomSpreadIdx !== null) {
-                renderZoomModalContent();
+        function selectTextBox(spreadIdx, textId, event) {
+            if (event) event.stopPropagation();
+            activeTextTarget = { spreadIdx, textId };
+            const sp = bookSpreads[spreadIdx];
+            const box = sp?.textBoxes?.find(t => t.id === textId);
+            if (box) {
+                syncInspectorWithTextBox(box);
+            }
+            document.querySelectorAll('[data-textbox-card]').forEach(el => {
+                if (el.getAttribute('data-textbox-id') === textId) {
+                    el.classList.add('ring-2', 'ring-[#2563eb]');
+                } else {
+                    el.classList.remove('ring-2', 'ring-[#2563eb]');
+                }
+            });
+        }
+
+        function syncInspectorWithTextBox(box) {
+            if (!box) return;
+            document.getElementById('studio-font-family').value = box.fontFamily || "'Inter', sans-serif";
+            document.getElementById('studio-font-size').value = String(box.fontSize || 18);
+            document.getElementById('studio-text-color').value = box.color || '#111827';
+
+            const bBtn = document.getElementById('studio-bold-btn');
+            const uBtn = document.getElementById('studio-underline-btn');
+            bBtn.className = `px-2 py-1 border rounded-sm font-bold text-xs transition ${
+                box.bold ? 'bg-[#927657] text-white border-[#927657]' : 'bg-white text-gray-800 border-gray-300 hover:border-[#927657]'
+            }`;
+            uBtn.className = `px-2 py-1 border rounded-sm underline text-xs transition ${
+                box.underline ? 'bg-[#927657] text-white border-[#927657]' : 'bg-white text-gray-800 border-gray-300 hover:border-[#927657]'
+            }`;
+        }
+
+        function syncInspectorWithActive() {
+            if (activeTextTarget) {
+                const sp = bookSpreads[activeTextTarget.spreadIdx];
+                const box = sp?.textBoxes?.find(t => t.id === activeTextTarget.textId);
+                if (box) {
+                    syncInspectorWithTextBox(box);
+                    return;
+                }
+            }
+            if (activeImageTarget) {
+                const slot = bookSpreads[activeImageTarget.spreadIdx]?.[activeImageTarget.side]?.slots?.[activeImageTarget.slotIdx];
+                if (slot) {
+                    const z = typeof slot.zoom === 'number' ? slot.zoom : 100;
+                    document.getElementById('studio-zoom-slider').value = z;
+                    document.getElementById('studio-zoom-label').innerText = `${z}%`;
+                }
             }
         }
 
-        // Зургийн дотор чирж байрлалыг тааруулах (Pan / object-position)
-        function startImagePan(spreadIdx, side, slotIdx, event) {
+        function onStudioZoomChange(val) {
+            const num = Number(val) || 100;
+            document.getElementById('studio-zoom-label').innerText = `${num}%`;
+            if (!activeImageTarget) return;
+            const slot = bookSpreads[activeImageTarget.spreadIdx]?.[activeImageTarget.side]?.slots?.[activeImageTarget.slotIdx];
+            if (!slot) return;
+            slot.zoom = num;
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function centerActivePhoto() {
+            if (!activeImageTarget) return;
+            const slot = bookSpreads[activeImageTarget.spreadIdx]?.[activeImageTarget.side]?.slots?.[activeImageTarget.slotIdx];
+            if (!slot) return;
+            slot.posX = 50;
+            slot.posY = 50;
+            slot.zoom = 100;
+            document.getElementById('studio-zoom-slider').value = 100;
+            document.getElementById('studio-zoom-label').innerText = '100%';
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function onStudioTextPropChange(prop, value) {
+            if (!activeTextTarget) return;
+            const box = bookSpreads[activeTextTarget.spreadIdx]?.textBoxes?.find(t => t.id === activeTextTarget.textId);
+            if (!box) return;
+            box[prop] = value;
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function toggleStudioTextProp(prop) {
+            if (!activeTextTarget) return;
+            const box = bookSpreads[activeTextTarget.spreadIdx]?.textBoxes?.find(t => t.id === activeTextTarget.textId);
+            if (!box) return;
+            box[prop] = !box[prop];
+            syncInspectorWithTextBox(box);
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function applyCurrentTextStyleToAll() {
+            if (!activeTextTarget) return;
+            const srcBox = bookSpreads[activeTextTarget.spreadIdx]?.textBoxes?.find(t => t.id === activeTextTarget.textId);
+            if (!srcBox) return;
+
+            bookSpreads.forEach(sp => {
+                (sp.textBoxes || []).forEach(b => {
+                    b.fontFamily = srcBox.fontFamily;
+                    b.fontSize = srcBox.fontSize;
+                    b.bold = srcBox.bold;
+                    b.underline = srcBox.underline;
+                    b.color = srcBox.color;
+                    b.align = srcBox.align;
+                });
+            });
+            renderMainSpreadStage();
+            renderFilmstrip();
+        }
+
+        function updateTextBoxContent(spreadIdx, textId, value) {
+            const box = bookSpreads[spreadIdx]?.textBoxes?.find(t => t.id === textId);
+            if (!box) return;
+            box.text = value;
+        }
+
+        // Текст болон дүрсийг чирж нүүлгэх / хэмжээ сунгах
+        function startCanvasElementAction(mode, spreadIdx, itemId, event) {
+            if (event.button !== 0) return;
+            event.stopPropagation();
+
+            const stageEl = document.getElementById('spread-canvas-surface');
+            const rect = stageEl ? stageEl.getBoundingClientRect() : { width: 800, height: 300 };
+            const sp = bookSpreads[spreadIdx];
+            if (!sp) return;
+
+            const isText = mode.startsWith('text');
+            const list = isText ? sp.textBoxes : sp.shapes;
+            const item = list?.find(x => x.id === itemId);
+            if (!item) return;
+
+            if (isText) {
+                selectTextBox(spreadIdx, itemId);
+            }
+
+            canvasInteraction = {
+                mode,
+                spreadIdx,
+                itemId,
+                isText,
+                startX: event.clientX,
+                startY: event.clientY,
+                initX: item.x,
+                initY: item.y,
+                initW: item.w,
+                initH: item.h,
+                stageW: Math.max(200, rect.width),
+                stageH: Math.max(120, rect.height)
+            };
+        }
+
+        // Зургийн дотор чирж байрлалыг тааруулах (Pan)
+        function startPhotoPan(spreadIdx, side, slotIdx, event) {
             if (event.button !== 0) return;
             const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
             if (!slot || slot.type !== 'image' || !slot.photoId) return;
 
             event.stopPropagation();
-            event.preventDefault();
+            activeImageTarget = { spreadIdx, side, slotIdx };
+            activeSide = side;
+            syncInspectorWithActive();
 
-            panState = {
+            const zoomFactor = (slot.zoom || 100) / 100;
+            photoPanState = {
                 spreadIdx,
                 side,
                 slotIdx,
@@ -1363,481 +1745,522 @@
                 startY: event.clientY,
                 initX: typeof slot.posX === 'number' ? slot.posX : 50,
                 initY: typeof slot.posY === 'number' ? slot.posY : 50,
+                zoomFactor,
                 imgEl: event.currentTarget
             };
         }
 
         window.addEventListener('mousemove', function (event) {
-            if (!panState) return;
-            const slot = bookSpreads[panState.spreadIdx]?.[panState.side]?.slots?.[panState.slotIdx];
-            if (!slot) return;
+            if (photoPanState) {
+                const slot = bookSpreads[photoPanState.spreadIdx]?.[photoPanState.side]?.slots?.[photoPanState.slotIdx];
+                if (!slot) return;
+                const dx = ((event.clientX - photoPanState.startX) * 0.25) / photoPanState.zoomFactor;
+                const dy = ((event.clientY - photoPanState.startY) * 0.25) / photoPanState.zoomFactor;
+                slot.posX = Math.max(0, Math.min(100, photoPanState.initX - dx));
+                slot.posY = Math.max(0, Math.min(100, photoPanState.initY - dy));
+                if (photoPanState.imgEl) {
+                    photoPanState.imgEl.style.objectPosition = `${slot.posX}% ${slot.posY}%`;
+                    photoPanState.imgEl.style.transformOrigin = `${slot.posX}% ${slot.posY}%`;
+                }
+            }
 
-            const dx = (event.clientX - panState.startX) * 0.25;
-            const dy = (event.clientY - panState.startY) * 0.25;
-            slot.posX = Math.max(0, Math.min(100, panState.initX - dx));
-            slot.posY = Math.max(0, Math.min(100, panState.initY - dy));
+            if (canvasInteraction) {
+                const sp = bookSpreads[canvasInteraction.spreadIdx];
+                const list = canvasInteraction.isText ? sp?.textBoxes : sp?.shapes;
+                const item = list?.find(x => x.id === canvasInteraction.itemId);
+                if (!item) return;
 
-            if (panState.imgEl) {
-                panState.imgEl.style.objectPosition = `${slot.posX}% ${slot.posY}%`;
+                const dxPct = ((event.clientX - canvasInteraction.startX) / canvasInteraction.stageW) * 100;
+                const dyPct = ((event.clientY - canvasInteraction.startY) / canvasInteraction.stageH) * 100;
+
+                const el = document.querySelector(`[data-canvas-item="${canvasInteraction.itemId}"]`);
+
+                if (canvasInteraction.mode.endsWith('move')) {
+                    item.x = Math.max(2, Math.min(92 - item.w * 0.4, canvasInteraction.initX + dxPct));
+                    item.y = Math.max(2, Math.min(90 - item.h * 0.4, canvasInteraction.initY + dyPct));
+                    if (el) {
+                        el.style.left = `${item.x}%`;
+                        el.style.top = `${item.y}%`;
+                    }
+                } else if (canvasInteraction.mode.endsWith('resize-e')) {
+                    item.w = Math.max(12, Math.min(80, canvasInteraction.initW + dxPct));
+                    if (el) el.style.width = `${item.w}%`;
+                } else if (canvasInteraction.mode.endsWith('resize-s')) {
+                    item.h = Math.max(8, Math.min(75, canvasInteraction.initH + dyPct));
+                    if (el) el.style.height = `${item.h}%`;
+                }
             }
         });
 
         window.addEventListener('mouseup', function () {
-            panState = null;
+            photoPanState = null;
+            if (canvasInteraction) {
+                canvasInteraction = null;
+                renderFilmstrip();
+            }
         });
 
-        function resetZoomSlotOffsets() {
-            if (activeZoomSpreadIdx === null) return;
-            const sp = bookSpreads[activeZoomSpreadIdx];
-            if (!sp) return;
-            ['left', 'right'].forEach(side => {
-                if (sp[side].blank) return;
-                sp[side].slots.forEach(sl => {
-                    sl.posX = 50;
-                    sl.posY = 50;
-                });
-            });
-            renderSpreads();
-            renderZoomModalContent();
+        function clearSlotContent(spreadIdx, side, slotIdx, event) {
+            if (event) event.stopPropagation();
+            const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
+            if (!slot) return;
+            if (slot.type === 'text') {
+                slot.text = '';
+            } else {
+                slot.photoId = null;
+                slot.posX = 50;
+                slot.posY = 50;
+                slot.zoom = 100;
+                reflowPhotosAcrossSpreads();
+            }
+            renderAllStudioViews();
         }
 
-        // Нэг нүдний HTML рендерлэх (isZoomed үед зургийн дотор чирж байрлал тааруулна)
-        function renderSlotHTML(spreadIdx, side, slotIdx, slot, isZoomed = false) {
+        function renderSlotHTML(spreadIdx, side, slotIdx, slot, isThumbnail = false) {
             const safeSlot = slot || makeImageSlot(null);
             const photo = safeSlot.type === 'image' && safeSlot.photoId ? getPhotoById(safeSlot.photoId) : null;
             const posX = typeof safeSlot.posX === 'number' ? safeSlot.posX : 50;
             const posY = typeof safeSlot.posY === 'number' ? safeSlot.posY : 50;
-
-            const controlsHtml = `
-                <div onclick="event.stopPropagation()" class="absolute top-1.5 right-1.5 z-10 opacity-0 group-hover/slot:opacity-100 focus-within:opacity-100 transition flex items-center gap-1">
-                    <button 
-                        onclick="toggleSlotTextMode(${spreadIdx}, '${side}', ${slotIdx}, event)" 
-                        type="button" 
-                        title="${safeSlot.type === 'text' ? 'Зураг болгох' : 'Текст бичих талбар болгох'}"
-                        class="bg-black/75 hover:bg-[#927657] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-[2px] shadow transition"
-                    >
-                        ${safeSlot.type === 'text' ? 'Зураг' : 'Т'}
-                    </button>
-                    <button 
-                        onclick="deleteOrClearSlot(${spreadIdx}, '${side}', ${slotIdx}, event)" 
-                        type="button" 
-                        title="Нүдийг устгах / цэвэрлэх"
-                        class="bg-black/75 hover:bg-red-600 text-white rounded-full p-0.5 shadow transition"
-                    >
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            `;
+            const zoomScale = (typeof safeSlot.zoom === 'number' ? safeSlot.zoom : 100) / 100;
 
             if (safeSlot.type === 'text') {
                 return `
-                    <div onclick="event.stopPropagation()" class="relative w-full h-full bg-white border border-gray-200 overflow-hidden flex items-center justify-center p-2 group/slot">
-                        ${controlsHtml}
-                        <textarea
-                            oninput="updateSlotTextValue(${spreadIdx}, '${side}', ${slotIdx}, this.value)"
-                            placeholder="Энд текст бичнэ үү..."
-                            class="w-full h-full resize-none bg-transparent ${isZoomed ? 'text-sm' : 'text-[10px]'} leading-relaxed text-gray-800 text-center focus:outline-none focus:bg-[#faf8f5] p-1.5"
-                        >${safeSlot.text || ''}</textarea>
+                    <div class="w-full h-full bg-white border border-gray-200 flex items-center justify-center p-1.5 overflow-hidden">
+                        <span class="${isThumbnail ? 'text-[5px]' : 'text-xs'} text-gray-600 text-center line-clamp-3 leading-snug">
+                            ${safeSlot.text || ''}
+                        </span>
                     </div>
                 `;
             }
 
             return `
                 <div 
-                    ondragover="onSlotDragOver(event)"
-                    ondragleave="onSlotDragLeave(event)"
-                    ondrop="onDropToSlot(${spreadIdx}, '${side}', ${slotIdx}, event)"
+                    ${!isThumbnail ? `
+                        ondragover="onSlotDragOver(event)"
+                        ondragleave="onSlotDragLeave(event)"
+                        ondrop="onDropToSlot(${spreadIdx}, '${side}', ${slotIdx}, event)"
+                    ` : ''}
                     class="relative w-full h-full bg-[#242424] overflow-hidden flex items-center justify-center transition group/slot"
                 >
-                    ${controlsHtml}
+                    ${!isThumbnail && photo ? `
+                        <button
+                            type="button"
+                            onclick="clearSlotContent(${spreadIdx}, '${side}', ${slotIdx}, event)"
+                            title="Зургийг хасах"
+                            class="opacity-0 group-hover/slot:opacity-100 transition absolute top-1.5 right-1.5 z-10 bg-black/70 hover:bg-red-600 text-white rounded-full p-0.5 shadow"
+                        >
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    ` : ''}
                     ${photo ? `
                         <img 
                             src="${photo.url}" 
-                            style="object-position: ${posX}% ${posY}%;"
-                            draggable="${!isZoomed}"
-                            ${isZoomed ? `onmousedown="startImagePan(${spreadIdx}, '${side}', ${slotIdx}, event)"` : `ondragstart="onDragStartFromSlot(${spreadIdx}, '${side}', ${slotIdx}, '${photo.id}', event)"`}
-                            ondragend="onDragEnd(event)"
-                            class="w-full h-full object-cover ${isZoomed ? 'cursor-move' : 'cursor-grab active:cursor-grabbing'} select-none"
+                            style="
+                                object-position: ${posX}% ${posY}%;
+                                transform: scale(${zoomScale});
+                                transform-origin: ${posX}% ${posY}%;
+                            "
+                            draggable="${!isThumbnail}"
+                            ${!isThumbnail ? `
+                                onmousedown="startPhotoPan(${spreadIdx}, '${side}', ${slotIdx}, event)"
+                                ondragstart="onDragStartFromSlot(${spreadIdx}, '${side}', ${slotIdx}, '${photo.id}', event)"
+                                ondragend="onDragEnd(event)"
+                            ` : ''}
+                            class="w-full h-full object-cover ${!isThumbnail ? 'cursor-move' : ''} select-none"
                         >
                     ` : `
-                        <span class="text-[10px] text-gray-300 font-medium px-1 text-center pointer-events-none select-none leading-tight">
-                            + Зураг
+                        <span class="${isThumbnail ? 'text-[5px]' : 'text-[10px]'} text-gray-300 font-medium px-1 text-center pointer-events-none select-none">
+                            ${isThumbnail ? '' : '+ Зураг'}
                         </span>
                     `}
                 </div>
             `;
         }
 
-        // Нэг талын нүүрний зохиомжууд (0.jpg - 10.jpg)
-        function renderPaneCanvas(spreadIdx, side, pane, isZoomed = false) {
+        function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
-                    <div class="w-full h-full bg-white flex flex-col items-center justify-center p-3 select-none">
-                        <div class="w-10 h-[1px] bg-gray-200 mb-1.5"></div>
-                        <span class="text-[9px] text-gray-300 tracking-wider uppercase text-center">${pane.blankLabel || 'Цагаан хуудас'}</span>
+                    <div class="w-full h-full bg-white flex flex-col items-center justify-center p-2 select-none">
+                        <span class="${isThumbnail ? 'text-[5px]' : 'text-[11px]'} text-gray-300 tracking-wider uppercase text-center">
+                            ${pane.blankLabel || 'Цагаан хуудас'}
+                        </span>
                     </div>
                 `;
             }
 
             const s = pane.slots;
+            const gapClass = isThumbnail ? 'gap-[2px] p-[2px]' : 'gap-2.5 p-3 sm:p-4';
+
             switch (pane.layout) {
                 case '2-v':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 gap-1.5 bg-white">
-                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                            ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                            ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                         </div>
                     `;
                 case '3-l-right':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 gap-1.5 bg-white">
-                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                            <div class="grid grid-rows-2 gap-1.5 h-full">
-                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
-                                ${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2.5'}">
+                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                                ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                             </div>
                         </div>
                     `;
                 case '3-l-left':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 gap-1.5 bg-white">
-                            <div class="grid grid-rows-2 gap-1.5 h-full">
-                                ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2.5'}">
+                                ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                             </div>
-                            ${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}
+                            ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                         </div>
                     `;
                 case '4-top-bot':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 gap-1.5 bg-white">
-                            <div class="grid grid-rows-3 gap-1.5 h-full">
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}</div>
-                                <div class="row-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}</div>
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                            <div class="grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                                <div class="row-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
                             </div>
-                            <div class="grid grid-rows-3 gap-1.5 h-full">
-                                <div class="row-span-1 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}</div>
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}</div>
+                            <div class="grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="row-span-1 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
+                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                             </div>
                         </div>
                     `;
                 case '5-mix':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 gap-1.5 bg-white">
-                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                            <div class="grid grid-rows-2 gap-1.5 h-full">
-                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
-                                <div class="grid grid-cols-2 gap-1.5 h-full">
-                                    ${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}
-                                    ${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                                <div class="grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                    ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
+                                    ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                                 </div>
                             </div>
                         </div>
                     `;
                 case '7-spread':
                     return `
-                        <div class="w-full h-full p-2 grid grid-rows-2 gap-1.5 bg-white">
-                            <div class="grid grid-cols-4 gap-1.5 h-full">
-                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}</div>
-                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}</div>
-                                <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}</div>
+                        <div class="w-full h-full grid grid-rows-2 bg-white ${gapClass}">
+                            <div class="grid grid-cols-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
+                                <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
                             </div>
-                            <div class="grid grid-cols-4 gap-1.5 h-full">
-                                <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}</div>
-                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 4, s[4], isZoomed)}</div>
-                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 5, s[5], isZoomed)}</div>
+                            <div class="grid grid-cols-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
+                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 4, s[4], isThumbnail)}</div>
+                                <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 5, s[5], isThumbnail)}</div>
                             </div>
                         </div>
                     `;
                 case '8-grid':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-3 gap-1.5 bg-white">
-                            <div class="col-span-2 grid grid-rows-3 gap-1.5 h-full">
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}</div>
-                                <div class="row-span-1 grid grid-cols-2 gap-1.5 h-full">
-                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
-                                    ${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
+                            <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                                <div class="row-span-1 grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                                    ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                                 </div>
                             </div>
-                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}</div>
+                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
                 case '9-grid':
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-3 gap-1.5 bg-white">
-                            <div class="col-span-2 grid grid-rows-3 gap-1.5 h-full">
-                                <div class="row-span-1 grid grid-cols-2 gap-1.5 h-full">
-                                    ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
+                            <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="row-span-1 grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                    ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                                 </div>
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}</div>
+                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
                             </div>
-                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}</div>
+                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
                 case '10-quad':
-                    // 10.jpg: 4 тэнцүү нүд (2x2 grid)
                     return `
-                        <div class="w-full h-full p-2 grid grid-cols-2 grid-rows-2 gap-1.5 bg-white">
-                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
-                            ${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}
-                            ${renderSlotHTML(spreadIdx, side, 2, s[2], isZoomed)}
-                            ${renderSlotHTML(spreadIdx, side, 3, s[3], isZoomed)}
+                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 bg-white ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                            ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                            ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
+                            ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                         </div>
                     `;
                 case 'text-photo':
-                    // 0.jpg: Зүүн талд зураг, баруун талд текст бичих талбар
                     return `
-                        <div class="w-full h-full p-2.5 grid grid-cols-2 gap-3 bg-white items-center">
-                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}</div>
-                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isZoomed)}</div>
+                        <div class="w-full h-full grid grid-cols-2 bg-white items-center ${gapClass}">
+                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
                         </div>
                     `;
                 case '1-full':
                 default:
                     return `
-                        <div class="w-full h-full p-2 bg-white">
-                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isZoomed)}
+                        <div class="w-full h-full bg-white ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                         </div>
                     `;
             }
         }
 
+        function renderSidebarLayouts() {
+            const sp = bookSpreads[currentSpreadIdx];
+            const pane = sp?.[activeSide];
+            const currentLayoutKey = pane && !pane.blank ? pane.layout : '';
+
+            document.getElementById('sidebar-layouts-grid').innerHTML = LAYOUT_OPTIONS.map(opt => {
+                const isSelected = currentLayoutKey === opt.key;
+                return `
+                    <button
+                        type="button"
+                        ${!pane || pane.blank ? 'disabled' : `onclick="setPagePaneLayout(${currentSpreadIdx}, '${activeSide}', '${opt.key}')"`}
+                        class="p-2 rounded-sm border flex flex-col items-center space-y-1 transition ${
+                            isSelected
+                                ? 'border-[#927657] bg-[#927657]/10 text-[#927657]'
+                                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400 disabled:opacity-40'
+                        }"
+                    >
+                        <div class="w-12 h-9 p-1 bg-gray-50 border border-gray-200 rounded-[2px]">
+                            ${opt.icon}
+                        </div>
+                        <span class="text-[10px] font-semibold">${opt.label}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
         function renderSidebarPhotos() {
             document.getElementById('editor-total-photos').innerText = photoAssets.length;
-            let sidebarHtml = '';
-
-            photoAssets.forEach((asset, index) => {
-                sidebarHtml += `
-                    <div 
-                        draggable="true"
-                        ondragstart="onDragStartFromSidebar('${asset.id}', event)"
-                        ondragend="onDragEnd(event)"
-                        class="relative group h-20 bg-gray-100 rounded-sm overflow-hidden border border-gray-200 cursor-grab active:cursor-grabbing"
-                    >
-                        <img src="${asset.url}" class="w-full h-full object-cover select-none">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <button onclick="removeEditorPhoto(${index})" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full" title="Устгах">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                            </button>
-                        </div>
+            document.getElementById('editor-sidebar-photos').innerHTML = photoAssets.map((asset, index) => `
+                <div 
+                    draggable="true"
+                    ondragstart="onDragStartFromSidebar('${asset.id}', event)"
+                    ondragend="onDragEnd(event)"
+                    class="relative group h-20 bg-gray-100 rounded-sm overflow-hidden border border-gray-200 cursor-grab active:cursor-grabbing"
+                >
+                    <img src="${asset.url}" class="w-full h-full object-cover select-none">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <button onclick="removeEditorPhoto(${index})" type="button" class="text-white hover:text-red-400 p-1 bg-black/50 rounded-full" title="Устгах">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
                     </div>
-                `;
-            });
-
-            document.getElementById('editor-sidebar-photos').innerHTML = sidebarHtml;
-        }
-
-        function renderPaneLayoutToolbar(spreadIdx, side, pane) {
-            if (pane.blank) {
-                return `<div class="h-5"></div>`;
-            }
-            return `
-                <div onclick="event.stopPropagation()" class="flex items-center justify-center flex-wrap gap-1 min-h-5">
-                    ${LAYOUT_OPTIONS.map(opt => {
-                        const isActive = pane.layout === opt.key;
-                        return `
-                            <button
-                                type="button"
-                                onclick="setPagePaneLayout(${spreadIdx}, '${side}', '${opt.key}')"
-                                title="${opt.label}"
-                                class="w-4 h-4 p-0.5 rounded-[2px] border transition flex items-center justify-center ${
-                                    isActive
-                                        ? 'border-[#927657] bg-[#927657]/15 ring-1 ring-[#927657]/40'
-                                        : 'border-gray-200 bg-white hover:border-gray-400 opacity-75 hover:opacity-100'
-                                }"
-                            >
-                                <span class="w-full h-full block">${opt.icon}</span>
-                            </button>
-                        `;
-                    }).join('')}
                 </div>
-            `;
+            `).join('');
         }
 
-        function getSpreadCaption(spread, pageNum) {
-            if (spread.kind === 'cover') return 'Нүүр (Cover)';
-            if (spread.kind === 'first-page') return `${pageNum}-р нүүр`;
-            if (spread.kind === 'last-page') return `${pageNum}-р нүүр (Төгсгөл)`;
-            return `${pageNum}–${pageNum + 1} нүүр`;
-        }
-
-        function openSpreadZoomModal(spreadIdx) {
-            if (!bookSpreads[spreadIdx]) return;
-            activeZoomSpreadIdx = spreadIdx;
-            renderZoomModalContent();
-            document.getElementById('spread-zoom-modal').style.display = 'flex';
-        }
-
-        function closeSpreadZoomModal() {
-            activeZoomSpreadIdx = null;
-            document.getElementById('spread-zoom-modal').style.display = 'none';
-            renderSpreads();
-        }
-
-        function renderZoomModalContent() {
-            const spread = bookSpreads[activeZoomSpreadIdx];
-            if (!spread) return;
-
+        function getSpreadCaption(spread, idx) {
+            if (spread.kind === 'cover') return 'Cover';
             let pageNum = 1;
-            for (let i = 0; i < activeZoomSpreadIdx; i++) {
+            for (let i = 0; i < idx; i++) {
                 if (bookSpreads[i].kind === 'first-page' || bookSpreads[i].kind === 'last-page') pageNum += 1;
                 else if (bookSpreads[i].kind === 'double-page') pageNum += 2;
             }
+            if (spread.kind === 'first-page') return `Page ${pageNum}`;
+            if (spread.kind === 'last-page') return `Page ${pageNum}`;
+            return `Page ${pageNum}–${pageNum + 1}`;
+        }
 
-            document.getElementById('zoom-spread-title').innerText =
-                `${getSpreadCaption(spread, pageNum)} — Томруулсан засвар`;
+        function renderMainSpreadStage() {
+            const container = document.getElementById('main-spread-stage-container');
+            const sp = bookSpreads[currentSpreadIdx];
+            if (!sp) return;
 
             const fmtCfg = getActiveFormatConfig();
+            const isCover = sp.kind === 'cover';
 
-            const renderSideSelector = (side, label) => {
-                const pane = spread[side];
-                if (pane.blank) {
-                    return `<div class="text-xs text-gray-400">${label}: ${pane.blankLabel || 'Цагаан тал'}</div>`;
-                }
+            const shapesHtml = (sp.shapes || []).map(sh => {
+                const borderRadius = sh.type === 'circle' ? 'rounded-full' : 'rounded-none';
                 return `
-                    <div class="flex flex-col space-y-1.5">
-                        <span class="text-[11px] font-bold text-gray-700">${label} загвар:</span>
-                        <div class="flex flex-wrap gap-1.5">
-                            ${LAYOUT_OPTIONS.map(opt => {
-                                const active = pane.layout === opt.key;
-                                return `
-                                    <button
-                                        type="button"
-                                        onclick="setPagePaneLayout(${activeZoomSpreadIdx}, '${side}', '${opt.key}')"
-                                        class="flex items-center space-x-1 px-2 py-1 rounded-[2px] border text-[10px] font-semibold transition ${
-                                            active
-                                                ? 'border-[#927657] bg-[#927657]/15 text-[#927657]'
-                                                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400'
-                                        }"
-                                    >
-                                        <span class="w-3.5 h-3.5 inline-block">${opt.icon}</span>
-                                        <span>${opt.label}</span>
-                                    </button>
-                                `;
-                            }).join('')}
-                        </div>
+                    <div
+                        data-canvas-item="${sh.id}"
+                        onmousedown="startCanvasElementAction('shape-move', ${currentSpreadIdx}, '${sh.id}', event)"
+                        style="
+                            left: ${sh.x}%;
+                            top: ${sh.y}%;
+                            width: ${sh.w}%;
+                            height: ${sh.h}%;
+                            background-color: ${sh.color};
+                            opacity: ${sh.opacity};
+                        "
+                        class="absolute z-20 ${borderRadius} cursor-move group/shape"
+                    >
+                        <button
+                            type="button"
+                            onmousedown="event.stopPropagation()"
+                            onclick="removeShape(${currentSpreadIdx}, '${sh.id}', event)"
+                            class="opacity-0 group-hover/shape:opacity-100 transition absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center shadow"
+                        >×</button>
                     </div>
                 `;
-            };
+            }).join('');
 
-            document.getElementById('zoom-layout-controls').innerHTML = `
-                ${renderSideSelector('left', 'Зүүн тал')}
-                ${renderSideSelector('right', 'Баруун тал')}
-            `;
+            const textBoxesHtml = (sp.textBoxes || []).map(tb => {
+                const isSelected = activeTextTarget && activeTextTarget.textId === tb.id;
+                const alignClass = tb.align === 'center' ? 'text-center' : (tb.align === 'right' ? 'text-right' : 'text-left');
+                return `
+                    <div
+                        data-canvas-item="${tb.id}"
+                        data-textbox-card="true"
+                        data-textbox-id="${tb.id}"
+                        onmousedown="startCanvasElementAction('text-move', ${currentSpreadIdx}, '${tb.id}', event)"
+                        style="
+                            left: ${tb.x}%;
+                            top: ${tb.y}%;
+                            width: ${tb.w}%;
+                            height: ${tb.h}%;
+                        "
+                        class="absolute z-30 border ${isSelected ? 'border-[#2563eb] ring-2 ring-[#2563eb]/30' : 'border-dashed border-gray-400 hover:border-[#2563eb]'} bg-white/75 backdrop-blur-[1px] cursor-move group/txt flex items-center"
+                    >
+                        <!-- Зүүн/Баруун хэмжээ сунгах бариул -->
+                        <div
+                            onmousedown="startCanvasElementAction('text-resize-e', ${currentSpreadIdx}, '${tb.id}', event)"
+                            class="hidden group-hover/txt:flex items-center justify-center w-3.5 h-6 bg-white border border-gray-500 rounded-full text-[8px] text-gray-700 cursor-ew-resize absolute -right-2 top-1/2 -translate-y-1/2 shadow"
+                        >&lt;&gt;</div>
 
-            document.getElementById('zoom-spread-stage-wrap').innerHTML = `
+                        <!-- Доод хэмжээ сунгах бариул -->
+                        <div
+                            onmousedown="startCanvasElementAction('text-resize-s', ${currentSpreadIdx}, '${tb.id}', event)"
+                            class="hidden group-hover/txt:block w-8 h-2 bg-white border border-gray-500 rounded-full cursor-ns-resize absolute -bottom-1 left-1/2 -translate-x-1/2 shadow"
+                        ></div>
+
+                        <!-- Устгах товч -->
+                        <button
+                            type="button"
+                            onmousedown="event.stopPropagation()"
+                            onclick="removeTextBox(${currentSpreadIdx}, '${tb.id}', event)"
+                            class="opacity-0 group-hover/txt:opacity-100 transition absolute -top-2.5 -right-2.5 bg-red-600 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center shadow"
+                        >×</button>
+
+                        <textarea
+                            onmousedown="event.stopPropagation(); selectTextBox(${currentSpreadIdx}, '${tb.id}', event);"
+                            oninput="updateTextBoxContent(${currentSpreadIdx}, '${tb.id}', this.value)"
+                            style="
+                                font-family: ${tb.fontFamily || "'Inter', sans-serif"};
+                                font-size: ${tb.fontSize || 18}px;
+                                font-weight: ${tb.bold ? '700' : '400'};
+                                text-decoration: ${tb.underline ? 'underline' : 'none'};
+                                color: ${tb.color || '#111827'};
+                                text-align: ${tb.align || 'left'};
+                            "
+                            class="w-full h-full bg-transparent resize-none px-2.5 py-1.5 leading-snug focus:outline-none ${alignClass}"
+                        >${tb.text || ''}</textarea>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
                 <div
-                    style="${fmtCfg.zoomAspectStyle}"
-                    class="bg-white shadow-xl border border-gray-300 grid grid-cols-2 overflow-hidden"
+                    id="spread-canvas-surface"
+                    style="${fmtCfg.mainSpreadStyle}"
+                    class="relative bg-white shadow-xl grid grid-cols-2 overflow-hidden select-none ${
+                        isCover ? 'border-2 border-[#3d8b37]' : 'border border-gray-300'
+                    }"
                 >
-                    <div class="w-full h-full border-r border-gray-200 book-spine-left overflow-hidden">
-                        ${renderPaneCanvas(activeZoomSpreadIdx, 'left', spread.left, true)}
+                    <div
+                        onclick="setActiveSide('left', event)"
+                        class="relative w-full h-full border-r border-gray-200 book-spine-left overflow-hidden ${
+                            !sp.left.blank && activeSide === 'left' ? 'ring-2 ring-inset ring-[#927657]/40' : ''
+                        }"
+                    >
+                        ${renderPaneCanvas(currentSpreadIdx, 'left', sp.left, false)}
                     </div>
-                    <div class="w-full h-full book-spine-right overflow-hidden">
-                        ${renderPaneCanvas(activeZoomSpreadIdx, 'right', spread.right, true)}
+
+                    <div
+                        onclick="setActiveSide('right', event)"
+                        class="relative w-full h-full book-spine-right overflow-hidden ${
+                            !sp.right.blank && activeSide === 'right' ? 'ring-2 ring-inset ring-[#927657]/40' : ''
+                        }"
+                    >
+                        ${renderPaneCanvas(currentSpreadIdx, 'right', sp.right, false)}
                     </div>
+
+                    ${shapesHtml}
+                    ${textBoxesHtml}
                 </div>
             `;
         }
 
-        function renderSpreads() {
-            const spreadsContainer = document.getElementById('editor-spreads-container');
+        function renderFilmstrip() {
             const fmtCfg = getActiveFormatConfig();
-            let spreadsHtml = '';
-            let pageNum = 1;
+            const row = document.getElementById('filmstrip-thumbnails-row');
+            document.getElementById('filmstrip-page-counter').innerText =
+                `${currentSpreadIdx + 1} / ${bookSpreads.length} дэлгэмэл`;
+            document.getElementById('filmstrip-active-label').innerText =
+                getSpreadCaption(bookSpreads[currentSpreadIdx] || {}, currentSpreadIdx);
 
-            bookSpreads.forEach((spread, spreadIdx) => {
-                const captionText = getSpreadCaption(spread, pageNum);
-                if (spread.kind === 'first-page' || spread.kind === 'last-page') pageNum += 1;
-                else if (spread.kind === 'double-page') pageNum += 2;
-
-                const isCover = spread.kind === 'cover';
-
-                spreadsHtml += `
-                    <div class="flex flex-col items-center space-y-2 group/spread">
-                        <!-- Дээд талын хуваагдал сонгох жижиг товчнууд болон устгах товч -->
-                        <div class="w-full flex items-center justify-between gap-2 px-1">
-                            <div class="flex-1 flex justify-center">
-                                ${renderPaneLayoutToolbar(spreadIdx, 'left', spread.left)}
-                            </div>
-                            <div class="w-5 flex justify-center shrink-0">
-                                ${spread.kind === 'double-page' ? `
-                                    <button
-                                        type="button"
-                                        onclick="removeSpread(${spreadIdx})"
-                                        title="Дэлгэмэл хуудас устгах"
-                                        class="text-xs text-gray-400 hover:text-red-500 opacity-0 group-hover/spread:opacity-100 transition font-bold"
-                                    >×</button>
-                                ` : ''}
-                            </div>
-                            <div class="flex-1 flex justify-center">
-                                ${renderPaneLayoutToolbar(spreadIdx, 'right', spread.right)}
-                            </div>
-                        </div>
-
-                        <!-- Зэрэгцээ 2 нүүр бүхий дэлгэмэл хуудас (Дарахад томруулж засна) -->
-                        <div
-                            onclick="openSpreadZoomModal(${spreadIdx})"
-                            title="Дарж томруулан засах"
-                            style="${fmtCfg.spreadAspectStyle}"
-                            class="w-full bg-white shadow-md grid grid-cols-2 overflow-hidden transition cursor-pointer hover:ring-2 hover:ring-[#927657]/50 ${
-                                isCover
-                                    ? 'border-2 border-[#6a8d55]'
-                                    : 'border border-gray-300'
-                            }"
-                        >
-                            <!-- Зүүн талын нүүр -->
-                            <div class="w-full h-full border-r border-gray-200 book-spine-left overflow-hidden">
-                                ${renderPaneCanvas(spreadIdx, 'left', spread.left, false)}
-                            </div>
-
-                            <!-- Баруун талын нүүр -->
-                            <div class="w-full h-full book-spine-right overflow-hidden">
-                                ${renderPaneCanvas(spreadIdx, 'right', spread.right, false)}
-                            </div>
-                        </div>
-
-                        <!-- Доод талын нэршил (Нүүр, 1-р нүүр, 2-3 нүүр...) -->
-                        <div class="text-xs font-medium text-gray-600 pt-0.5">
-                            ${captionText}
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Хамгийн сүүлд "+ Хуудас нэмэх" карт
-            spreadsHtml += `
-                <div class="flex flex-col items-center space-y-2">
-                    <div class="h-5"></div>
+            let html = bookSpreads.map((sp, idx) => {
+                const active = idx === currentSpreadIdx;
+                return `
                     <button
                         type="button"
-                        onclick="addNewSpread()"
-                        style="${fmtCfg.spreadAspectStyle}"
-                        class="w-full bg-[#f5f6f7] hover:bg-white border-2 border-[#6a8d55]/70 hover:border-[#6a8d55] flex items-center justify-center transition cursor-pointer shadow-sm group/add"
+                        onclick="goToSpread(${idx})"
+                        class="flex flex-col items-center space-y-1 shrink-0 group focus:outline-none"
                     >
-                        <svg class="w-8 h-8 text-[#6a8d55] group-hover/add:scale-110 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
+                        <div
+                            style="${fmtCfg.thumbSpreadStyle}"
+                            class="bg-white grid grid-cols-2 overflow-hidden border-2 transition ${
+                                active ? 'border-[#3d8b37] shadow-sm' : 'border-gray-200 group-hover:border-gray-400'
+                            }"
+                        >
+                            <div class="w-full h-full border-r border-gray-200 overflow-hidden">
+                                ${renderPaneCanvas(idx, 'left', sp.left, true)}
+                            </div>
+                            <div class="w-full h-full overflow-hidden">
+                                ${renderPaneCanvas(idx, 'right', sp.right, true)}
+                            </div>
+                        </div>
+                        <span class="text-[10px] ${active ? 'font-bold text-[#3d8b37]' : 'text-gray-500'}">
+                            ${getSpreadCaption(sp, idx)}
+                        </span>
                     </button>
-                    <div class="text-xs font-medium text-gray-600 pt-0.5">
-                        + Дэлгэмэл хуудас нэмэх
+                `;
+            }).join('');
+
+            // Доод цувааны төгсгөлд "+ Add double page" товч
+            html += `
+                <button
+                    type="button"
+                    onclick="addNewSpread()"
+                    class="flex flex-col items-center space-y-1 shrink-0 group focus:outline-none"
+                >
+                    <div
+                        style="${fmtCfg.thumbSpreadStyle}"
+                        class="bg-gray-50 hover:bg-white border-2 border-dashed border-[#3d8b37]/70 flex items-center justify-center transition"
+                    >
+                        <span class="text-lg font-bold text-[#3d8b37]">+</span>
                     </div>
-                </div>
+                    <span class="text-[10px] font-medium text-gray-600">Add page</span>
+                </button>
             `;
 
-            spreadsContainer.innerHTML = spreadsHtml;
+            row.innerHTML = html;
+        }
+
+        function renderAllStudioViews() {
+            document.getElementById('active-side-badge').innerText = activeSide === 'left' ? 'Зүүн' : 'Баруун';
+            renderSidebarLayouts();
+            renderSidebarPhotos();
+            renderMainSpreadStage();
+            renderFilmstrip();
         }
 
         function initEditorView() {
             document.getElementById('editor-book-heading').innerText =
                 `${selectedCurrentProduct || 'Memory Book'} • ${getActiveBookFormatLabel()}`;
-            renderSidebarPhotos();
-            renderSpreads();
+            renderAllStudioViews();
         }
 
         function onDragStartFromSidebar(photoId, event) {
@@ -1884,6 +2307,7 @@
                 targetSlot.photoId = dragState.photoId;
                 targetSlot.posX = 50;
                 targetSlot.posY = 50;
+                targetSlot.zoom = 100;
             } else if (dragState.type === 'slot') {
                 const srcSlot = bookSpreads[dragState.spreadIdx]?.[dragState.side]?.slots?.[dragState.slotIdx];
                 if (!srcSlot || srcSlot.type !== 'image') return;
@@ -1897,25 +2321,26 @@
                     return;
                 }
 
-                const tempPhotoId = targetSlot.type === 'image' ? targetSlot.photoId : null;
-                const tempPosX = targetSlot.posX ?? 50;
-                const tempPosY = targetSlot.posY ?? 50;
+                const tempId = targetSlot.type === 'image' ? targetSlot.photoId : null;
+                const tempX = targetSlot.posX ?? 50;
+                const tempY = targetSlot.posY ?? 50;
+                const tempZ = targetSlot.zoom ?? 100;
 
                 targetSlot.type = 'image';
                 targetSlot.photoId = srcSlot.photoId;
                 targetSlot.posX = srcSlot.posX ?? 50;
                 targetSlot.posY = srcSlot.posY ?? 50;
+                targetSlot.zoom = srcSlot.zoom ?? 100;
 
-                srcSlot.photoId = tempPhotoId;
-                srcSlot.posX = tempPosX;
-                srcSlot.posY = tempPosY;
+                srcSlot.photoId = tempId;
+                srcSlot.posX = tempX;
+                srcSlot.posY = tempY;
+                srcSlot.zoom = tempZ;
             }
 
             dragState = null;
-            renderSpreads();
-            if (activeZoomSpreadIdx !== null) {
-                renderZoomModalContent();
-            }
+            renderMainSpreadStage();
+            renderFilmstrip();
         }
 
         function removeEditorPhoto(index) {
@@ -2063,3 +2488,6 @@
 
 </body>
 </html>
+```[cite: 3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21]
+
+Текст болон дүрсүүдийг давхарлах дараалал (`Bring forward / Send backward`) эсвэл хуудасны дэвсгэр өнгийг солих тохиргоог нэмж өгөх үү?
