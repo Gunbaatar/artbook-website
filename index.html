@@ -603,7 +603,7 @@
                     </div>
                     <div>
                         <h4 class="text-sm font-bold text-gray-800">Drag & Drop Your Files Here or Click to Browse</h4>
-                        <p class="text-[11px] text-gray-400 mt-1">JPG/TIFF/HEIC, доод хэмжээ 2000 x 2000 px, дээд хэмжээ 9000 x 9000 px or 80 MP, max 500 MB.</p>
+                        <p class="text-[11px] text-gray-400 mt-1">JPG/TIFF/HEIC, урт/өргөний их тал доод тал нь 2000 px (богино тал 800–1000+ px байж болно), дээд тал нь 9000 px, max 500 MB.</p>
                     </div>
                     <div class="flex items-center justify-center pt-2">
                         <button type="button" class="bg-[#927657] hover:bg-[#7d6347] text-white text-xs font-semibold px-8 py-3 rounded-sm shadow-md transition tracking-wider uppercase pointer-events-none">
@@ -658,9 +658,9 @@
         let selectedCurrentProduct = '';
         let currentPriceText = '';
 
-        // Зургийн пикселийн хязгаар
-        const MIN_IMAGE_PX = 2000;
-        const MAX_IMAGE_PX = 9000;
+        // Зургийн пикселийн хязгаар: урт/өргөний их тал >= 2000px ба <= 9000px
+        const MIN_MAJOR_SIDE_PX = 2000;
+        const MAX_MAJOR_SIDE_PX = 9000;
 
         // Номын формат ба хэмжээний сонголтууд (LANDSCAPE max-width: 1600px)
         const BOOK_FORMATS = [
@@ -1218,6 +1218,7 @@
             document.getElementById('computer-file-input').click();
         }
 
+        // Урт эсвэл өргөний их тал >= 2000px ба <= 9000px байх нөхцөл
         function validateImageDimensions(file) {
             return new Promise((resolve) => {
                 const url = URL.createObjectURL(file);
@@ -1225,11 +1226,8 @@
                 img.onload = function () {
                     const w = img.naturalWidth;
                     const h = img.naturalHeight;
-                    const isValid =
-                        w >= MIN_IMAGE_PX &&
-                        h >= MIN_IMAGE_PX &&
-                        w <= MAX_IMAGE_PX &&
-                        h <= MAX_IMAGE_PX;
+                    const majorSide = Math.max(w, h);
+                    const isValid = majorSide >= MIN_MAJOR_SIDE_PX && majorSide <= MAX_MAJOR_SIDE_PX;
 
                     if (!isValid) {
                         URL.revokeObjectURL(url);
@@ -1286,7 +1284,7 @@
             if (invalidMessages.length > 0) {
                 setTimeout(() => {
                     alert(
-                        `Зургийн хэмжээ доод тал нь ${MIN_IMAGE_PX} × ${MIN_IMAGE_PX} px, дээд тал нь ${MAX_IMAGE_PX} × ${MAX_IMAGE_PX} px байх шаардлагатай.\n\nШаардлага хангаагүй зургууд:\n` +
+                        `Зургийн урт эсвэл өргөний дээд хэмжээ (их тал) доод тал нь ${MIN_MAJOR_SIDE_PX} px, дээд тал нь ${MAX_MAJOR_SIDE_PX} px байх шаардлагатай (богино тал 800–1000+ px байж болно).\n\nШаардлага хангаагүй зургууд:\n` +
                         invalidMessages.join('\n')
                     );
                 }, 50);
@@ -2433,4 +2431,4 @@
 
 </body>
 </html>
-```[cite: 3, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+```[cite: 1]
