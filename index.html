@@ -413,7 +413,7 @@
                         <button type="button" onclick="toggleActiveSide()" class="text-[#927657] hover:underline">Тал солих</button>
                     </div>
                     <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
-                        <!-- JS-ээр 1.jpg - 10.jpg, 0.jpg загварын мини картууд орно -->
+                        <!-- JS-ээр 1_2.jpg - 10_2.jpg загварын мини картууд орно -->
                     </div>
                 </div>
 
@@ -727,73 +727,67 @@
         // Идэвхтэй текст элемент: { spreadIdx, textId }
         let activeTextTarget = null;
 
-        // Яг хэрэглэгчийн өгсөн 1.jpg - 10.jpg болон 0.jpg загваруудын мини дүрс
+        // Зөвхөн хэрэглэгчийн сүүлд илгээсэн 1_2.jpg - 10_2.jpg загварууд
         const LAYOUT_OPTIONS = [
             {
-                key: '1-full',
-                label: '1.jpg',
+                key: '1_2',
+                label: '1_2.jpg',
                 slots: 1,
                 icon: `<div class="w-full h-full bg-[#111111]"></div>`
             },
             {
-                key: '2-v',
-                label: '2.jpg',
+                key: '2_2',
+                label: '2_2.jpg',
                 slots: 2,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div>`
             },
             {
-                key: '3-l-right',
-                label: '3.jpg',
+                key: '3_2',
+                label: '3_2.jpg',
                 slots: 3,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div>`
             },
             {
-                key: '3-l-left',
-                label: '4.jpg',
+                key: '4_2',
+                label: '4_2.jpg',
                 slots: 3,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
-                key: '4-top-bot',
-                label: '5.jpg',
+                key: '5_2',
+                label: '5_2.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="grid grid-rows-3 gap-[2px]"><div class="row-span-2 bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="grid grid-rows-3 gap-[2px]"><div class="bg-[#111111]"></div><div class="row-span-2 bg-[#111111]"></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-rows-2 gap-[2px]"><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div></div>`
             },
             {
-                key: '5-mix',
-                label: '6.jpg',
-                slots: 5,
+                key: '6_2',
+                label: '6_2.jpg',
+                slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div></div>`
             },
             {
-                key: '7-spread',
-                label: '7.jpg',
+                key: '7_2',
+                label: '7_2.jpg',
                 slots: 6,
                 icon: `<div class="w-full h-full grid grid-rows-2 gap-[2px]"><div class="grid grid-cols-4 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="col-span-2 bg-[#111111]"></div></div><div class="grid grid-cols-4 gap-[2px]"><div class="col-span-2 bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div>`
             },
             {
-                key: '8-grid',
-                label: '8.jpg',
+                key: '8_2',
+                label: '8_2.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="row-span-2 bg-[#111111]"></div><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
-                key: '9-grid',
-                label: '9.jpg',
+                key: '9_2',
+                label: '9_2.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="row-span-2 bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
-                key: '10-quad',
-                label: '10.jpg',
+                key: '10_2',
+                label: '10_2.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div>`
-            },
-            {
-                key: 'text-photo',
-                label: '0.jpg',
-                slots: 2,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px] items-center"><div class="h-full bg-[#111111]"></div><div class="space-y-[2px] px-[2px]"><div class="h-[2px] bg-gray-600"></div><div class="h-[2px] bg-gray-500 w-4/5"></div><div class="h-[2px] bg-gray-400 w-3/5"></div></div></div>`
             }
         ];
 
@@ -803,10 +797,6 @@
 
         function makeImageSlot(photoId = null, posX = 50, posY = 50, zoom = 100) {
             return { type: 'image', photoId, text: '', posX, posY, zoom };
-        }
-
-        function makeTextSlot(text = 'Энд дурсамж бичнэ үү...') {
-            return { type: 'text', photoId: null, text, posX: 50, posY: 50, zoom: 100 };
         }
 
         function getLayoutSlotCount(layoutKey) {
@@ -821,12 +811,11 @@
                 if (existingSlots[i]) {
                     result.push({
                         ...existingSlots[i],
+                        type: 'image',
                         zoom: typeof existingSlots[i].zoom === 'number' ? existingSlots[i].zoom : 100,
                         posX: typeof existingSlots[i].posX === 'number' ? existingSlots[i].posX : 50,
                         posY: typeof existingSlots[i].posY === 'number' ? existingSlots[i].posY : 50
                     });
-                } else if (layoutKey === 'text-photo' && i === 1) {
-                    result.push(makeTextSlot('Энд тайлбар бичнэ үү...'));
                 } else {
                     result.push(makeImageSlot(null));
                 }
@@ -881,28 +870,16 @@
 
             for (let i = 0; i < neededDoublePages; i++) {
                 const prev = existingDoubles[i];
-                const leftLayout = prev ? prev.left.layout : '1-full';
-                const rightLayout = prev ? prev.right.layout : '1-full';
+                const leftLayout = prev && LAYOUT_OPTIONS.some(l => l.key === prev.left.layout) ? prev.left.layout : '1_2';
+                const rightLayout = prev && LAYOUT_OPTIONS.some(l => l.key === prev.right.layout) ? prev.right.layout : '1_2';
                 const leftCount = getLayoutSlotCount(leftLayout);
                 const rightCount = getLayoutSlotCount(rightLayout);
-
-                const leftSlots = [];
-                for (let k = 0; k < leftCount; k++) {
-                    const prevSlot = prev?.left?.slots?.[k];
-                    leftSlots.push(prevSlot && prevSlot.type === 'text' ? { ...prevSlot } : makeImageSlot(null));
-                }
-
-                const rightSlots = [];
-                for (let k = 0; k < rightCount; k++) {
-                    const prevSlot = prev?.right?.slots?.[k];
-                    rightSlots.push(prevSlot && prevSlot.type === 'text' ? { ...prevSlot } : makeImageSlot(null));
-                }
 
                 rebuildDoubles.push({
                     id: prev ? prev.id : ('spread_dbl_' + Date.now() + '_' + i),
                     kind: 'double-page',
-                    left: { blank: false, layout: leftLayout, slots: leftSlots },
-                    right: { blank: false, layout: rightLayout, slots: rightSlots },
+                    left: { blank: false, layout: leftLayout, slots: Array.from({ length: leftCount }, () => makeImageSlot(null)) },
+                    right: { blank: false, layout: rightLayout, slots: Array.from({ length: rightCount }, () => makeImageSlot(null)) },
                     textBoxes: prev?.textBoxes ? prev.textBoxes.map(t => ({ ...t })) : [],
                     shapes: prev?.shapes ? prev.shapes.map(sh => ({ ...sh })) : []
                 });
@@ -912,15 +889,19 @@
             const existingFirst = bookSpreads.find(sp => sp.kind === 'first-page');
             const existingLast = bookSpreads.find(sp => sp.kind === 'last-page');
 
+            const coverLayout = LAYOUT_OPTIONS.some(l => l.key === existingCover?.right?.layout) ? existingCover.right.layout : '1_2';
+            const firstLayout = LAYOUT_OPTIONS.some(l => l.key === existingFirst?.right?.layout) ? existingFirst.right.layout : '1_2';
+            const lastLayout = LAYOUT_OPTIONS.some(l => l.key === existingLast?.left?.layout) ? existingLast.left.layout : '1_2';
+
             const nextSpreads = [
                 {
                     id: existingCover ? existingCover.id : ('spread_cover_' + Date.now()),
                     kind: 'cover',
-                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1-full', slots: [] },
+                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1_2', slots: [] },
                     right: {
                         blank: false,
-                        layout: existingCover?.right?.layout || '1-full',
-                        slots: normalizeSlotsForLayout(existingCover?.right?.layout || '1-full', existingCover?.right?.slots || [makeImageSlot(null)])
+                        layout: coverLayout,
+                        slots: normalizeSlotsForLayout(coverLayout, [])
                     },
                     textBoxes: existingCover?.textBoxes ? existingCover.textBoxes.map(t => ({ ...t })) : [],
                     shapes: existingCover?.shapes ? existingCover.shapes.map(sh => ({ ...sh })) : []
@@ -928,11 +909,11 @@
                 {
                     id: existingFirst ? existingFirst.id : ('spread_p1_' + Date.now()),
                     kind: 'first-page',
-                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
                     right: {
                         blank: false,
-                        layout: existingFirst?.right?.layout || '1-full',
-                        slots: normalizeSlotsForLayout(existingFirst?.right?.layout || '1-full', existingFirst?.right?.slots || [makeImageSlot(null)])
+                        layout: firstLayout,
+                        slots: normalizeSlotsForLayout(firstLayout, [])
                     },
                     textBoxes: existingFirst?.textBoxes ? existingFirst.textBoxes.map(t => ({ ...t })) : [],
                     shapes: existingFirst?.shapes ? existingFirst.shapes.map(sh => ({ ...sh })) : []
@@ -943,10 +924,10 @@
                     kind: 'last-page',
                     left: {
                         blank: false,
-                        layout: existingLast?.left?.layout || '1-full',
-                        slots: normalizeSlotsForLayout(existingLast?.left?.layout || '1-full', existingLast?.left?.slots || [makeImageSlot(null)])
+                        layout: lastLayout,
+                        slots: normalizeSlotsForLayout(lastLayout, [])
                     },
-                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
                     textBoxes: existingLast?.textBoxes ? existingLast.textBoxes.map(t => ({ ...t })) : [],
                     shapes: existingLast?.shapes ? existingLast.shapes.map(sh => ({ ...sh })) : []
                 }
@@ -958,19 +939,17 @@
                     const pane = sp[side];
                     if (pane.blank) return;
                     pane.slots.forEach(sl => {
-                        if (sl.type === 'image') {
-                            if (poolIdx < orderedPool.length) {
-                                sl.photoId = orderedPool[poolIdx].photoId;
-                                sl.posX = orderedPool[poolIdx].posX;
-                                sl.posY = orderedPool[poolIdx].posY;
-                                sl.zoom = orderedPool[poolIdx].zoom;
-                                poolIdx++;
-                            } else {
-                                sl.photoId = null;
-                                sl.posX = 50;
-                                sl.posY = 50;
-                                sl.zoom = 100;
-                            }
+                        if (poolIdx < orderedPool.length) {
+                            sl.photoId = orderedPool[poolIdx].photoId;
+                            sl.posX = orderedPool[poolIdx].posX;
+                            sl.posY = orderedPool[poolIdx].posY;
+                            sl.zoom = orderedPool[poolIdx].zoom;
+                            poolIdx++;
+                        } else {
+                            sl.photoId = null;
+                            sl.posX = 50;
+                            sl.posY = 50;
+                            sl.zoom = 100;
                         }
                     });
                 });
@@ -1357,32 +1336,32 @@
                 {
                     id: 'spread_cover_' + Date.now(),
                     kind: 'cover',
-                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1-full', slots: [] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1_2', slots: [] },
+                    right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
                     textBoxes: [],
                     shapes: []
                 },
                 {
                     id: 'spread_p1_' + Date.now(),
                     kind: 'first-page',
-                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
+                    right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
                     textBoxes: [],
                     shapes: []
                 },
                 {
                     id: 'spread_dbl_' + Date.now() + '_0',
                     kind: 'double-page',
-                    left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                    right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                    left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                    right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
                     textBoxes: [],
                     shapes: []
                 },
                 {
                     id: 'spread_last_' + Date.now(),
                     kind: 'last-page',
-                    left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1-full', slots: [] },
+                    left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
                     textBoxes: [],
                     shapes: []
                 }
@@ -1461,8 +1440,8 @@
             const newSpread = {
                 id: 'spread_dbl_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
                 kind: 'double-page',
-                left: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
-                right: { blank: false, layout: '1-full', slots: [makeImageSlot(null)] },
+                left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
                 textBoxes: [],
                 shapes: []
             };
@@ -1499,7 +1478,6 @@
             }
         }
 
-        // Ар талд дэвсгэр/layer байхгүй цэвэр текст үүсгэх (зүүн/баруун/дээш/доош чөлөөтэй зөөж болно)
         function addFloatingTextBox() {
             const sp = bookSpreads[currentSpreadIdx];
             if (!sp) return;
@@ -1792,34 +1770,20 @@
             if (event) event.stopPropagation();
             const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
             if (!slot) return;
-            if (slot.type === 'text') {
-                slot.text = '';
-            } else {
-                slot.photoId = null;
-                slot.posX = 50;
-                slot.posY = 50;
-                slot.zoom = 100;
-                reflowPhotosAcrossSpreads();
-            }
+            slot.photoId = null;
+            slot.posX = 50;
+            slot.posY = 50;
+            slot.zoom = 100;
+            reflowPhotosAcrossSpreads();
             renderAllStudioViews();
         }
 
         function renderSlotHTML(spreadIdx, side, slotIdx, slot, isThumbnail = false) {
             const safeSlot = slot || makeImageSlot(null);
-            const photo = safeSlot.type === 'image' && safeSlot.photoId ? getPhotoById(safeSlot.photoId) : null;
+            const photo = safeSlot.photoId ? getPhotoById(safeSlot.photoId) : null;
             const posX = typeof safeSlot.posX === 'number' ? safeSlot.posX : 50;
             const posY = typeof safeSlot.posY === 'number' ? safeSlot.posY : 50;
             const zoomScale = (typeof safeSlot.zoom === 'number' ? safeSlot.zoom : 100) / 100;
-
-            if (safeSlot.type === 'text') {
-                return `
-                    <div class="w-full h-full flex items-center justify-center p-2 overflow-hidden">
-                        <span class="${isThumbnail ? 'text-[5px]' : 'text-xs'} text-gray-700 text-center line-clamp-3 leading-snug">
-                            ${safeSlot.text || ''}
-                        </span>
-                    </div>
-                `;
-            }
 
             return `
                 <div 
@@ -1867,7 +1831,7 @@
             `;
         }
 
-        // Яг хэрэглэгчийн өгсөн 1.jpg - 10.jpg болон 0.jpg зохиомжууд (18.25.07.jpg-тай яг ижил)
+        // Яг хэрэглэгчийн өгсөн 1_2.jpg - 10_2.jpg загварууд
         function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
@@ -1880,84 +1844,84 @@
             }
 
             const s = pane.slots;
-            const gapClass = isThumbnail ? 'gap-[2px] p-[2px]' : 'gap-2.5 p-3 sm:p-4';
+            const padClass = isThumbnail ? 'p-[3px]' : 'p-[10px]';
+            const gapClass = isThumbnail ? 'gap-[3px]' : 'gap-[10px]';
 
             switch (pane.layout) {
-                case '2-v':
+                case '2_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                         </div>
                     `;
-                case '3-l-right':
+                case '3_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
-                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2.5'}">
+                            <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                                 ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                             </div>
                         </div>
                     `;
-                case '3-l-left':
+                case '4_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
-                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2.5'}">
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                            <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                             </div>
                             ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                         </div>
                     `;
-                case '4-top-bot':
-                    // 18.25.07.jpg ба 5.jpg зохиомж: зүүн талд том дээд + доор хэвтээ, баруун талд дээр 1 + доор 1
+                case '5_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
-                            <div class="grid grid-rows-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
-                                <div class="row-span-3 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
-                                <div class="row-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
-                            </div>
-                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
-                                <div class="h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
-                                <div class="h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
+                            ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
+                            <div class="grid grid-rows-2 h-full ${gapClass}">
+                                <div class="grid grid-cols-2 h-full ${gapClass}">
+                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                                    ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
+                                </div>
+                                ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                             </div>
                         </div>
                     `;
-                case '5-mix':
+                case '6_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
+                        <div class="w-full h-full grid grid-cols-2 bg-white ${padClass} ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
-                            <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                            <div class="grid grid-rows-2 h-full ${gapClass}">
                                 ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
-                                <div class="grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="grid grid-cols-2 h-full ${gapClass}">
                                     ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                                     ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                                 </div>
                             </div>
                         </div>
                     `;
-                case '7-spread':
+                case '7_2':
                     return `
-                        <div class="w-full h-full grid grid-rows-2 bg-white ${gapClass}">
-                            <div class="grid grid-cols-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                        <div class="w-full h-full grid grid-rows-2 bg-white ${padClass} ${gapClass}">
+                            <div class="grid grid-cols-4 h-full ${gapClass}">
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
                                 <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
                             </div>
-                            <div class="grid grid-cols-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                            <div class="grid grid-cols-4 h-full ${gapClass}">
                                 <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 4, s[4], isThumbnail)}</div>
                                 <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 5, s[5], isThumbnail)}</div>
                             </div>
                         </div>
                     `;
-                case '8-grid':
+                case '8_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
-                            <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
+                            <div class="col-span-2 grid grid-rows-3 h-full ${gapClass}">
                                 <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
-                                <div class="row-span-1 grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                                <div class="row-span-1 grid grid-cols-2 h-full ${gapClass}">
                                     ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                                     ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                                 </div>
@@ -1965,11 +1929,11 @@
                             <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
-                case '9-grid':
+                case '9_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
-                            <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
-                                <div class="row-span-1 grid grid-cols-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
+                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
+                            <div class="col-span-2 grid grid-rows-3 h-full ${gapClass}">
+                                <div class="row-span-1 grid grid-cols-2 h-full ${gapClass}">
                                     ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                                     ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                                 </div>
@@ -1978,26 +1942,19 @@
                             <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
-                case '10-quad':
+                case '10_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 bg-white ${gapClass}">
+                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 bg-white ${padClass} ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
                         </div>
                     `;
-                case 'text-photo':
-                    return `
-                        <div class="w-full h-full grid grid-cols-2 bg-white items-center ${gapClass}">
-                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
-                            <div class="h-full">${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}</div>
-                        </div>
-                    `;
-                case '1-full':
+                case '1_2':
                 default:
                     return `
-                        <div class="w-full h-full bg-white ${gapClass}">
+                        <div class="w-full h-full bg-white ${padClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
                         </div>
                     `;
@@ -2021,7 +1978,7 @@
                                 : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400 disabled:opacity-40'
                         }"
                     >
-                        <div class="w-12 h-9 p-1 bg-white border border-gray-200 rounded-[2px]">
+                        <div class="w-12 h-9 p-[3px] bg-white border border-gray-200 rounded-[2px]">
                             ${opt.icon}
                         </div>
                         <span class="text-[10px] font-semibold">${opt.label}</span>
@@ -2097,7 +2054,6 @@
                 `;
             }).join('');
 
-            // Ар талд дэвсгэр хайрцаг/layer байхгүй, зөвхөн цэвэр текст + зөөх/бичих боломж
             const textBoxesHtml = (sp.textBoxes || []).map(tb => {
                 const isSelected = activeTextTarget && activeTextTarget.textId === tb.id;
                 const alignClass = tb.align === 'center' ? 'text-center' : (tb.align === 'right' ? 'text-right' : 'text-left');
@@ -2470,4 +2426,4 @@
 
 </body>
 </html>
-```[cite: 3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23]
+```[cite: 3, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
