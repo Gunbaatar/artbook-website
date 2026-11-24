@@ -186,7 +186,7 @@
             </div>
 
             <span class="text-gray-300">|</span>
-            <a href="#" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
+            <a href="#" onclick="showPhotoPrintPage(event)" class="text-gray-700 hover:text-[#927657] py-3 px-1 sm:px-2 border-b-2 border-transparent hover:border-[#927657] inline-block transition-colors duration-200">ФОТО ХЭВЛЭЛ</a>
             <span class="text-gray-300">|</span>
 
             <!-- 3. УРЛАГИЙН БҮТЭЭГДЭХҮҮН ДЭД ЦЭС -->
@@ -262,6 +262,86 @@
                         <p class="text-xs sm:text-sm font-medium tracking-wide underline opacity-90">Дурсамж ном үүсгэх →</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 1.5 ФОТО ХЭВЛЭЛ (ЦААС СОНГОХ ХУУДАС) -->
+    <main id="photo-print-page" style="display: none;" class="max-w-6xl w-full mx-auto px-6 py-12 my-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 items-start">
+            <!-- 1. PREMIUM SATIN PAPER -->
+            <div class="flex flex-col">
+                <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
+                    <img src="satin_paper.jpg" onerror="this.src='book.webp'" alt="Premium Satin Paper" class="w-full h-full object-cover">
+                </div>
+                <div class="text-center mb-5">
+                    <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM SATIN PAPER</h3>
+                    <p class="text-[11px] font-medium tracking-wider uppercase text-gray-500 mt-1">САТИН ЦААС</p>
+                </div>
+                <div class="border-t-2 border-gray-900 pt-4 mb-8 flex-1">
+                    <ul class="space-y-1.5 text-xs text-gray-700 leading-relaxed">
+                        <li>• Зөөлөн, бага зэрэг гялгар</li>
+                        <li>• Гэрлийн ойлт бага</li>
+                        <li>• Фото зураг, хөрөг хэвлэхэд тохиромжтой</li>
+                    </ul>
+                </div>
+                <button
+                    type="button"
+                    onclick="selectPhotoPaper('Premium Satin Paper (Сатин цаас)', '30,000₮')"
+                    class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
+                >
+                    СОНГОХ
+                </button>
+            </div>
+
+            <!-- 2. PREMIUM HIGH GLOSS -->
+            <div class="flex flex-col">
+                <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
+                    <img src="high_gloss_paper.jpg" onerror="this.src='book2.webp'" alt="Premium High Gloss" class="w-full h-full object-cover">
+                </div>
+                <div class="text-center mb-5">
+                    <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM HIGH GLOSS</h3>
+                    <p class="text-[11px] font-medium tracking-wider uppercase text-gray-500 mt-1">ГЯЛГАР ЦААС</p>
+                </div>
+                <div class="border-t-2 border-gray-900 pt-4 mb-8 flex-1">
+                    <ul class="space-y-1.5 text-xs text-gray-700 leading-relaxed">
+                        <li>• Маш гялгар гадаргуутай</li>
+                        <li>• Өнгө тод, контраст өндөр</li>
+                        <li>• Хурууны хээ, гэрлийн ойлт илүү мэдэгдэнэ</li>
+                    </ul>
+                </div>
+                <button
+                    type="button"
+                    onclick="selectPhotoPaper('Premium High Gloss (Гялгар цаас)', '30,000₮')"
+                    class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
+                >
+                    СОНГОХ
+                </button>
+            </div>
+
+            <!-- 3. PREMIUM LUSTER PAPER -->
+            <div class="flex flex-col">
+                <div class="aspect-square w-full bg-gray-100 overflow-hidden mb-6 shadow-sm">
+                    <img src="luster_paper.jpg" onerror="this.src='artbook_menu.jpg'" alt="Premium Luster Paper" class="w-full h-full object-cover">
+                </div>
+                <div class="text-center mb-5">
+                    <h3 class="text-sm sm:text-base font-bold tracking-wider uppercase text-gray-900">PREMIUM LUSTER PAPER</h3>
+                    <p class="text-[11px] font-medium tracking-wider uppercase text-gray-500 mt-1">ХАГАС ГЯЛГАР ЦААС</p>
+                </div>
+                <div class="border-t-2 border-gray-900 pt-4 mb-8 flex-1">
+                    <ul class="space-y-1.5 text-xs text-gray-700 leading-relaxed">
+                        <li>• Маш нарийн бүтэцтэй гадаргуутай</li>
+                        <li>• Гялгар болон матт завсрын шинжтэй</li>
+                        <li>• Мэргэжлийн фото хэвлэлд өргөн хэрэглэдэг</li>
+                    </ul>
+                </div>
+                <button
+                    type="button"
+                    onclick="selectPhotoPaper('Premium Luster Paper (Хагас гялгар цаас)', '30,000₮')"
+                    class="w-full bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs tracking-widest uppercase py-3.5 rounded-md shadow-sm transition cursor-pointer"
+                >
+                    СОНГОХ
+                </button>
             </div>
         </div>
     </main>
@@ -837,96 +917,84 @@
             return result;
         }
 
-        // Cover-оос бусад (first-page, double-page, last-page) хуудсуудын зургийг
-        // layout өөрчлөх үед автоматаар урагшлуулж слотуудад жигд тааруулна.
+        // Одоо байгаа бүх хуудасны layout болон оноогдсон зургуудын санах ойг хадгалж,
+        // аль ч слотод орсон зургийг өөр слотод давхардуулахгүйгээр зөвхөн ашиглагдаагүй
+        // зургуудыг Cover-оос бусад хуудсуудын хоосон слотуудад тараана.
         function reflowPhotosAcrossSpreads() {
             const validIds = new Set(photoAssets.map(p => p.id));
-            const coverUsedIds = new Set();
-            const nonCoverOrdered = [];
-            const seenNonCover = new Set();
+            const usedIds = new Set();
 
             bookSpreads.forEach(sp => {
                 ['left', 'right'].forEach(side => {
-                    if (sp[side].blank) return;
+                    if (!sp[side] || sp[side].blank) return;
                     sp[side].slots.forEach(sl => {
                         if (sl.type === 'image' && sl.photoId) {
-                            if (!validIds.has(sl.photoId)) {
+                            if (!validIds.has(sl.photoId) || usedIds.has(sl.photoId)) {
                                 sl.photoId = null;
-                                return;
-                            }
-                            if (sp.kind === 'cover') {
-                                coverUsedIds.add(sl.photoId);
-                            } else if (!seenNonCover.has(sl.photoId)) {
-                                seenNonCover.add(sl.photoId);
-                                nonCoverOrdered.push({
-                                    photoId: sl.photoId,
-                                    posX: typeof sl.posX === 'number' ? sl.posX : 50,
-                                    posY: typeof sl.posY === 'number' ? sl.posY : 50,
-                                    zoom: typeof sl.zoom === 'number' ? sl.zoom : 100
-                                });
+                                sl.posX = 50;
+                                sl.posY = 50;
+                                sl.zoom = 100;
+                            } else {
+                                usedIds.add(sl.photoId);
                             }
                         }
                     });
                 });
             });
 
-            photoAssets.forEach(asset => {
-                if (!coverUsedIds.has(asset.id) && !seenNonCover.has(asset.id)) {
-                    seenNonCover.add(asset.id);
-                    nonCoverOrdered.push({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 });
-                }
-            });
+            const unusedPool = photoAssets
+                .filter(asset => !usedIds.has(asset.id))
+                .map(asset => ({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 }));
 
-            let nonCoverCapacity = 0;
-            bookSpreads.forEach(sp => {
-                if (sp.kind === 'cover') return;
-                ['left', 'right'].forEach(side => {
-                    if (sp[side].blank) return;
-                    nonCoverCapacity += sp[side].slots.length;
-                });
-            });
-
-            if (nonCoverOrdered.length > nonCoverCapacity) {
-                const extraSlotsNeeded = nonCoverOrdered.length - nonCoverCapacity;
-                const extraDoublePages = Math.ceil(extraSlotsNeeded / 2);
-                const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
-                const insertAt = lastIdx >= 0 ? lastIdx : bookSpreads.length;
-
-                for (let i = 0; i < extraDoublePages; i++) {
-                    bookSpreads.splice(insertAt + i, 0, {
-                        id: 'spread_dbl_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2, 5),
-                        kind: 'double-page',
-                        left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
-                        right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
-                        textBoxes: [],
-                        shapes: []
+            if (unusedPool.length > 0) {
+                let emptySlotsCount = 0;
+                bookSpreads.forEach(sp => {
+                    if (sp.kind === 'cover') return;
+                    ['left', 'right'].forEach(side => {
+                        if (!sp[side] || sp[side].blank) return;
+                        sp[side].slots.forEach(sl => {
+                            if (!sl.photoId) emptySlotsCount++;
+                        });
                     });
+                });
+
+                if (unusedPool.length > emptySlotsCount) {
+                    const extraSlotsNeeded = unusedPool.length - emptySlotsCount;
+                    const extraDoublePages = Math.ceil(extraSlotsNeeded / 2);
+                    const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
+                    const insertAt = lastIdx >= 0 ? lastIdx : bookSpreads.length;
+
+                    for (let i = 0; i < extraDoublePages; i++) {
+                        bookSpreads.splice(insertAt + i, 0, {
+                            id: 'spread_dbl_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2, 5),
+                            kind: 'double-page',
+                            left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                            right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                            textBoxes: [],
+                            shapes: []
+                        });
+                    }
                 }
+
+                let poolIdx = 0;
+                bookSpreads.forEach(sp => {
+                    if (sp.kind === 'cover') return;
+                    ['left', 'right'].forEach(side => {
+                        const pane = sp[side];
+                        if (!pane || pane.blank) return;
+                        pane.slots.forEach(sl => {
+                            if (!sl.photoId && poolIdx < unusedPool.length) {
+                                sl.type = 'image';
+                                sl.photoId = unusedPool[poolIdx].photoId;
+                                sl.posX = unusedPool[poolIdx].posX;
+                                sl.posY = unusedPool[poolIdx].posY;
+                                sl.zoom = unusedPool[poolIdx].zoom;
+                                poolIdx++;
+                            }
+                        });
+                    });
+                });
             }
-
-            let poolIdx = 0;
-            bookSpreads.forEach(sp => {
-                if (sp.kind === 'cover') return;
-                ['left', 'right'].forEach(side => {
-                    const pane = sp[side];
-                    if (pane.blank) return;
-                    pane.slots.forEach(sl => {
-                        if (poolIdx < nonCoverOrdered.length) {
-                            sl.type = 'image';
-                            sl.photoId = nonCoverOrdered[poolIdx].photoId;
-                            sl.posX = nonCoverOrdered[poolIdx].posX;
-                            sl.posY = nonCoverOrdered[poolIdx].posY;
-                            sl.zoom = nonCoverOrdered[poolIdx].zoom;
-                            poolIdx++;
-                        } else {
-                            sl.photoId = null;
-                            sl.posX = 50;
-                            sl.posY = 50;
-                            sl.zoom = 100;
-                        }
-                    });
-                });
-            });
 
             if (currentSpreadIdx >= bookSpreads.length) {
                 currentSpreadIdx = Math.max(0, bookSpreads.length - 1);
@@ -1071,6 +1139,16 @@
             };
         }
 
+        function showPhotoPrintPage(e) {
+            if (e) e.preventDefault();
+            hideAllPages();
+            document.getElementById('photo-print-page').style.display = 'block';
+        }
+
+        function selectPhotoPaper(paperName, priceText) {
+            addToCart('Фото хэвлэл — ' + paperName, priceText || '30,000₮');
+        }
+
         function switchContent(type, e) {
             if(e) e.preventDefault();
             const img = document.getElementById('main-image');
@@ -1155,6 +1233,7 @@
 
         function hideAllPages() {
             document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('photo-print-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'none';
             document.getElementById('dashboard-page').style.display = 'none';
             document.getElementById('editor-page').style.display = 'none';
@@ -1475,9 +1554,7 @@
                 activeImageTarget = { spreadIdx, side, slotIdx: 0 };
             }
 
-            if (spread.kind !== 'cover') {
-                reflowPhotosAcrossSpreads();
-            }
+            reflowPhotosAcrossSpreads();
             renderAllStudioViews();
         }
 
@@ -1499,7 +1576,13 @@
                 droppedPhotoId = dragState.photoId;
             } else if (dragState.type === 'slot') {
                 const srcSlot = bookSpreads[dragState.spreadIdx]?.[dragState.side]?.slots?.[dragState.slotIdx];
-                if (srcSlot?.photoId) droppedPhotoId = srcSlot.photoId;
+                if (srcSlot?.photoId) {
+                    droppedPhotoId = srcSlot.photoId;
+                    srcSlot.photoId = null;
+                    srcSlot.posX = 50;
+                    srcSlot.posY = 50;
+                    srcSlot.zoom = 100;
+                }
             }
 
             if (droppedPhotoId) {
@@ -1514,9 +1597,7 @@
             }
 
             dragState = null;
-            if (sp.kind !== 'cover') {
-                reflowPhotosAcrossSpreads();
-            }
+            reflowPhotosAcrossSpreads();
             renderAllStudioViews();
         }
 
@@ -1858,9 +1939,7 @@
             slot.posX = 50;
             slot.posY = 50;
             slot.zoom = 100;
-            if (bookSpreads[spreadIdx]?.kind !== 'cover') {
-                reflowPhotosAcrossSpreads();
-            }
+            reflowPhotosAcrossSpreads();
             renderAllStudioViews();
         }
 
@@ -2392,8 +2471,22 @@
             if (!dragState) return;
 
             if (dragState.type === 'sidebar') {
+                const movedPhotoId = dragState.photoId;
+                bookSpreads.forEach(sp => {
+                    ['left', 'right'].forEach(side => {
+                        if (!sp[side] || sp[side].blank) return;
+                        sp[side].slots.forEach(sl => {
+                            if (sl.photoId === movedPhotoId) {
+                                sl.photoId = null;
+                                sl.posX = 50;
+                                sl.posY = 50;
+                                sl.zoom = 100;
+                            }
+                        });
+                    });
+                });
                 targetSlot.type = 'image';
-                targetSlot.photoId = dragState.photoId;
+                targetSlot.photoId = movedPhotoId;
                 targetSlot.posX = 50;
                 targetSlot.posY = 50;
                 targetSlot.zoom = 100;
@@ -2430,8 +2523,8 @@
             activeImageTarget = { spreadIdx: targetSpreadIdx, side: targetSide, slotIdx: targetSlotIdx };
             activeSide = targetSide;
             dragState = null;
-            renderMainSpreadStage();
-            renderFilmstrip();
+            reflowPhotosAcrossSpreads();
+            renderAllStudioViews();
         }
 
         function removeEditorPhoto(index) {
