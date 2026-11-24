@@ -418,7 +418,7 @@
                     </div>
                     <p class="text-[10px] text-gray-400">Layout дээр дарж загвар сонгох эсвэл зураг чирж тавина.</p>
                     <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
-                        <!-- JS-ээр 1_2.jpg - 10_2.jpg загварын мини картууд орно -->
+                        <!-- JS-ээр 1_2.jpg - 11_2.jpg загварын мини картууд орно -->
                     </div>
                 </div>
 
@@ -735,7 +735,7 @@
         // Идэвхтэй текст элемент: { spreadIdx, textId }
         let activeTextTarget = null;
 
-        // Зөвхөн хэрэглэгчийн өгсөн 1_2.jpg - 10_2.jpg загварууд
+        // 1_2.jpg - 11_2.jpg загварууд
         const LAYOUT_OPTIONS = [
             {
                 key: '1_2',
@@ -783,19 +783,25 @@
                 key: '8_2',
                 label: '8_2.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="row-span-2 bg-[#111111]"></div><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div><div class="bg-[#111111]"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-5 gap-[2px]"><div class="col-span-3 grid grid-rows-5 gap-[2px]"><div class="row-span-3 bg-[#111111]"></div><div class="row-span-2 grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div><div class="col-span-2 bg-[#111111]"></div></div>`
             },
             {
                 key: '9_2',
                 label: '9_2.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="row-span-2 bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-5 gap-[2px]"><div class="col-span-3 grid grid-rows-5 gap-[2px]"><div class="row-span-3 bg-[#111111]"></div><div class="row-span-2 grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div><div class="col-span-2 bg-[#111111]"></div></div>`
             },
             {
                 key: '10_2',
                 label: '10_2.jpg',
                 slots: 4,
                 icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div>`
+            },
+            {
+                key: '11_2',
+                label: '11_2.jpg',
+                slots: 4,
+                icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 bg-[#111111]"></div><div class="col-span-1 grid grid-rows-3 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div>`
             }
         ];
 
@@ -831,139 +837,77 @@
             return result;
         }
 
+        // Cover болон бусад хуудсанд аль хэдийн байгаа зургуудыг өөр нүдэнд давхардуулж хуваарилахгүй,
+        // зөвхөн ашиглагдаагүй (unused) зургуудыг хоосон слотуудад тараана.
         function reflowPhotosAcrossSpreads() {
-            const collected = [];
+            const validIds = new Set(photoAssets.map(p => p.id));
+            const usedIds = new Set();
+
             bookSpreads.forEach(sp => {
                 ['left', 'right'].forEach(side => {
                     if (sp[side].blank) return;
                     sp[side].slots.forEach(sl => {
                         if (sl.type === 'image' && sl.photoId) {
-                            collected.push({
-                                photoId: sl.photoId,
-                                posX: typeof sl.posX === 'number' ? sl.posX : 50,
-                                posY: typeof sl.posY === 'number' ? sl.posY : 50,
-                                zoom: typeof sl.zoom === 'number' ? sl.zoom : 100
-                            });
+                            if (validIds.has(sl.photoId)) {
+                                usedIds.add(sl.photoId);
+                            } else {
+                                sl.photoId = null;
+                            }
                         }
                     });
                 });
             });
 
-            const validIds = new Set(photoAssets.map(p => p.id));
-            const orderedPool = [];
-            const seen = new Set();
+            const unusedPool = photoAssets
+                .filter(asset => !usedIds.has(asset.id))
+                .map(asset => ({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 }));
 
-            collected.forEach(item => {
-                if (validIds.has(item.photoId) && !seen.has(item.photoId)) {
-                    orderedPool.push(item);
-                    seen.add(item.photoId);
-                }
+            let totalEmptyAfterCover = 0;
+            bookSpreads.forEach(sp => {
+                if (sp.kind === 'cover') return;
+                ['left', 'right'].forEach(side => {
+                    if (sp[side].blank) return;
+                    sp[side].slots.forEach(sl => {
+                        if (!sl.photoId) totalEmptyAfterCover++;
+                    });
+                });
             });
 
-            photoAssets.forEach(asset => {
-                if (!seen.has(asset.id)) {
-                    orderedPool.push({ photoId: asset.id, posX: 50, posY: 50, zoom: 100 });
-                    seen.add(asset.id);
-                }
-            });
+            const extraNeeded = Math.max(0, unusedPool.length - totalEmptyAfterCover);
+            const extraDoublePages = Math.ceil(extraNeeded / 2);
 
-            const remainingForDoubleAndLast = Math.max(0, orderedPool.length - 2);
-            const neededDoublePages = Math.max(
-                1,
-                Math.ceil(Math.max(0, remainingForDoubleAndLast - 1) / 2)
-            );
+            const lastIdx = bookSpreads.findIndex(sp => sp.kind === 'last-page');
+            const insertAt = lastIdx >= 0 ? lastIdx : bookSpreads.length;
 
-            const existingDoubles = bookSpreads.filter(sp => sp.kind === 'double-page');
-            const rebuildDoubles = [];
-
-            for (let i = 0; i < neededDoublePages; i++) {
-                const prev = existingDoubles[i];
-                const leftLayout = prev && LAYOUT_OPTIONS.some(l => l.key === prev.left.layout) ? prev.left.layout : '1_2';
-                const rightLayout = prev && LAYOUT_OPTIONS.some(l => l.key === prev.right.layout) ? prev.right.layout : '1_2';
-                const leftCount = getLayoutSlotCount(leftLayout);
-                const rightCount = getLayoutSlotCount(rightLayout);
-
-                rebuildDoubles.push({
-                    id: prev ? prev.id : ('spread_dbl_' + Date.now() + '_' + i),
+            for (let i = 0; i < extraDoublePages; i++) {
+                bookSpreads.splice(insertAt + i, 0, {
+                    id: 'spread_dbl_' + Date.now() + '_' + i + '_' + Math.random().toString(36).slice(2, 5),
                     kind: 'double-page',
-                    left: { blank: false, layout: leftLayout, slots: Array.from({ length: leftCount }, () => makeImageSlot(null)) },
-                    right: { blank: false, layout: rightLayout, slots: Array.from({ length: rightCount }, () => makeImageSlot(null)) },
-                    textBoxes: prev?.textBoxes ? prev.textBoxes.map(t => ({ ...t })) : [],
-                    shapes: prev?.shapes ? prev.shapes.map(sh => ({ ...sh })) : []
+                    left: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                    right: { blank: false, layout: '1_2', slots: [makeImageSlot(null)] },
+                    textBoxes: [],
+                    shapes: []
                 });
             }
 
-            const existingCover = bookSpreads.find(sp => sp.kind === 'cover');
-            const existingFirst = bookSpreads.find(sp => sp.kind === 'first-page');
-            const existingLast = bookSpreads.find(sp => sp.kind === 'last-page');
-
-            const coverLayout = LAYOUT_OPTIONS.some(l => l.key === existingCover?.right?.layout) ? existingCover.right.layout : '1_2';
-            const firstLayout = LAYOUT_OPTIONS.some(l => l.key === existingFirst?.right?.layout) ? existingFirst.right.layout : '1_2';
-            const lastLayout = LAYOUT_OPTIONS.some(l => l.key === existingLast?.left?.layout) ? existingLast.left.layout : '1_2';
-
-            const nextSpreads = [
-                {
-                    id: existingCover ? existingCover.id : ('spread_cover_' + Date.now()),
-                    kind: 'cover',
-                    left: { blank: true, blankLabel: 'Арын хавтас', layout: '1_2', slots: [] },
-                    right: {
-                        blank: false,
-                        layout: coverLayout,
-                        slots: normalizeSlotsForLayout(coverLayout, [])
-                    },
-                    textBoxes: existingCover?.textBoxes ? existingCover.textBoxes.map(t => ({ ...t })) : [],
-                    shapes: existingCover?.shapes ? existingCover.shapes.map(sh => ({ ...sh })) : []
-                },
-                {
-                    id: existingFirst ? existingFirst.id : ('spread_p1_' + Date.now()),
-                    kind: 'first-page',
-                    left: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
-                    right: {
-                        blank: false,
-                        layout: firstLayout,
-                        slots: normalizeSlotsForLayout(firstLayout, [])
-                    },
-                    textBoxes: existingFirst?.textBoxes ? existingFirst.textBoxes.map(t => ({ ...t })) : [],
-                    shapes: existingFirst?.shapes ? existingFirst.shapes.map(sh => ({ ...sh })) : []
-                },
-                ...rebuildDoubles,
-                {
-                    id: existingLast ? existingLast.id : ('spread_last_' + Date.now()),
-                    kind: 'last-page',
-                    left: {
-                        blank: false,
-                        layout: lastLayout,
-                        slots: normalizeSlotsForLayout(lastLayout, [])
-                    },
-                    right: { blank: true, blankLabel: 'Хавтасны дотор тал', layout: '1_2', slots: [] },
-                    textBoxes: existingLast?.textBoxes ? existingLast.textBoxes.map(t => ({ ...t })) : [],
-                    shapes: existingLast?.shapes ? existingLast.shapes.map(sh => ({ ...sh })) : []
-                }
-            ];
-
             let poolIdx = 0;
-            nextSpreads.forEach(sp => {
+            bookSpreads.forEach(sp => {
+                if (sp.kind === 'cover') return;
                 ['left', 'right'].forEach(side => {
                     const pane = sp[side];
                     if (pane.blank) return;
                     pane.slots.forEach(sl => {
-                        if (poolIdx < orderedPool.length) {
-                            sl.photoId = orderedPool[poolIdx].photoId;
-                            sl.posX = orderedPool[poolIdx].posX;
-                            sl.posY = orderedPool[poolIdx].posY;
-                            sl.zoom = orderedPool[poolIdx].zoom;
+                        if (!sl.photoId && poolIdx < unusedPool.length) {
+                            sl.photoId = unusedPool[poolIdx].photoId;
+                            sl.posX = unusedPool[poolIdx].posX;
+                            sl.posY = unusedPool[poolIdx].posY;
+                            sl.zoom = unusedPool[poolIdx].zoom;
                             poolIdx++;
-                        } else {
-                            sl.photoId = null;
-                            sl.posX = 50;
-                            sl.posY = 50;
-                            sl.zoom = 100;
                         }
                     });
                 });
             });
 
-            bookSpreads = nextSpreads;
             if (currentSpreadIdx >= bookSpreads.length) {
                 currentSpreadIdx = Math.max(0, bookSpreads.length - 1);
             }
@@ -1981,7 +1925,7 @@
             `;
         }
 
-        // Яг хэрэглэгчийн өгсөн 1_2.jpg - 10_2.jpg загварууд
+        // 1_2.jpg - 11_2.jpg загварууд (8_2, 9_2 нь 8.jpg-ийн харьцаатай; 11_2 нь 11.jpg-ийн загвар)
         function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
@@ -2067,29 +2011,17 @@
                         </div>
                     `;
                 case '8_2':
+                case '9_2':
                     return `
-                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
-                            <div class="col-span-2 grid grid-rows-3 h-full ${gapClass}">
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
-                                <div class="row-span-1 grid grid-cols-2 h-full ${gapClass}">
+                        <div class="w-full h-full grid grid-cols-5 bg-white ${padClass} ${gapClass}">
+                            <div class="col-span-3 grid grid-rows-5 h-full ${gapClass}">
+                                <div class="row-span-3 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                                <div class="row-span-2 grid grid-cols-2 h-full ${gapClass}">
                                     ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                                     ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                                 </div>
                             </div>
-                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
-                        </div>
-                    `;
-                case '9_2':
-                    return `
-                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
-                            <div class="col-span-2 grid grid-rows-3 h-full ${gapClass}">
-                                <div class="row-span-1 grid grid-cols-2 h-full ${gapClass}">
-                                    ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
-                                    ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
-                                </div>
-                                <div class="row-span-2 h-full">${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}</div>
-                            </div>
-                            <div class="col-span-1 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
+                            <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}</div>
                         </div>
                     `;
                 case '10_2':
@@ -2099,6 +2031,17 @@
                             ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
                             ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
+                        </div>
+                    `;
+                case '11_2':
+                    return `
+                        <div class="w-full h-full grid grid-cols-3 bg-white ${padClass} ${gapClass}">
+                            <div class="col-span-2 h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
+                            <div class="col-span-1 grid grid-rows-3 h-full ${gapClass}">
+                                ${renderSlotHTML(spreadIdx, side, 1, s[1], isThumbnail)}
+                                ${renderSlotHTML(spreadIdx, side, 2, s[2], isThumbnail)}
+                                ${renderSlotHTML(spreadIdx, side, 3, s[3], isThumbnail)}
+                            </div>
                         </div>
                     `;
                 case '1_2':
