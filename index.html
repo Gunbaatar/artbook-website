@@ -302,7 +302,7 @@
                 <span id="editor-book-heading" class="hidden md:inline text-xs font-medium text-gray-500">Memory Book</span>
             </div>
 
-            <!-- Текстийн болон зургийн форматлах хөвөгч/дээд хэрэгслийн самбар -->
+            <!-- Текстийн болон зургийн форматлах хэрэгслийн самбар -->
             <div id="studio-inspector-bar" class="flex flex-wrap items-center gap-2 text-xs">
                 <div class="flex items-center space-x-1.5 bg-gray-50 border border-gray-200 px-2 py-1 rounded-sm">
                     <span class="text-[11px] text-gray-500">Зураг:</span>
@@ -394,9 +394,9 @@
         </div>
 
         <!-- Гол ажлын хэсэг: Зүүн загварын самбар + Том дэлгэмэл талбар + Баруун хэрэгслийн цэс -->
-        <div class="flex flex-1 min-h-[540px] overflow-hidden">
+        <div class="flex flex-1 min-h-[580px] overflow-hidden">
             <!-- 1. Зүүн талын Layouts & Зургийн самбар -->
-            <aside class="w-60 lg:w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
+            <aside class="w-56 lg:w-60 bg-white border-r border-gray-200 flex flex-col shrink-0">
                 <div class="flex border-b border-gray-200 text-[11px] font-bold">
                     <button id="left-tab-layouts" type="button" onclick="switchLeftPanelTab('layouts')" class="flex-1 py-2.5 text-center border-b-2 border-[#927657] text-[#927657]">
                         Layouts
@@ -409,11 +409,11 @@
                 <!-- Layouts цэс -->
                 <div id="left-panel-layouts" class="p-3 overflow-y-auto flex-1 space-y-2">
                     <div class="flex items-center justify-between text-[10px] font-semibold text-gray-500 pb-1">
-                        <span>Идэвхтэй тал: <strong id="active-side-badge" class="text-gray-800">Баруун</strong></span>
+                        <span>Тал: <strong id="active-side-badge" class="text-gray-800">Баруун</strong></span>
                         <button type="button" onclick="toggleActiveSide()" class="text-[#927657] hover:underline">Тал солих</button>
                     </div>
                     <div id="sidebar-layouts-grid" class="grid grid-cols-2 gap-2">
-                        <!-- JS-ээр 0.jpg - 10.jpg загварын мини картууд орно -->
+                        <!-- JS-ээр 1.jpg - 10.jpg, 0.jpg загварын мини картууд орно -->
                     </div>
                 </div>
 
@@ -430,9 +430,9 @@
                 </div>
             </aside>
 
-            <!-- 2. Төв хэсгийн ТОМ дэлгэмэл хуудасны ажлын талбар -->
-            <section class="flex-1 bg-[#e5e7eb] p-4 sm:p-7 flex flex-col items-center justify-center overflow-auto relative">
-                <div id="main-spread-stage-container" class="w-full flex items-center justify-center my-auto">
+            <!-- 2. Төв хэсгийн ТОМ дэлгэмэл хуудасны ажлын талбар (Захын хэсгүүдээс ~2cm / 76px зайтайгаар аль болох том) -->
+            <section class="flex-1 bg-[#e5e7eb] p-[76px] flex items-center justify-center overflow-auto relative">
+                <div id="main-spread-stage-container" class="w-full h-full flex items-center justify-center">
                     <!-- JS-ээр том дэлгэмэл хуудас (зүүн + баруун нүүр) энд зурна -->
                 </div>
             </section>
@@ -662,14 +662,14 @@
         const MIN_IMAGE_PX = 2000;
         const MAX_IMAGE_PX = 9000;
 
-        // Номын формат ба хэмжээний сонголтууд
+        // Номын формат ба хэмжээний сонголтууд (~2cm захын зайтайгаар аль болох томруулсан харагдац)
         const BOOK_FORMATS = [
             {
                 key: 'landscape',
                 title: 'LANDSCAPE',
                 subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
                 boxClass: 'w-44 h-32',
-                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 980px;',
+                mainSpreadStyle: 'aspect-ratio: 8 / 3; width: 100%; max-width: 1260px; max-height: calc(100vh - 290px);',
                 thumbSpreadStyle: 'aspect-ratio: 8 / 3; width: 108px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
@@ -681,7 +681,7 @@
                 title: 'PORTRAIT',
                 subtitle: 'БОСОО ХЭЛБЭР',
                 boxClass: 'w-32 h-44',
-                mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 780px;',
+                mainSpreadStyle: 'aspect-ratio: 6 / 4; width: 100%; max-width: 1020px; max-height: calc(100vh - 290px);',
                 thumbSpreadStyle: 'aspect-ratio: 6 / 4; width: 84px;',
                 sizes: [
                     'A3 хэмжээ ( 29.7 × 42см )',
@@ -693,7 +693,7 @@
                 title: 'SQUARE',
                 subtitle: 'ДӨРВӨЛЖИН ХЭЛБЭР',
                 boxClass: 'w-36 h-36',
-                mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 860px;',
+                mainSpreadStyle: 'aspect-ratio: 2 / 1; width: 100%; max-width: 1120px; max-height: calc(100vh - 290px);',
                 thumbSpreadStyle: 'aspect-ratio: 2 / 1; width: 96px;',
                 sizes: [
                     'Жижиг хэмжээ ( 29 × 29см )',
@@ -727,77 +727,76 @@
         // Идэвхтэй текст элемент: { spreadIdx, textId }
         let activeTextTarget = null;
 
-        // Хуваагдлын загварууд (0.jpg - 10.jpg)
+        // Яг хэрэглэгчийн өгсөн 1.jpg - 10.jpg болон 0.jpg загваруудын мини дүрс
         const LAYOUT_OPTIONS = [
             {
                 key: '1-full',
                 label: '1.jpg',
                 slots: 1,
-                icon: `<div class="w-full h-full bg-gray-800 rounded-[1px]"></div>`
+                icon: `<div class="w-full h-full bg-[#111111]"></div>`
             },
             {
                 key: '2-v',
                 label: '2.jpg',
                 slots: 2,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div>`
             },
             {
                 key: '3-l-right',
                 label: '3.jpg',
                 slots: 3,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div>`
             },
             {
                 key: '3-l-left',
                 label: '4.jpg',
                 slots: 3,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="bg-gray-800"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
                 key: '4-top-bot',
                 label: '5.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="grid grid-rows-3 gap-[1px]"><div class="row-span-2 bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="grid grid-rows-3 gap-[1px]"><div class="bg-gray-800"></div><div class="row-span-2 bg-gray-800"></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="grid grid-rows-3 gap-[2px]"><div class="row-span-2 bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="grid grid-rows-3 gap-[2px]"><div class="bg-[#111111]"></div><div class="row-span-2 bg-[#111111]"></div></div></div>`
             },
             {
                 key: '5-mix',
                 label: '6.jpg',
                 slots: 5,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div></div>`
             },
             {
                 key: '7-spread',
                 label: '7.jpg',
                 slots: 6,
-                icon: `<div class="w-full h-full grid grid-rows-2 gap-[1px]"><div class="grid grid-cols-4 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="col-span-2 bg-gray-800"></div></div><div class="grid grid-cols-4 gap-[1px]"><div class="col-span-2 bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-rows-2 gap-[2px]"><div class="grid grid-cols-4 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="col-span-2 bg-[#111111]"></div></div><div class="grid grid-cols-4 gap-[2px]"><div class="col-span-2 bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div>`
             },
             {
                 key: '8-grid',
                 label: '8.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-3 gap-[1px]"><div class="col-span-2 grid grid-rows-3 gap-[1px]"><div class="row-span-2 bg-gray-800"></div><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div></div><div class="bg-gray-800"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="row-span-2 bg-[#111111]"></div><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
                 key: '9-grid',
                 label: '9.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-3 gap-[1px]"><div class="col-span-2 grid grid-rows-3 gap-[1px]"><div class="grid grid-cols-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div><div class="row-span-2 bg-gray-800"></div></div><div class="bg-gray-800"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-3 gap-[2px]"><div class="col-span-2 grid grid-rows-3 gap-[2px]"><div class="grid grid-cols-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div><div class="row-span-2 bg-[#111111]"></div></div><div class="bg-[#111111]"></div></div>`
             },
             {
                 key: '10-quad',
                 label: '10.jpg',
                 slots: 4,
-                icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[1px]"><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div><div class="bg-gray-800"></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px]"><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div><div class="bg-[#111111]"></div></div>`
             },
             {
                 key: 'text-photo',
                 label: '0.jpg',
                 slots: 2,
-                icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px] items-center"><div class="h-full bg-gray-800"></div><div class="space-y-[1px] px-[1px]"><div class="h-[2px] bg-gray-600"></div><div class="h-[2px] bg-gray-400 w-3/4"></div></div></div>`
+                icon: `<div class="w-full h-full grid grid-cols-2 gap-[2px] items-center"><div class="h-full bg-[#111111]"></div><div class="space-y-[2px] px-[2px]"><div class="h-[2px] bg-gray-600"></div><div class="h-[2px] bg-gray-500 w-4/5"></div><div class="h-[2px] bg-gray-400 w-3/5"></div></div></div>`
             }
         ];
 
-        // Чөлөөтэй байрлах элементүүдийн drag / resize төлөв
         let canvasInteraction = null;
         let photoPanState = null;
         let dragState = null;
@@ -1500,7 +1499,6 @@
             }
         }
 
-        // Чөлөөтэй нүүлгэж, хэмжээг нь сунгаж бичих текст хайрцаг нэмэх
         function addFloatingTextBox() {
             const sp = bookSpreads[currentSpreadIdx];
             if (!sp) return;
@@ -1529,7 +1527,6 @@
             renderFilmstrip();
         }
 
-        // Дөрвөлжин / Дугуй дүрс нэмэх
         function addShapeToCurrentSpread(shapeType) {
             const sp = bookSpreads[currentSpreadIdx];
             if (!sp) return;
@@ -1690,7 +1687,6 @@
             box.text = value;
         }
 
-        // Текст болон дүрсийг чирж нүүлгэх / хэмжээ сунгах
         function startCanvasElementAction(mode, spreadIdx, itemId, event) {
             if (event.button !== 0) return;
             event.stopPropagation();
@@ -1725,7 +1721,6 @@
             };
         }
 
-        // Зургийн дотор чирж байрлалыг тааруулах (Pan)
         function startPhotoPan(spreadIdx, side, slotIdx, event) {
             if (event.button !== 0) return;
             const slot = bookSpreads[spreadIdx]?.[side]?.slots?.[slotIdx];
@@ -1772,7 +1767,6 @@
 
                 const dxPct = ((event.clientX - canvasInteraction.startX) / canvasInteraction.stageW) * 100;
                 const dyPct = ((event.clientY - canvasInteraction.startY) / canvasInteraction.stageH) * 100;
-
                 const el = document.querySelector(`[data-canvas-item="${canvasInteraction.itemId}"]`);
 
                 if (canvasInteraction.mode.endsWith('move')) {
@@ -1825,7 +1819,7 @@
 
             if (safeSlot.type === 'text') {
                 return `
-                    <div class="w-full h-full bg-white border border-gray-200 flex items-center justify-center p-1.5 overflow-hidden">
+                    <div class="w-full h-full bg-white border border-gray-200 flex items-center justify-center p-2 overflow-hidden">
                         <span class="${isThumbnail ? 'text-[5px]' : 'text-xs'} text-gray-600 text-center line-clamp-3 leading-snug">
                             ${safeSlot.text || ''}
                         </span>
@@ -1840,7 +1834,7 @@
                         ondragleave="onSlotDragLeave(event)"
                         ondrop="onDropToSlot(${spreadIdx}, '${side}', ${slotIdx}, event)"
                     ` : ''}
-                    class="relative w-full h-full bg-[#242424] overflow-hidden flex items-center justify-center transition group/slot"
+                    class="relative w-full h-full bg-[#111111] overflow-hidden flex items-center justify-center transition group/slot"
                 >
                     ${!isThumbnail && photo ? `
                         <button
@@ -1879,6 +1873,7 @@
             `;
         }
 
+        // Яг хэрэглэгчийн өгсөн 1.jpg - 10.jpg болон 0.jpg зохиомжууд
         function renderPaneCanvas(spreadIdx, side, pane, isThumbnail = false) {
             if (pane.blank) {
                 return `
@@ -1895,6 +1890,7 @@
 
             switch (pane.layout) {
                 case '2-v':
+                    // 2.jpg: 2 тэнцүү босоо нүд
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
@@ -1902,6 +1898,7 @@
                         </div>
                     `;
                 case '3-l-right':
+                    // 3.jpg: Зүүн талд 1 том өндөр нүд, баруун талд дээр/доор 2 хэвтээ нүд
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
@@ -1912,6 +1909,7 @@
                         </div>
                     `;
                 case '3-l-left':
+                    // 4.jpg: Зүүн талд дээр/доор 2 хэвтээ нүд, баруун талд 1 том өндөр нүд
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
                             <div class="grid grid-rows-2 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2.5'}">
@@ -1922,6 +1920,7 @@
                         </div>
                     `;
                 case '4-top-bot':
+                    // 5.jpg: Зүүн талд том дээд + жижиг доод, баруун талд жижиг дээд + том доод
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
                             <div class="grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
@@ -1935,6 +1934,7 @@
                         </div>
                     `;
                 case '5-mix':
+                    // 6.jpg: Зүүн талд 1 том өндөр нүд, баруун талд дээр 1 хэвтээ + доор 2 босоо нүд
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
@@ -1948,6 +1948,7 @@
                         </div>
                     `;
                 case '7-spread':
+                    // 7.jpg: Дээд эгнээнд 2 босоо + 1 өргөн, доод эгнээнд 1 өргөн + 2 босоо
                     return `
                         <div class="w-full h-full grid grid-rows-2 bg-white ${gapClass}">
                             <div class="grid grid-cols-4 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
@@ -1963,6 +1964,7 @@
                         </div>
                     `;
                 case '8-grid':
+                    // 8.jpg: Зүүн талд дээр 1 том хэвтээ + доор 2 босоо, баруун талд 1 өндөр нүд
                     return `
                         <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
                             <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
@@ -1976,6 +1978,7 @@
                         </div>
                     `;
                 case '9-grid':
+                    // 9.jpg: Зүүн талд дээр 2 босоо + доор 1 том хэвтээ, баруун талд 1 өндөр нүд
                     return `
                         <div class="w-full h-full grid grid-cols-3 bg-white ${gapClass}">
                             <div class="col-span-2 grid grid-rows-3 h-full ${isThumbnail ? 'gap-[2px]' : 'gap-2'}">
@@ -1989,6 +1992,7 @@
                         </div>
                     `;
                 case '10-quad':
+                    // 10.jpg: 4 тэнцүү нүд (2x2)
                     return `
                         <div class="w-full h-full grid grid-cols-2 grid-rows-2 bg-white ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
@@ -1998,6 +2002,7 @@
                         </div>
                     `;
                 case 'text-photo':
+                    // 0.jpg: Зүүн талд зураг, баруун талд текст
                     return `
                         <div class="w-full h-full grid grid-cols-2 bg-white items-center ${gapClass}">
                             <div class="h-full">${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}</div>
@@ -2006,6 +2011,7 @@
                     `;
                 case '1-full':
                 default:
+                    // 1.jpg: 1 бүтэн нүд
                     return `
                         <div class="w-full h-full bg-white ${gapClass}">
                             ${renderSlotHTML(spreadIdx, side, 0, s[0], isThumbnail)}
@@ -2031,7 +2037,7 @@
                                 : 'border-gray-200 bg-white text-gray-600 hover:border-gray-400 disabled:opacity-40'
                         }"
                     >
-                        <div class="w-12 h-9 p-1 bg-gray-50 border border-gray-200 rounded-[2px]">
+                        <div class="w-12 h-9 p-1 bg-white border border-gray-200 rounded-[2px]">
                             ${opt.icon}
                         </div>
                         <span class="text-[10px] font-semibold">${opt.label}</span>
@@ -2124,19 +2130,16 @@
                         "
                         class="absolute z-30 border ${isSelected ? 'border-[#2563eb] ring-2 ring-[#2563eb]/30' : 'border-dashed border-gray-400 hover:border-[#2563eb]'} bg-white/75 backdrop-blur-[1px] cursor-move group/txt flex items-center"
                     >
-                        <!-- Зүүн/Баруун хэмжээ сунгах бариул -->
                         <div
                             onmousedown="startCanvasElementAction('text-resize-e', ${currentSpreadIdx}, '${tb.id}', event)"
                             class="hidden group-hover/txt:flex items-center justify-center w-3.5 h-6 bg-white border border-gray-500 rounded-full text-[8px] text-gray-700 cursor-ew-resize absolute -right-2 top-1/2 -translate-y-1/2 shadow"
                         >&lt;&gt;</div>
 
-                        <!-- Доод хэмжээ сунгах бариул -->
                         <div
                             onmousedown="startCanvasElementAction('text-resize-s', ${currentSpreadIdx}, '${tb.id}', event)"
                             class="hidden group-hover/txt:block w-8 h-2 bg-white border border-gray-500 rounded-full cursor-ns-resize absolute -bottom-1 left-1/2 -translate-x-1/2 shadow"
                         ></div>
 
-                        <!-- Устгах товч -->
                         <button
                             type="button"
                             onmousedown="event.stopPropagation()"
@@ -2229,7 +2232,6 @@
                 `;
             }).join('');
 
-            // Доод цувааны төгсгөлд "+ Add double page" товч
             html += `
                 <button
                     type="button"
@@ -2488,6 +2490,4 @@
 
 </body>
 </html>
-```[cite: 3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21]
-
-Текст болон дүрсүүдийг давхарлах дараалал (`Bring forward / Send backward`) эсвэл хуудасны дэвсгэр өнгийг солих тохиргоог нэмж өгөх үү?
+```[cite: 3, 22]
