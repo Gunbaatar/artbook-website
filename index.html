@@ -321,7 +321,7 @@
 
             <!-- Баруун талын номын хуудас preview-нууд (Spread samples) -->
             <div class="flex-1 p-8 overflow-y-auto bg-[#e8eaed]">
-                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8" id="editor-spreads-container">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start" id="editor-spreads-container">
                     <!-- JS-ээр хуудас болон тусдаа layout-тай нүднүүд энд үүснэ -->
                 </div>
             </div>
@@ -376,7 +376,7 @@
 
     <!-- ФАЙЛ ОРУУЛАХ МОДАЛ ЦОНХ -->
     <div id="upload-modal" style="display: none;" class="fixed inset-0 bg-black/50 z-[70] flex justify-center items-center p-4">
-        <div class="bg-white rounded-sm shadow-2xl w-full max-w-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-sm shadow-2xl w-full max-w-4xl p-6 sm:p-8 relative max-h-[92vh] overflow-y-auto">
             <!-- Хаах товч -->
             <button onclick="toggleUploadModal(event)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -385,8 +385,34 @@
             <!-- Далд файл сонгогч -->
             <input type="file" id="computer-file-input" multiple accept="image/*,.tiff,.heic" class="hidden" onchange="handleFilesSelected(event)">
 
+            <!-- 0. НОМНЫ ФОРМАТ БОЛОН ХЭМЖЭЭ СОНГОХ ХЭСЭГ -->
+            <div id="format-step-view" class="block">
+                <div class="text-center mb-6">
+                    <h3 class="text-base sm:text-lg font-bold uppercase tracking-wider text-gray-900">Номын хэлбэр ба хэмжээ сонгох</h3>
+                    <p class="text-xs text-gray-500 mt-1">Сонгосон хэлбэр болон хэмжээнд тохирсон хуудасны загвар үүснэ</p>
+                </div>
+
+                <div id="book-format-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-7">
+                    <!-- JS-ээр LANDSCAPE, PORTRAIT, SQUARE картууд үүснэ -->
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 flex justify-end">
+                    <button onclick="confirmFormatAndShowUpload()" type="button" class="w-full sm:w-auto bg-[#927657] hover:bg-[#7d6347] text-white font-semibold text-xs sm:text-sm px-10 py-3.5 rounded-sm shadow-md transition tracking-wider uppercase flex items-center justify-center space-x-2">
+                        <span>ЗУРАГ ОРУУЛАХ РУУ ШИЛЖИХ</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                    </button>
+                </div>
+            </div>
+
             <!-- 1. ЭХЛЭЭД ЗУРАГ ОРУУЛАХ ХЭСЭГ -->
-            <div id="upload-step-view" class="block">
+            <div id="upload-step-view" style="display: none;">
+                <div class="flex items-center justify-between mb-3">
+                    <button onclick="backToFormatStep()" type="button" class="text-xs font-semibold text-gray-600 hover:text-[#927657] transition">
+                        ← Хэлбэр / хэмжээ солих
+                    </button>
+                    <span id="active-book-format-badge" class="text-[11px] font-bold text-[#927657] bg-[#927657]/10 px-2.5 py-1 rounded-sm"></span>
+                </div>
+
                 <div onclick="openFileExplorer()" class="border-2 border-dashed border-gray-300 hover:border-[#927657] cursor-pointer rounded-sm p-8 text-center flex flex-col items-center justify-center space-y-4 mb-2 bg-gray-50/55 transition">
                     <div class="w-12 h-12 text-[#927657] flex items-center justify-center">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -448,6 +474,50 @@
         const MIN_IMAGE_PX = 2000;
         const MAX_IMAGE_PX = 9000;
 
+        // Номын формат ба хэмжээний сонголтууд (web.jpg загвар)
+        const BOOK_FORMATS = [
+            {
+                key: 'landscape',
+                title: 'LANDSCAPE',
+                subtitle: 'ХӨНДЛӨН ХЭЛБЭР',
+                boxClass: 'w-44 h-32',
+                canvasAspectClass: 'aspect-[4/3] max-h-72 mx-auto',
+                sizes: [
+                    'A3 хэмжээ ( 29.7 × 42см )',
+                    'A4 хэмжээ ( 21 × 29.7см )'
+                ]
+            },
+            {
+                key: 'portrait',
+                title: 'PORTRAIT',
+                subtitle: 'БОСОО ХЭЛБЭР',
+                boxClass: 'w-32 h-44',
+                canvasAspectClass: 'aspect-[3/4] max-h-80 mx-auto',
+                sizes: [
+                    'A3 хэмжээ ( 29.7 × 42см )',
+                    'A4 хэмжээ ( 21 × 29.7см )'
+                ]
+            },
+            {
+                key: 'square',
+                title: 'SQUARE',
+                subtitle: 'ДӨРВӨЛЖИН ХЭЛБЭР',
+                boxClass: 'w-36 h-36',
+                canvasAspectClass: 'aspect-square max-h-72 mx-auto',
+                sizes: [
+                    'Жижиг хэмжээ ( 29 × 29см )',
+                    'Том хэмжээ ( 20 × 20см )'
+                ]
+            }
+        ];
+
+        let selectedBookFormat = 'portrait';
+        let selectedBookSizeIndex = {
+            landscape: 0,
+            portrait: 0,
+            square: 0
+        };
+
         // Зургийн сан: { id, file, url }
         let photoAssets = [];
 
@@ -467,6 +537,107 @@
             { key: '3-l', label: '3L загвар', slots: 3, icon: `<div class="w-full h-full grid grid-cols-2 gap-[1px]"><div class="bg-gray-300"></div><div class="grid grid-rows-2 gap-[1px]"><div class="bg-gray-300"></div><div class="bg-gray-300"></div></div></div>` },
             { key: '4-grid', label: '4 хуваагдал', slots: 4, icon: `<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-[1px]"><div class="bg-gray-300"></div><div class="bg-gray-300"></div><div class="bg-gray-300"></div><div class="bg-gray-300"></div></div>` }
         ];
+
+        function getActiveFormatConfig() {
+            return BOOK_FORMATS.find(f => f.key === selectedBookFormat) || BOOK_FORMATS[1];
+        }
+
+        function getActiveBookFormatLabel() {
+            const cfg = getActiveFormatConfig();
+            const sizeLabel = cfg.sizes[selectedBookSizeIndex[cfg.key] || 0];
+            return `${cfg.title} • ${sizeLabel}`;
+        }
+
+        function renderBookFormatCards() {
+            const container = document.getElementById('book-format-cards');
+            if (!container) return;
+
+            container.innerHTML = BOOK_FORMATS.map(fmt => {
+                const isSelected = selectedBookFormat === fmt.key;
+                const activeSizeIdx = selectedBookSizeIndex[fmt.key] || 0;
+
+                const radiosHtml = fmt.sizes.map((sizeText, idx) => {
+                    const checked = isSelected && activeSizeIdx === idx;
+                    return `
+                        <button
+                            type="button"
+                            onclick="selectBookSize('${fmt.key}', ${idx}, event)"
+                            class="w-full flex items-center space-x-3 text-left py-1.5 group/radio focus:outline-none"
+                        >
+                            <span class="w-4 h-4 rounded-full flex items-center justify-center transition ${
+                                checked
+                                    ? 'bg-gray-900'
+                                    : 'bg-gray-200 group-hover/radio:bg-gray-300'
+                            }">
+                                ${checked ? `<span class="w-1.5 h-1.5 rounded-full bg-white"></span>` : ''}
+                            </span>
+                            <span class="text-xs ${
+                                checked ? 'font-semibold text-gray-900' : 'text-gray-500'
+                            }">${sizeText}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                return `
+                    <div
+                        onclick="selectBookFormat('${fmt.key}')"
+                        class="cursor-pointer transition flex flex-col border ${
+                            isSelected
+                                ? 'border-gray-900 shadow-sm bg-white'
+                                : 'border-transparent hover:border-gray-200 bg-white'
+                        }"
+                    >
+                        <div class="bg-[#ececec] py-6 px-4 flex items-center justify-center h-56">
+                            <div class="${fmt.boxClass} bg-[#557a95] text-white shadow-md flex flex-col justify-between p-3 select-none transition-all duration-200">
+                                <div class="text-[7px] uppercase tracking-[0.2em] opacity-75">KIDART</div>
+                                <div class="text-center my-auto">
+                                    <div class="text-sm font-bold tracking-[0.22em]">EXPLORE</div>
+                                    <div class="text-[6px] tracking-[0.18em] opacity-80 mt-0.5">THE WORLD AROUND YOU</div>
+                                </div>
+                                <div class="h-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 text-center">
+                            <div class="text-xs font-bold tracking-wider text-gray-900 uppercase">${fmt.title}</div>
+                            <div class="text-[10px] tracking-wider text-gray-400 uppercase mt-0.5">${fmt.subtitle}</div>
+                        </div>
+
+                        <div class="px-5 pb-5 pt-2 border-t border-gray-100 space-y-1">
+                            ${radiosHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectBookFormat(formatKey) {
+            selectedBookFormat = formatKey;
+            renderBookFormatCards();
+        }
+
+        function selectBookSize(formatKey, sizeIdx, event) {
+            if (event) event.stopPropagation();
+            selectedBookFormat = formatKey;
+            selectedBookSizeIndex[formatKey] = sizeIdx;
+            renderBookFormatCards();
+        }
+
+        function confirmFormatAndShowUpload() {
+            document.getElementById('format-step-view').style.display = 'none';
+            document.getElementById('upload-step-view').style.display = 'block';
+            document.getElementById('layout-step-view').style.display = 'none';
+            document.getElementById('loading-step-view').style.display = 'none';
+            document.getElementById('active-book-format-badge').innerText = getActiveBookFormatLabel();
+        }
+
+        function backToFormatStep() {
+            document.getElementById('upload-step-view').style.display = 'none';
+            document.getElementById('layout-step-view').style.display = 'none';
+            document.getElementById('loading-step-view').style.display = 'none';
+            document.getElementById('format-step-view').style.display = 'block';
+            renderBookFormatCards();
+        }
 
         function getPhotoById(photoId) {
             return photoAssets.find(p => p.id === photoId) || null;
@@ -582,7 +753,9 @@
                 if (selectedCurrentProduct === 'Art Book' || selectedCurrentProduct === 'Memory Book') {
                     photoAssets = [];
                     bookSpreads = [];
-                    document.getElementById('upload-step-view').style.display = 'block';
+                    renderBookFormatCards();
+                    document.getElementById('format-step-view').style.display = 'block';
+                    document.getElementById('upload-step-view').style.display = 'none';
                     document.getElementById('loading-step-view').style.display = 'none';
                     document.getElementById('layout-step-view').style.display = 'none';
                     toggleUploadModal();
@@ -637,12 +810,12 @@
             const prevStep = photoAssets.length > 0 ? 'layout-step-view' : 'upload-step-view';
 
             // Ачааллын дүрсийг харуулах
+            document.getElementById('format-step-view').style.display = 'none';
             document.getElementById('upload-step-view').style.display = 'none';
             document.getElementById('layout-step-view').style.display = 'none';
             document.getElementById('loading-step-view').style.display = 'flex';
             document.getElementById('upload-progress-text').innerText = `0 / ${files.length} зураг шалгаж байна...`;
 
-            // UI-д ачааллын дүрсийг зурж амраах
             await new Promise(resolve => requestAnimationFrame(resolve));
 
             const results = [];
@@ -769,7 +942,6 @@
             if (unplaced.length === 0) return;
 
             let pIdx = 0;
-            // Эхлээд одоо байгаа хуудасны хоосон нүднүүдийг дүүргэнэ
             for (let s = 0; s < bookSpreads.length && pIdx < unplaced.length; s++) {
                 for (let k = 0; k < bookSpreads[s].slots.length && pIdx < unplaced.length; k++) {
                     if (!bookSpreads[s].slots[k]) {
@@ -779,7 +951,6 @@
                 }
             }
 
-            // Үлдсэн зургуудад шинэ хуудаснууд үүсгэнэ
             while (pIdx < unplaced.length) {
                 const s1 = unplaced[pIdx] ? unplaced[pIdx].id : null;
                 const s2 = unplaced[pIdx + 1] ? unplaced[pIdx + 1].id : null;
@@ -968,6 +1139,7 @@
 
         function renderSpreads() {
             const spreadsContainer = document.getElementById('editor-spreads-container');
+            const fmtCfg = getActiveFormatConfig();
             let spreadsHtml = '';
             let pageCounter = 1;
 
@@ -1016,9 +1188,11 @@
                             ${layoutButtonsHtml}
                         </div>
 
-                        <!-- Хуудасны өрөлтийн талбар -->
-                        <div class="bg-[#f8f9fa] border border-gray-200 h-56 rounded-sm overflow-hidden shadow-inner">
-                            ${renderSpreadCanvas(spread, spreadIdx)}
+                        <!-- Сонгосон формат ба хэмжээнд тохирсон хуудасны талбар -->
+                        <div class="w-full py-2 flex items-center justify-center">
+                            <div class="${fmtCfg.canvasAspectClass} w-full bg-[#f8f9fa] border border-gray-200 rounded-sm overflow-hidden shadow-inner">
+                                ${renderSpreadCanvas(spread, spreadIdx)}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1030,7 +1204,7 @@
         // Редакторын UI шинэчлэх
         function initEditorView() {
             document.getElementById('editor-book-heading').innerText =
-                `${selectedCurrentProduct || 'Memory Book'} - Загвар зохион байгуулалт`;
+                `${selectedCurrentProduct || 'Memory Book'} • ${getActiveBookFormatLabel()} - Загвар зохион байгуулалт`;
             renderSidebarPhotos();
             renderSpreads();
         }
@@ -1125,7 +1299,7 @@
         function addCurrentBookToCart() {
             const spreadCount = bookSpreads.length;
             addToCart(
-                (selectedCurrentProduct || 'Memory Book') + ' (' + photoAssets.length + ' зураг, ' + spreadCount + ' хуудас)',
+                (selectedCurrentProduct || 'Memory Book') + ' - ' + getActiveBookFormatLabel() + ' (' + photoAssets.length + ' зураг, ' + spreadCount + ' хуудас)',
                 currentPriceText || '180,000₮'
             );
             goHome();
@@ -1242,3 +1416,5 @@
 </body>
 </html>
 ```[cite: 3]
+
+Сонгосон **LANDSCAPE**, **PORTRAIT**, **SQUARE** хэлбэр бүр дээр хуудасны доторх нүдний хуваагдлыг (`1 зураг`, `2 босоо`, `2 хэвтээ`, `3L`, `4 хуваагдал`) мөн тухайн форматын онцлогт тааруулж өөрчлөх үү?
